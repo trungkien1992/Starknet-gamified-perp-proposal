@@ -1,6 +1,11 @@
-version: '3.9'
+version: "3.9"
 services:
-  db:
-    image: postgres:13
   nats:
-    image: nats:2
+    image: nats:2.10
+    command: ["-js", "-sd", "/data/js"]
+    ports: ["4222:4222"]
+  postgres:
+    image: postgres:14
+    environment:
+      POSTGRES_PASSWORD: secr3t
+    ports: ["5432:5432"]

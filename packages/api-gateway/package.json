@@ -2,6 +2,10 @@
   "name": "api-gateway",
   "version": "0.0.1",
   "scripts": {
-    "dev": "echo 'api-gateway dev stub'"
+    "dev": "nodemon -x node src/main.js"
+  },
+  "dependencies": {
+    "fastify": "^5.4.0",
+    "nats": "^2.29.3"
   }
 }

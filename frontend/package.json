@@ -2,6 +2,6 @@
   "name": "frontend",
   "version": "0.0.1",
   "scripts": {
-    "dev": "echo 'frontend dev stub'"
+    "dev": "flutter run -d chrome"
   }
 }
