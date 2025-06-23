@@ -2,6 +2,11 @@
   "name": "gamecore",
   "version": "0.0.1",
   "scripts": {
-    "dev": "echo 'gamecore dev stub'"
+    "dev": "nodemon -x node src/index.js"
+  },
+  "dependencies": {
+    "fastify": "^5.4.0",
+    "nats": "^2.29.3",
+    "pg": "^8.16.2"
   }
 }
