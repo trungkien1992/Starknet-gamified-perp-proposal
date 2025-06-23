@@ -1,0 +1,7 @@
+{
+  "name": "api-gateway",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "echo 'api-gateway dev stub'"
+  }
+}
