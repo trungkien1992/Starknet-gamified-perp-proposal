@@ -1,8 +1,13 @@
 import Fastify from 'fastify';
 import { connect } from 'nats';
+import { Client } from 'pg';
 import crypto from 'crypto';
+import dotenv from 'dotenv';
 
-const nats = await connect({ servers: 'nats://localhost:4222' });
+dotenv.config();
+const nats = await connect({ servers: process.env.NATS_URL });
+const pg = new Client({ connectionString: process.env.DATABASE_URL });
+await pg.connect();
 const app = Fastify();
 
 app.post('/trades/open', async (req, reply) => {
@@ -14,6 +19,10 @@ app.post('/trades/open', async (req, reply) => {
     ts_unix: Date.now()
   };
   await nats.publish('trade.closed', JSON.stringify(mock));
+  await pg.query(
+    'INSERT INTO trades(trade_id, user_addr, pnl_usd, leverage_x, ts_unix) VALUES ($1,$2,$3,$4,$5)',
+    [mock.trade_id, mock.user_addr, mock.pnl_usd, mock.leverage_x, mock.ts_unix]
+  );
   return { ok: true, id: mock.trade_id };
 });
 
