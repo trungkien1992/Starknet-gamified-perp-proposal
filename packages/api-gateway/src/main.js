@@ -1,29 +1,50 @@
 import Fastify from 'fastify';
+import ws from '@fastify/websocket';
+import cors from '@fastify/cors';
 import { connect } from 'nats';
-import { Client } from 'pg';
+import { Pool } from 'pg';
 import crypto from 'crypto';
 import dotenv from 'dotenv';
 
 dotenv.config();
 const nats = await connect({ servers: process.env.NATS_URL });
-const pg = new Client({ connectionString: process.env.DATABASE_URL });
-await pg.connect();
+const pg = new Pool({ connectionString: process.env.DATABASE_URL });
 const app = Fastify();
+app.register(cors, { origin: '*' });
+app.register(ws);
 
 app.post('/trades/open', async (req, reply) => {
-  const mock = {
-    trade_id: crypto.randomUUID(),
-    user_addr: '0xabc',
-    pnl_usd: 5,
-    leverage_x: 3,
-    ts_unix: Date.now()
-  };
-  await nats.publish('trade.closed', JSON.stringify(mock));
-  await pg.query(
-    'INSERT INTO trades(trade_id, user_addr, pnl_usd, leverage_x, ts_unix) VALUES ($1,$2,$3,$4,$5)',
-    [mock.trade_id, mock.user_addr, mock.pnl_usd, mock.leverage_x, mock.ts_unix]
-  );
-  return { ok: true, id: mock.trade_id };
+  try {
+    const body = req.body;
+    const trade = {
+      trade_id: crypto.randomUUID(),
+      user_addr: body.user,
+      pnl_usd: 5,
+      leverage_x: body.lev,
+      asset: body.asset,
+      dir: body.dir,
+      ts_unix: Date.now()
+    };
+    await pg.query(
+      'INSERT INTO trades(trade_id, user_addr, pnl_usd, leverage_x, ts_unix) VALUES ($1,$2,$3,$4,$5)',
+      [trade.trade_id, trade.user_addr, trade.pnl_usd, trade.leverage_x, trade.ts_unix]
+    );
+    await nats.publish('trade.closed', JSON.stringify(trade));
+    return { ok: true, id: trade.trade_id };
+  } catch (err) {
+    console.error(err);
+    reply.status(500);
+    return { ok: false };
+  }
+});
+
+app.get('/ws/ink', { websocket: true }, (socket) => {
+  const sub = nats.subscribe('ink.updated');
+  (async () => {
+    for await (const m of sub) {
+      socket.send(m.data);
+    }
+  })().catch(() => socket.close());
 });
 
 app.listen({ port: 3000 }, () => console.log('API Gateway 3000'));

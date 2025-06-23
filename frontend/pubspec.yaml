@@ -1,0 +1,10 @@
+name: frontend
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  web_socket_channel: ^2.4.0
+  flutter_riverpod: ^2.3.6
+  http: ^1.1.0
