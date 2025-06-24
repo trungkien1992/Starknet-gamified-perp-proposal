@@ -20,6 +20,8 @@ CREATE TABLE IF NOT EXISTS tiles (
   y INTEGER
 );
 
+ALTER TABLE tiles ADD CONSTRAINT tiles_xy_unique UNIQUE (x, y);
+
 CREATE TABLE IF NOT EXISTS user_streaks (
   user_addr TEXT PRIMARY KEY,
   streak INTEGER NOT NULL CHECK (streak >= 0)

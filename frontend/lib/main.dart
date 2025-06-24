@@ -110,13 +110,16 @@ class SwipeBar extends StatefulWidget {
 
 class _SwipeBarState extends State<SwipeBar> {
   double _position = 0;
+  String userWallet = '0xabc';
+  String selectedAsset = 'BTC';
+  int leverage = 3;
 
   Future<void> _sendTrade(int dir) async {
     final body = jsonEncode({
-      'user': '0xabc',
-      'asset': 'BTC',
+      'user':   userWallet,
+      'asset':  selectedAsset,
       'dir': dir,
-      'lev': 3,
+      'lev':    leverage,
     });
     await http.post(
       Uri.parse('$_apiBase/trades/open'),
