@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "fastify": "^5.4.0",
+    "@fastify/websocket": "^8.0.0",
     "nats": "^2.29.3",
     "pg": "^8.16.2",
     "dotenv": "^16.3.1"

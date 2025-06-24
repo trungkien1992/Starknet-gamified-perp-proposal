@@ -1,0 +1,15 @@
+name: frontend
+publish_to: 'none'
+description: Flutter frontend
+environment:
+  sdk: '>=2.17.0 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_riverpod: ^2.3.6
+  web_socket_channel: ^2.4.0
+  http: ^0.13.0
+
+flutter:
+  uses-material-design: true

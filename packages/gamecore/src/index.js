@@ -14,5 +14,9 @@ for await (const m of sub) {
     'INSERT INTO ink_ledger(trade_id, ink_delta) VALUES ($1, $2)',
     [trade.trade_id, ink]
   );
+  await nats.publish(
+    'ink.updated',
+    JSON.stringify({ trade_id: trade.trade_id, ink_delta: ink })
+  );
   console.log('Ink updated', trade.trade_id, ink);
 }
