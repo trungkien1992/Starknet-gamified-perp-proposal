@@ -10,7 +10,10 @@ dotenv.config();
 const nats = await connect({ servers: process.env.NATS_URL });
 const pg = new Pool({ connectionString: process.env.DATABASE_URL });
 const app = Fastify();
-app.register(cors, { origin: '*' });
+app.register(cors, {
+  origin: '*', // TODO tighten in prod
+  allowedHeaders: ['sec-websocket-protocol'] // future JWT / wallet-sig
+});
 app.register(ws);
 
 app.post('/trades/open', async (req, reply) => {
