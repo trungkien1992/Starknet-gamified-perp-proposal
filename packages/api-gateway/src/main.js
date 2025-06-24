@@ -47,14 +47,26 @@ app.post('/trades/open', async (req, reply) => {
 
 app.get('/ws/ink', { websocket: true }, (socket) => {
   const sub = nats.subscribe('ink.updated');
+  const iter = sub[Symbol.asyncIterator]();
+
+  const cleanup = () => {
+    sub.unsubscribe();
+    if (typeof iter.return === 'function') iter.return();
+  };
+
+  socket.on('close', cleanup);
+
   void (async () => {
     try {
-      for await (const m of sub) {
-        socket.raw.write(m.data);
+      for await (const m of iter) {
+        if (!socket.raw.write(m.data)) {
+          await new Promise((res) => socket.raw.once('drain', res));
+        }
       }
     } catch (err) {
       app.log.error(err, 'WS relay error');
-      socket.close();
+    } finally {
+      cleanup();
     }
   })();
 });
