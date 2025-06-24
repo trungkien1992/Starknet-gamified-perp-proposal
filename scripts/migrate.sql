@@ -22,5 +22,5 @@ CREATE TABLE IF NOT EXISTS tiles (
 
 CREATE TABLE IF NOT EXISTS user_streaks (
   user_addr TEXT PRIMARY KEY,
-  streak INT NOT NULL CHECK (streak >= 0)
+  streak INTEGER NOT NULL CHECK (streak >= 0)
 );

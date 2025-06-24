@@ -4,6 +4,11 @@ import { Pool } from 'pg';
 import dotenv from 'dotenv';
 
 dotenv.config();
+const app = Fastify();
+app.get('/healthz', async () => {
+  return { ok: true };
+});
+await app.listen({ port: 3001 });
 const nats = await connectNats({ servers: process.env.NATS_URL });
 const pg = new Pool({ connectionString: process.env.DATABASE_URL });
 const app = Fastify();
