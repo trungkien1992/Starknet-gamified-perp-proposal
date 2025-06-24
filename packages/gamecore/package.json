@@ -5,6 +5,9 @@
   "scripts": {
     "dev": "nodemon -x node src/index.js"
   },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
   "dependencies": {
     "fastify": "^5.4.0",
     "nats": "^2.29.3",
