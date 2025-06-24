@@ -43,11 +43,16 @@ app.post('/trades/open', async (req, reply) => {
 
 app.get('/ws/ink', { websocket: true }, (socket) => {
   const sub = nats.subscribe('ink.updated');
-  (async () => {
-    for await (const m of sub) {
-      socket.send(m.data);
+  void (async () => {
+    try {
+      for await (const m of sub) {
+        socket.raw.write(m.data);
+      }
+    } catch (err) {
+      app.log.error(err, 'WS relay error');
+      socket.close();
     }
-  })().catch(() => socket.close());
+  })();
 });
 
 app.listen({ port: 3000 }, () => console.log('API Gateway 3000'));
