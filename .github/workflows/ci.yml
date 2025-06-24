@@ -8,7 +8,7 @@ env:
   TURBO_DISABLE_TELEMETRY: '1'
 
 jobs:
-  node-tests:
+  node:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -20,8 +20,8 @@ jobs:
           node-version: 20
           cache: 'pnpm'
       - run: pnpm install
-      - run: npx turbo run lint --filter=./packages/*
-      - run: pnpm test:node
+      - run: npx turbo lint
+      - run: pnpm test
 
   flutter:
     runs-on: ubuntu-latest
@@ -31,7 +31,6 @@ jobs:
         with:
           channel: 'stable'
           cache: true
-          cache-key: flutter-${{ runner.os }}-${{ hashFiles('**/pubspec.lock') }}-${{ hashFiles('**/pubspec.yaml') }}
-      - run: xvfb-run --auto-servernum -- flutter test
+      - run: flutter test
         working-directory: frontend
         continue-on-error: true
