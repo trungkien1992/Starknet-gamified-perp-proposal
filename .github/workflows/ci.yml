@@ -15,12 +15,12 @@ jobs:
       - uses: pnpm/action-setup@v2
         with:
           version: 9
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'pnpm'
       - run: pnpm install
-      - run: npx turbo lint
+      - run: npx turbo run lint --filter=./packages...
       - run: pnpm test
 
   flutter:
@@ -31,6 +31,7 @@ jobs:
         with:
           channel: 'stable'
           cache: true
-      - run: flutter test
+          cache-key: flutter-${{ runner.os }}-${{ hashFiles('**/pubspec.lock') }}-${{ hashFiles('**/pubspec.yaml') }}
+      - run: xvfb-run --auto-servernum -- flutter test
         working-directory: frontend
         continue-on-error: true
