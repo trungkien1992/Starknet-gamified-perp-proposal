@@ -8,7 +8,7 @@ env:
   TURBO_DISABLE_TELEMETRY: '1'
 
 jobs:
-  node:
+  node-tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -20,8 +20,8 @@ jobs:
           node-version: 20
           cache: 'pnpm'
       - run: pnpm install
-      - run: npx turbo run lint --filter=./packages...
-      - run: pnpm test
+      - run: npx turbo run lint --filter=./packages/*
+      - run: pnpm test:node
 
   flutter:
     runs-on: ubuntu-latest
