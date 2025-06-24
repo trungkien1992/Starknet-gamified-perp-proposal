@@ -11,6 +11,7 @@ for await (const m of sub) {
   try {
     const trade = JSON.parse(m.data);
     const ink = Math.floor(trade.pnl_usd * trade.leverage_x);
+    if (ink < 0) continue; // skip negative payouts
     await pg.query(
       'INSERT INTO ink_ledger(trade_id, ink_delta) VALUES ($1, $2)',
       [trade.trade_id, ink]
