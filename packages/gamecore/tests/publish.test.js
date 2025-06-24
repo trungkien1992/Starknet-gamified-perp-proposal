@@ -1,4 +1,4 @@
-import { processTrade } from '../../packages/gamecore/src/lib/pipeline.js';
+import { processTrade } from '../src/lib/pipeline.js';
 import { jest } from '@jest/globals';
 
 test('reward emitted when total reaches threshold', async () => {
