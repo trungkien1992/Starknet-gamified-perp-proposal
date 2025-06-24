@@ -6,21 +6,15 @@
     "packages/*",
     "frontend"
   ],
-  "engines": {
-    "node": ">=20.0.0"
-  },
   "scripts": {
-    "dev": "turbo run dev --parallel",
+    "dev": "turbo dev --parallel",
     "lint": "turbo lint",
     "test": "turbo test",
-    "db:migrate": "psql $DATABASE_URL -f scripts/migrate.sql"
+    "db:migrate": "bash -c 'psql \"${DATABASE_URL?}\" -f scripts/migrate.sql'"
   },
   "devDependencies": {
     "nodemon": "^3.1.1",
     "turbo": "^2.5.4"
   },
-  "engines": {
-    "node": ">=20.0.0"
-    "turbo": "^2"
-  }
+  "engines": { "node": ">=20.0.0" }
 }

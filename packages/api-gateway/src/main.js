@@ -15,11 +15,7 @@ app.register(cors, {
   allowedHeaders: ['sec-websocket-protocol'] // future JWT / wallet-sig
 });
 app.register(ws);
-app.get('/healthz', async (_, reply) => reply.code(200).send({ ok: true }));
-
-app.get('/healthz', async () => {
-  return { ok: true };
-});
+app.get('/healthz', async () => ({ ok: true }));
 
 app.post('/trades/open', async (req, reply) => {
   try {
@@ -70,7 +66,6 @@ app.get('/ws/ink', { websocket: true }, (socket) => {
       cleanup();
     }
   })();
-  socket.on('close', () => sub.unsubscribe());
 });
 
 app.get('/ws/rewards', { websocket: true }, (socket) => {
@@ -78,7 +73,9 @@ app.get('/ws/rewards', { websocket: true }, (socket) => {
   void (async () => {
     try {
       for await (const m of sub) {
-        socket.raw.write(m.data);
+        if (!socket.raw.write(m.data)) {
+          await new Promise(res => socket.raw.once('drain', res));
+        }
       }
     } catch (err) {
       app.log.error(err, 'WS reward relay error');

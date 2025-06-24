@@ -5,22 +5,23 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 const app = Fastify();
-app.get('/healthz', async () => {
-  return { ok: true };
-});
+app.get('/healthz', async () => ({ ok: true }));
 await app.listen({ port: 3001 });
 const nats = await connectNats({ servers: process.env.NATS_URL });
 const pg = new Pool({ connectionString: process.env.DATABASE_URL });
-const app = Fastify();
-app.get('/healthz', async () => ({ ok: true }));
-app.listen({ port: 3001 }, () => console.log('Gamecore 3001'));
 
-const sub = nats.subscribe('trade.closed');
+const js = nats.jetstream();
+const sub = await js.pullSubscribe('trade.closed', { durable: 'gamecore' });
+const pull = () => sub.pull({ batch: 1, expires: 1000 });
+pull();
 for await (const m of sub) {
   try {
     const trade = JSON.parse(m.data);
     const ink = Math.floor(trade.pnl_usd * trade.leverage_x);
-    if (ink < 0) continue; // skip negative payouts
+    if (ink < 0) {
+      m.ack();
+      continue;
+    }
     await pg.query(
       'INSERT INTO ink_ledger(trade_id, ink_delta) VALUES ($1, $2)',
       [trade.trade_id, ink]
@@ -41,8 +42,11 @@ for await (const m of sub) {
       );
     }
     console.log('Ink updated', trade.trade_id, ink);
+    m.ack();
   } catch (err) {
     console.error(err);
+  } finally {
+    pull();
   }
 }
 
