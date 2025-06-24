@@ -4,7 +4,8 @@ module.exports = {
   verbose: true,
   clearMocks: true,
   coveragePathIgnorePatterns: [
-    '/packages/api-gateway/src/'
+    '/packages/api-gateway/src/generated/',
+    '/packages/api-gateway/src/main.js'
   ],
   coverageThreshold: {
     global: { lines: 80 }
