@@ -5,9 +5,10 @@ import { processTrade } from './lib/pipeline.js';
 import dotenv from 'dotenv';
 
 dotenv.config();
-const app = Fastify();
+const app = Fastify({ logger: true });
 app.get('/healthz', async () => ({ ok: true }));
 await app.listen({ port: 3001 });
+app.log.info('Gamecore 3001');
 const nats = await connectNats({ servers: process.env.NATS_URL });
 const pg = new Pool({ connectionString: process.env.DATABASE_URL });
 
@@ -19,10 +20,10 @@ for await (const m of sub) {
   try {
     const trade = JSON.parse(m.data);
     await processTrade(trade, pg, nats);
-    console.log('Ink updated', trade.trade_id);
+    app.log.info({ tradeId: trade.trade_id }, 'Ink updated');
     m.ack();
   } catch (err) {
-    console.error(err);
+    app.log.error(err);
   } finally {
     pull();
   }

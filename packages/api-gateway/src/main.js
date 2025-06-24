@@ -71,7 +71,7 @@ app.post('/trades/open', async (req, reply) => {
     await nats.publish('trade.closed', JSON.stringify(trade));
     return { ok: true, id: trade.trade_id };
   } catch (err) {
-    console.error(err);
+    app.log.error(err);
     reply.status(500);
     return { ok: false };
   }
@@ -120,8 +120,10 @@ app.get('/ws/rewards', { websocket: true }, (socket) => {
   socket.on('close', () => sub.unsubscribe());
 });
 
+export default app;
+
 if (process.env.NODE_ENV !== 'test') {
-  app.listen({ port: 3000 }, () => console.log('API Gateway 3000'));
+app.listen({ port: 3000 }, () => app.log.info('API Gateway 3000'));
 }
 
 export default app;

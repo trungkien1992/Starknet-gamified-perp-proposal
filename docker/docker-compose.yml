@@ -1,3 +1,4 @@
+# Local development only; do not expose these ports publicly
 version: "3.9"
 services:
   nats:
