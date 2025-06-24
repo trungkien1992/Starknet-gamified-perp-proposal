@@ -16,6 +16,10 @@ app.register(cors, {
 });
 app.register(ws);
 
+app.get('/healthz', async () => {
+  return { ok: true };
+});
+
 app.post('/trades/open', async (req, reply) => {
   try {
     const body = req.body;
