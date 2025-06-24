@@ -5,6 +5,9 @@
   "scripts": {
     "dev": "nodemon -x node src/main.js"
   },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
   "dependencies": {
     "fastify": "^5.4.0",
     "@fastify/websocket": "^7.0.1",

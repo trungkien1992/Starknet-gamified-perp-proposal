@@ -2,12 +2,44 @@ import Fastify from 'fastify';
 import ws from '@fastify/websocket';
 import cors from '@fastify/cors';
 import { connect } from 'nats';
+import { EventEmitter } from 'events';
 import { Pool } from 'pg';
 import crypto from 'crypto';
 import dotenv from 'dotenv';
 
 dotenv.config();
-const nats = await connect({ servers: process.env.NATS_URL });
+let nats;
+if (process.env.NODE_ENV === 'test' || !process.env.NATS_URL) {
+  const ee = new EventEmitter();
+  nats = {
+    publish: (subj, data) => ee.emit(subj, data),
+    subscribe: (subj) => {
+      const iter = (async function* () {
+        const q = [];
+        const handler = (msg) => q.push({ data: msg });
+        ee.on(subj, handler);
+        try {
+          while (true) {
+            if (q.length) {
+              yield q.shift();
+            } else {
+              await new Promise((res) => ee.once(subj, (m) => {
+                q.push({ data: m });
+                res();
+              }));
+            }
+          }
+        } finally {
+          ee.off(subj, handler);
+        }
+      })();
+      return { [Symbol.asyncIterator]: () => iter, unsubscribe() {} };
+    }
+  };
+} else {
+  nats = await connect({ servers: process.env.NATS_URL });
+}
+export { nats };
 const pg = new Pool({ connectionString: process.env.DATABASE_URL });
 const app = Fastify();
 app.register(cors, {
@@ -15,7 +47,10 @@ app.register(cors, {
   allowedHeaders: ['sec-websocket-protocol'] // future JWT / wallet-sig
 });
 app.register(ws);
-app.get('/healthz', async () => ({ ok: true }));
+app.get('/healthz', async (_, reply) => {
+  reply.code(200);
+  return { ok: true };
+});
 
 app.post('/trades/open', async (req, reply) => {
   try {
@@ -36,7 +71,7 @@ app.post('/trades/open', async (req, reply) => {
     await nats.publish('trade.closed', JSON.stringify(trade));
     return { ok: true, id: trade.trade_id };
   } catch (err) {
-    console.error(err);
+    app.log.error(err);
     reply.status(500);
     return { ok: false };
   }
@@ -85,10 +120,14 @@ app.get('/ws/rewards', { websocket: true }, (socket) => {
   socket.on('close', () => sub.unsubscribe());
 });
 
-app.listen({ port: 3000 }, () => console.log('API Gateway 3000'));
+if (process.env.NODE_ENV !== 'test') {
+  app.listen({ port: 3000 }, () => app.log.info('API Gateway 3000'));
+}
+
+export default app;
 
 process.on('SIGINT', async () => {
-  await nats.drain();
+  if (nats.drain) await nats.drain();
   await pg.end();
   process.exit(0);
 });
