@@ -1,6 +1,7 @@
 {
   "name": "api-gateway",
   "version": "0.0.1",
+  "type": "module",
   "scripts": {
     "dev": "nodemon -x node src/main.js"
   },
