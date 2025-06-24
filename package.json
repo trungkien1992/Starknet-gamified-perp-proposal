@@ -17,6 +17,6 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.10",
-    "turbo": "^1.13.0"
+    "turbo": "^2"
   }
 }
