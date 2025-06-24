@@ -120,8 +120,10 @@ app.get('/ws/rewards', { websocket: true }, (socket) => {
   socket.on('close', () => sub.unsubscribe());
 });
 
+export default app;
+
 if (process.env.NODE_ENV !== 'test') {
-  app.listen({ port: 3000 }, () => app.log.info('API Gateway 3000'));
+app.listen({ port: 3000 }, () => app.log.info('API Gateway 3000'));
 }
 
 export default app;
