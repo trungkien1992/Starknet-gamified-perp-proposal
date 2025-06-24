@@ -15,6 +15,7 @@ app.register(cors, {
   allowedHeaders: ['sec-websocket-protocol'] // future JWT / wallet-sig
 });
 app.register(ws);
+app.get('/healthz', async (_, reply) => reply.code(200).send({ ok: true }));
 
 app.post('/trades/open', async (req, reply) => {
   try {
@@ -53,6 +54,28 @@ app.get('/ws/ink', { websocket: true }, (socket) => {
       socket.close();
     }
   })();
+  socket.on('close', () => sub.unsubscribe());
+});
+
+app.get('/ws/rewards', { websocket: true }, (socket) => {
+  const sub = nats.subscribe('reward.dropped');
+  void (async () => {
+    try {
+      for await (const m of sub) {
+        socket.raw.write(m.data);
+      }
+    } catch (err) {
+      app.log.error(err, 'WS reward relay error');
+      socket.close();
+    }
+  })();
+  socket.on('close', () => sub.unsubscribe());
 });
 
 app.listen({ port: 3000 }, () => console.log('API Gateway 3000'));
+
+process.on('SIGINT', async () => {
+  await nats.drain();
+  await pg.end();
+  process.exit(0);
+});

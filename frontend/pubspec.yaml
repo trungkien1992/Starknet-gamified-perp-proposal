@@ -5,9 +5,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  web_socket_channel: ^2.4.0
-  flutter_riverpod: ^2.3.6
-  http: ^1.1.0
+  web_socket_channel: 2.4.0
+  flutter_riverpod: 2.3.6
+  http: 1.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
 
 flutter:
   uses-material-design: true
