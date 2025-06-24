@@ -1,5 +1,8 @@
 import 'dart:convert';
 import 'dart:async';
+import 'package:flutter/foundation.dart' show kIsWeb;
+// ignore: avoid_web_libraries_in_flutter
+import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
@@ -110,9 +113,10 @@ class SwipeBar extends StatefulWidget {
 
 class _SwipeBarState extends State<SwipeBar> {
   double _position = 0;
+  double _dragTotal = 0;
   String userWallet = '0xabc';
   String selectedAsset = 'BTC';
-  int leverage = 3;
+  int leverage = 1;
 
   Future<void> _sendTrade(int dir) async {
     final body = jsonEncode({
@@ -136,6 +140,11 @@ class _SwipeBarState extends State<SwipeBar> {
         setState(() {
           _position -= details.delta.dy;
           _position = _position.clamp(0, height - 50);
+          _dragTotal -= details.delta.dy;
+          _dragTotal = _dragTotal.clamp(0, height - 50);
+          final t = (_dragTotal / (height - 50)).clamp(0.0, 1.0);
+          final mapped = kIsWeb ? (1 + 9 * t) : ui.lerpDouble(1, 10, t)!;
+          leverage = mapped.round();
         });
       },
       onVerticalDragEnd: (details) {
@@ -144,6 +153,9 @@ class _SwipeBarState extends State<SwipeBar> {
         } else if (details.velocity.pixelsPerSecond.dy > 100) {
           _sendTrade(-1);
         }
+        setState(() {
+          _dragTotal = 0;
+        });
       },
       child: Container(
         width: 50,
