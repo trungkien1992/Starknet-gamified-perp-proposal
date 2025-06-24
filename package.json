@@ -6,6 +6,9 @@
     "packages/*",
     "frontend"
   ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "scripts": {
     "dev": "turbo run dev --parallel",
     "lint": "turbo lint",
@@ -13,7 +16,11 @@
     "db:migrate": "psql $DATABASE_URL -f scripts/migrate.sql"
   },
   "devDependencies": {
-    "nodemon": "^3.1.10",
-    "turbo": "^1.13.0"
+    "nodemon": "^3.1.1",
+    "turbo": "^2.5.4"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+    "turbo": "^2"
   }
 }

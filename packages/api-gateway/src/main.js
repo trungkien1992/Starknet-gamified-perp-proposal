@@ -15,6 +15,11 @@ app.register(cors, {
   allowedHeaders: ['sec-websocket-protocol'] // future JWT / wallet-sig
 });
 app.register(ws);
+app.get('/healthz', async (_, reply) => reply.code(200).send({ ok: true }));
+
+app.get('/healthz', async () => {
+  return { ok: true };
+});
 
 app.post('/trades/open', async (req, reply) => {
   try {
@@ -43,16 +48,50 @@ app.post('/trades/open', async (req, reply) => {
 
 app.get('/ws/ink', { websocket: true }, (socket) => {
   const sub = nats.subscribe('ink.updated');
+  const iter = sub[Symbol.asyncIterator]();
+
+  const cleanup = () => {
+    sub.unsubscribe();
+    if (typeof iter.return === 'function') iter.return();
+  };
+
+  socket.on('close', cleanup);
+
+  void (async () => {
+    try {
+      for await (const m of iter) {
+        if (!socket.raw.write(m.data)) {
+          await new Promise((res) => socket.raw.once('drain', res));
+        }
+      }
+    } catch (err) {
+      app.log.error(err, 'WS relay error');
+    } finally {
+      cleanup();
+    }
+  })();
+  socket.on('close', () => sub.unsubscribe());
+});
+
+app.get('/ws/rewards', { websocket: true }, (socket) => {
+  const sub = nats.subscribe('reward.dropped');
   void (async () => {
     try {
       for await (const m of sub) {
         socket.raw.write(m.data);
       }
     } catch (err) {
-      app.log.error(err, 'WS relay error');
+      app.log.error(err, 'WS reward relay error');
       socket.close();
     }
   })();
+  socket.on('close', () => sub.unsubscribe());
 });
 
 app.listen({ port: 3000 }, () => console.log('API Gateway 3000'));
+
+process.on('SIGINT', async () => {
+  await nats.drain();
+  await pg.end();
+  process.exit(0);
+});
