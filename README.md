@@ -97,7 +97,7 @@ pnpm --filter frontend dev
 ## Additional Tips
 
 - **Logging & Monitoring:** Check logs in terminal windows for each service. Use Docker logs for Postgres and NATS.  
-- **Testing:** Run unit and integration tests with `pnpm test` or service-specific commands.
+- **Testing:** Run unit and integration tests with `pnpm test` (Node only). Use `pnpm test:all` to include Flutter tests.
 - **UI tests require the Flutter SDK.** Run `pnpm --filter frontend flutter:test` locally before committing UI changes.
 - **Code Formatting:** Use `pnpm lint` and `pnpm format` to maintain code style consistency.
 - **CI/CD:** Ensure your CI pipeline runs `pnpm install`, `pnpm db:migrate`, and tests before deployment.

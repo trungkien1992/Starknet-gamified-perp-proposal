@@ -11,6 +11,7 @@
     "dev": "turbo dev --parallel",
     "lint": "turbo lint",
     "test": "turbo test",
+    "test:all": "pnpm test && pnpm --filter frontend flutter:test",
     "test:node": "NODE_OPTIONS=--experimental-vm-modules jest --coverage",
     "coverage": "jest --coverage",
     "db:migrate": "bash -c 'psql \"${DATABASE_URL?}\" -f scripts/migrate.sql'"
