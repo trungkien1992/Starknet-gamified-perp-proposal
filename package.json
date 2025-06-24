@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "turbo dev --parallel",
     "lint": "turbo lint",
-    "test": "turbo test --parallel",
+    "test": "turbo test && pnpm test:node",
     "test:node": "node --experimental-vm-modules node_modules/jest/bin/jest.js --runInBand",
     "coverage": "jest --coverage",
     "db:migrate": "bash -c 'psql \"${DATABASE_URL?}\" -f scripts/migrate.sql'"

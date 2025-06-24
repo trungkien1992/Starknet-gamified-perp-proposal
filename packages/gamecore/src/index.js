@@ -3,11 +3,14 @@ import { connect as connectNats } from 'nats';
 import { Pool } from 'pg';
 import { processTrade } from './lib/pipeline.js';
 import dotenv from 'dotenv';
+import pino from 'pino';
 
 dotenv.config();
+const log = pino();
 const app = Fastify();
 app.get('/healthz', async () => ({ ok: true }));
 await app.listen({ port: 3001 });
+log.info('Gamecore 3001');
 const nats = await connectNats({ servers: process.env.NATS_URL });
 const pg = new Pool({ connectionString: process.env.DATABASE_URL });
 
@@ -19,10 +22,10 @@ for await (const m of sub) {
   try {
     const trade = JSON.parse(m.data);
     await processTrade(trade, pg, nats);
-    console.log('Ink updated', trade.trade_id);
+    log.info({ tradeId: trade.trade_id }, 'Ink updated');
     m.ack();
   } catch (err) {
-    console.error(err);
+    log.error(err);
   } finally {
     pull();
   }
