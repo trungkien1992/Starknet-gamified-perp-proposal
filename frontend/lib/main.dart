@@ -1,17 +1,57 @@
 import 'dart:convert';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-final inkProvider = StreamProvider<int>((ref) async* {
-  final channel = WebSocketChannel.connect(
-    Uri.parse('ws://localhost:3000/ws/ink'),
-    pingInterval: const Duration(seconds: 25),
-  );
-  await for (final msg in channel.stream) {
-    final delta = jsonDecode(msg)['ink_delta'] as int;
-    yield delta;
+const _apiBase = String.fromEnvironment('API_URL', defaultValue: 'http://localhost:3000');
+const _inkWs = String.fromEnvironment('INK_WS_URL', defaultValue: 'ws://localhost:3000/ws/ink');
+const _rewardWs = String.fromEnvironment('REWARD_WS_URL', defaultValue: 'ws://localhost:3000/ws/rewards');
+
+final inkProvider = StreamProvider.autoDispose<int>((ref) async* {
+  final uri = Uri.parse(_inkWs);
+  while (true) {
+    final channel = WebSocketChannel.connect(uri, pingInterval: const Duration(seconds: 25));
+    ref.onDispose(() => channel.sink.close());
+    try {
+      await for (final msg in channel.stream) {
+        try {
+          final data = jsonDecode(msg);
+          if (data is Map && data['ink_delta'] is int) {
+            yield data['ink_delta'] as int;
+          }
+        } catch (_) {
+          // ignore parse errors
+        }
+      }
+    } catch (_) {
+      // connection closed; retry
+    }
+    await Future.delayed(const Duration(seconds: 1));
+  }
+});
+
+final rewardProvider = StreamProvider.autoDispose<String>((ref) async* {
+  final uri = Uri.parse(_rewardWs);
+  while (true) {
+    final channel = WebSocketChannel.connect(uri, pingInterval: const Duration(seconds: 25));
+    ref.onDispose(() => channel.sink.close());
+    try {
+      await for (final msg in channel.stream) {
+        try {
+          final data = jsonDecode(msg);
+          if (data is Map && data['kind'] is String) {
+            yield data['kind'] as String;
+          }
+        } catch (_) {
+          // ignore parse errors
+        }
+      }
+    } catch (_) {
+      // connection closed; retry
+    }
+    await Future.delayed(const Duration(seconds: 1));
   }
 });
 
@@ -38,17 +78,22 @@ class StreetCredApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: const Text('StreetCred Demo')),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        body: Stack(
           children: [
-            Consumer(
-              builder: (context, ref, _) {
-                final ink = ref.watch(totalInkProvider);
-                return Text('Ink: $ink');
-              },
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Consumer(
+                  builder: (context, ref, _) {
+                    final ink = ref.watch(totalInkProvider);
+                    return Text('Ink: $ink');
+                  },
+                ),
+                const SizedBox(height: 20),
+                const Expanded(child: Center(child: SwipeBar())),
+              ],
             ),
-            const SizedBox(height: 20),
-            const Expanded(child: Center(child: SwipeBar())),
+            const RewardListener(),
           ],
         ),
       ),
@@ -74,7 +119,7 @@ class _SwipeBarState extends State<SwipeBar> {
       'lev': 3,
     });
     await http.post(
-      Uri.parse('http://localhost:3000/trades/open'),
+      Uri.parse('$_apiBase/trades/open'),
       headers: {'Content-Type': 'application/json'},
       body: body,
     );
@@ -111,6 +156,56 @@ class _SwipeBarState extends State<SwipeBar> {
           color: Colors.white,
         ),
       ),
+    );
+  }
+}
+
+class RewardListener extends ConsumerStatefulWidget {
+  const RewardListener({super.key});
+
+  @override
+  ConsumerState<RewardListener> createState() => _RewardListenerState();
+}
+
+class _RewardListenerState extends ConsumerState<RewardListener> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.listen<AsyncValue<String>>(rewardProvider, (prev, next) {
+        next.whenData((kind) {
+          _showBurst(kind);
+        });
+      });
+    });
+  }
+
+  Future<void> _showBurst(String kind) async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => _BurstModal(kind: kind),
+    );
+    await Future.delayed(const Duration(seconds: 2));
+    if (mounted && Navigator.of(context).canPop()) {
+      Navigator.of(context).pop();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) => const SizedBox.shrink();
+}
+
+class _BurstModal extends StatelessWidget {
+  const _BurstModal({required this.kind});
+
+  final String kind;
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      content: Text('Reward unlocked: $kind'),
     );
   }
 }
