@@ -8,3 +8,8 @@ dependencies:
   web_socket_channel: ^2.4.0
   flutter_riverpod: ^2.3.6
   http: ^1.1.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/placeholder.txt
