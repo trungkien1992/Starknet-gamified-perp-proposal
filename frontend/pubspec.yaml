@@ -35,7 +35,5 @@ flutter:
   uses-material-design: true
   assets:
     - assets/placeholder.txt
-    - assets/hand_up.png
-    - assets/hand_down.png
     - assets/starknet_logo.svg
     - assets/sounds/reward_chime.mp3
