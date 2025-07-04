@@ -288,15 +288,6 @@ class _TradeArenaScreenState extends ConsumerState<TradeArenaScreen>
                                         children: [
                                           Row(
                                             children: [
-                                              Icon(
-                                                selectedAssetConfig['icon'],
-                                                color: selectedAssetConfig['color'],
-                                                size: 24,
-                                              ),
-                                              const SizedBox(
-                                                width: StreetCredDesignSystem
-                                                    .spacingM,
-                                              ),
                                               Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
@@ -412,12 +403,6 @@ class _TradeArenaScreenState extends ConsumerState<TradeArenaScreen>
                                     children: [
                                       Row(
                                         children: [
-                                          Icon(
-                                            selectedAssetConfig['icon'],
-                                            color: selectedAssetConfig['color'],
-                                            size: 24,
-                                          ),
-                                          const SizedBox(width: 12),
                                           Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
@@ -442,12 +427,6 @@ class _TradeArenaScreenState extends ConsumerState<TradeArenaScreen>
                                     children: [
                                       Row(
                                         children: [
-                                          Icon(
-                                            selectedAssetConfig['icon'],
-                                            color: selectedAssetConfig['color'],
-                                            size: 24,
-                                          ),
-                                          const SizedBox(width: 12),
                                           Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
@@ -467,39 +446,36 @@ class _TradeArenaScreenState extends ConsumerState<TradeArenaScreen>
                                           ),
                                         ],
                                       ),
+                                      if (walletState.isConnected) ...[
+                                        const SizedBox(
+                                          height: StreetCredDesignSystem.spacingL,
+                                        ),
+                                        Container(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal:
+                                                StreetCredDesignSystem.spacingM,
+                                            vertical:
+                                                StreetCredDesignSystem.spacingS,
+                                          ),
+                                          decoration:
+                                              StreetCredDesignSystem.statusBadgeDecoration(
+                                                StreetCredTheme.neonGreen,
+                                              ),
+                                          child: Text(
+                                            'READY TO TRADE',
+                                            style:
+                                                StreetCredDesignSystem.captionStyle()
+                                                    .copyWith(
+                                                      color: StreetCredTheme
+                                                          .neonGreen,
+                                                      fontSize: 12,
+                                                      fontWeight: FontWeight.bold,
+                                                    ),
+                                          ),
+                                        ),
+                                      ],
                                     ],
                                   ),
-                                ),
-
-                                    if (walletState.isConnected) ...[
-                                      const SizedBox(
-                                        height: StreetCredDesignSystem.spacingL,
-                                      ),
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal:
-                                              StreetCredDesignSystem.spacingM,
-                                          vertical:
-                                              StreetCredDesignSystem.spacingS,
-                                        ),
-                                        decoration:
-                                            StreetCredDesignSystem.statusBadgeDecoration(
-                                              StreetCredTheme.neonGreen,
-                                            ),
-                                        child: Text(
-                                          'READY TO TRADE',
-                                          style:
-                                              StreetCredDesignSystem.captionStyle()
-                                                  .copyWith(
-                                                    color: StreetCredTheme
-                                                        .neonGreen,
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                        ),
-                                      ),
-                                    ],
-                                  ],
                                 ),
                               ),
 

@@ -94,10 +94,6 @@ class StreetCredAppBar extends StatelessWidget implements PreferredSizeWidget {
         title: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (showBrandSymbol) ...[
-              BrandSymbol(size: 32, animated: true),
-              const SizedBox(width: StreetCredDesignSystem.spacingM),
-            ],
             Flexible(
               child: Text(
                 title,

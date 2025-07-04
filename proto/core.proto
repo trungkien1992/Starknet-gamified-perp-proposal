@@ -7,6 +7,11 @@ service CoreService {
   // A player requests to move to a new position on the map.
   rpc MovePlayer(MovePlayerRequest) returns (MovePlayerResponse);
   rpc RollbackPvPSession(RollbackPvPSessionRequest) returns (RollbackPvPSessionResponse);
+  
+  // PvP match management
+  rpc StartPvPMatch(StartPvPMatchRequest) returns (StartPvPMatchResponse);
+  rpc ProcessPvPRound(ProcessPvPRoundRequest) returns (ProcessPvPRoundResponse);
+  rpc ResolvePvPOutcome(ResolvePvPOutcomeRequest) returns (ResolvePvPOutcomeResponse);
 }
 
 message MovePlayerRequest {
@@ -39,4 +44,62 @@ message GameEvent {
   uint32 streak = 5;
   string timestamp = 6;
   string payload = 7; // JSON string for extensibility
+}
+
+// PvP Match Management Messages
+message StartPvPMatchRequest {
+  string player1_id = 1;
+  string player2_id = 2;
+}
+
+message StartPvPMatchResponse {
+  bool success = 1;
+  string message = 2;
+  string match_id = 3;
+}
+
+message ProcessPvPRoundRequest {
+  string match_id = 1;
+  string player1_action = 2; // "ATTACK", "DEFEND", "SPECIAL", "HEAL"
+  string player2_action = 3;
+}
+
+message ProcessPvPRoundResponse {
+  bool success = 1;
+  string message = 2;
+  PvPRoundResult round_result = 3;
+}
+
+message PvPRoundResult {
+  uint32 round_number = 1;
+  uint32 player1_damage = 2;
+  uint32 player2_damage = 3;
+  string winner = 4; // Player ID of round winner, empty if tie
+}
+
+message ResolvePvPOutcomeRequest {
+  string match_id = 1;
+  repeated TradeOutcome trade_outcomes = 2;
+}
+
+message ResolvePvPOutcomeResponse {
+  bool success = 1;
+  string message = 2;
+  PvPResolution resolution = 3;
+}
+
+message TradeOutcome {
+  string player_id = 1;
+  double pnl = 2;
+  double volume = 3;
+  float accuracy = 4; // 0.0-1.0
+}
+
+message PvPResolution {
+  string winner = 1;
+  string loser = 2;
+  uint32 xp_gained = 3;
+  uint32 xp_lost = 4;
+  bool streak_broken = 5;
+  string badge_earned = 6; // Optional badge name
 }

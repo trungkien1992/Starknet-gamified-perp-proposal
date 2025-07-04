@@ -22,6 +22,10 @@ pub struct Config {
     // Security settings
     pub max_fee_per_gas: u64,
     pub transaction_timeout_seconds: u64,
+    
+    // Extended API settings
+    pub extended_api_url: String,
+    pub extended_api_key: Option<String>,
 }
 
 impl Config {
@@ -62,6 +66,11 @@ impl Config {
                 .unwrap_or_else(|_| "300".to_string()) // 5 minutes
                 .parse()
                 .context("Invalid TRANSACTION_TIMEOUT_SECONDS")?,
+            
+            // Extended API settings
+            extended_api_url: env::var("EXTENDED_API_URL")
+                .unwrap_or_else(|_| "https://api.extended.finance".to_string()),
+            extended_api_key: env::var("EXTENDED_API_KEY").ok(),
         };
         
         info!("Configuration loaded successfully");
@@ -69,6 +78,7 @@ impl Config {
         info!("Kafka Brokers: {}", config.kafka_brokers);
         info!("Starknet RPC: {}", config.starknet_rpc_url);
         info!("SCDrip Contract: {}", config.scdrip_contract_address);
+        info!("Extended API URL: {}", config.extended_api_url);
         
         Ok(config)
     }

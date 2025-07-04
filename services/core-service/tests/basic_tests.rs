@@ -70,9 +70,9 @@ fn test_reward_summary_structure() {
 #[test]
 fn test_service_creation() {
     let tile_service = TileService::new();
-    let dispatcher = std::sync::Arc::new(core_service::game_engine::dispatcher::WebSocketEventDispatcher::new()) as std::sync::Arc<dyn core_service::infra::GameEventDispatcher>;
+    let dispatcher = std::sync::Arc::new(core_service::game_engine::dispatcher::WebSocketEventDispatcher::new(None).unwrap()) as std::sync::Arc<dyn core_service::infra::GameEventDispatcher>;
     let streak_service = StreakService::new(dispatcher.clone());
-    let pvp_service = PvPService::new();
+    let pvp_service = PvPService::new(dispatcher.clone());
     let reward_service = RewardService::new(dispatcher);
     
     // Just verify they can be created

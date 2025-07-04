@@ -424,6 +424,8 @@ impl Database {
                 created_at: row.get::<i64, _>("created_at") as u64,
                 ended_at: row.get::<Option<i64>, _>("ended_at").map(|t| t as u64),
                 rounds: Vec::new(),
+                xp_reward: 0,
+                streak_effect: false,
             };
             matches.push(match_record);
         }

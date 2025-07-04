@@ -12,8 +12,7 @@ part of 'reward_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$RewardState {
@@ -33,17 +32,15 @@ mixin _$RewardState {
 /// @nodoc
 abstract class $RewardStateCopyWith<$Res> {
   factory $RewardStateCopyWith(
-    RewardState value,
-    $Res Function(RewardState) then,
-  ) = _$RewardStateCopyWithImpl<$Res, RewardState>;
+          RewardState value, $Res Function(RewardState) then) =
+      _$RewardStateCopyWithImpl<$Res, RewardState>;
   @useResult
-  $Res call({
-    int xpGained,
-    String? nftName,
-    bool show,
-    DateTime? showTimestamp,
-    RewardType type,
-  });
+  $Res call(
+      {int xpGained,
+      String? nftName,
+      bool show,
+      DateTime? showTimestamp,
+      RewardType type});
 }
 
 /// @nodoc
@@ -67,31 +64,28 @@ class _$RewardStateCopyWithImpl<$Res, $Val extends RewardState>
     Object? showTimestamp = freezed,
     Object? type = null,
   }) {
-    return _then(
-      _value.copyWith(
-            xpGained: null == xpGained
-                ? _value.xpGained
-                : xpGained // ignore: cast_nullable_to_non_nullable
-                      as int,
-            nftName: freezed == nftName
-                ? _value.nftName
-                : nftName // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            show: null == show
-                ? _value.show
-                : show // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            showTimestamp: freezed == showTimestamp
-                ? _value.showTimestamp
-                : showTimestamp // ignore: cast_nullable_to_non_nullable
-                      as DateTime?,
-            type: null == type
-                ? _value.type
-                : type // ignore: cast_nullable_to_non_nullable
-                      as RewardType,
-          )
-          as $Val,
-    );
+    return _then(_value.copyWith(
+      xpGained: null == xpGained
+          ? _value.xpGained
+          : xpGained // ignore: cast_nullable_to_non_nullable
+              as int,
+      nftName: freezed == nftName
+          ? _value.nftName
+          : nftName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      show: null == show
+          ? _value.show
+          : show // ignore: cast_nullable_to_non_nullable
+              as bool,
+      showTimestamp: freezed == showTimestamp
+          ? _value.showTimestamp
+          : showTimestamp // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as RewardType,
+    ) as $Val);
   }
 }
 
@@ -99,18 +93,16 @@ class _$RewardStateCopyWithImpl<$Res, $Val extends RewardState>
 abstract class _$$RewardStateImplCopyWith<$Res>
     implements $RewardStateCopyWith<$Res> {
   factory _$$RewardStateImplCopyWith(
-    _$RewardStateImpl value,
-    $Res Function(_$RewardStateImpl) then,
-  ) = __$$RewardStateImplCopyWithImpl<$Res>;
+          _$RewardStateImpl value, $Res Function(_$RewardStateImpl) then) =
+      __$$RewardStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    int xpGained,
-    String? nftName,
-    bool show,
-    DateTime? showTimestamp,
-    RewardType type,
-  });
+  $Res call(
+      {int xpGained,
+      String? nftName,
+      bool show,
+      DateTime? showTimestamp,
+      RewardType type});
 }
 
 /// @nodoc
@@ -118,9 +110,8 @@ class __$$RewardStateImplCopyWithImpl<$Res>
     extends _$RewardStateCopyWithImpl<$Res, _$RewardStateImpl>
     implements _$$RewardStateImplCopyWith<$Res> {
   __$$RewardStateImplCopyWithImpl(
-    _$RewardStateImpl _value,
-    $Res Function(_$RewardStateImpl) _then,
-  ) : super(_value, _then);
+      _$RewardStateImpl _value, $Res Function(_$RewardStateImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of RewardState
   /// with the given fields replaced by the non-null parameter values.
@@ -133,43 +124,40 @@ class __$$RewardStateImplCopyWithImpl<$Res>
     Object? showTimestamp = freezed,
     Object? type = null,
   }) {
-    return _then(
-      _$RewardStateImpl(
-        xpGained: null == xpGained
-            ? _value.xpGained
-            : xpGained // ignore: cast_nullable_to_non_nullable
-                  as int,
-        nftName: freezed == nftName
-            ? _value.nftName
-            : nftName // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        show: null == show
-            ? _value.show
-            : show // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        showTimestamp: freezed == showTimestamp
-            ? _value.showTimestamp
-            : showTimestamp // ignore: cast_nullable_to_non_nullable
-                  as DateTime?,
-        type: null == type
-            ? _value.type
-            : type // ignore: cast_nullable_to_non_nullable
-                  as RewardType,
-      ),
-    );
+    return _then(_$RewardStateImpl(
+      xpGained: null == xpGained
+          ? _value.xpGained
+          : xpGained // ignore: cast_nullable_to_non_nullable
+              as int,
+      nftName: freezed == nftName
+          ? _value.nftName
+          : nftName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      show: null == show
+          ? _value.show
+          : show // ignore: cast_nullable_to_non_nullable
+              as bool,
+      showTimestamp: freezed == showTimestamp
+          ? _value.showTimestamp
+          : showTimestamp // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as RewardType,
+    ));
   }
 }
 
 /// @nodoc
 
 class _$RewardStateImpl implements _RewardState {
-  const _$RewardStateImpl({
-    this.xpGained = 0,
-    this.nftName = null,
-    this.show = false,
-    this.showTimestamp = null,
-    this.type = RewardType.none,
-  });
+  const _$RewardStateImpl(
+      {this.xpGained = 0,
+      this.nftName = null,
+      this.show = false,
+      this.showTimestamp = null,
+      this.type = RewardType.none});
 
   @override
   @JsonKey()
@@ -220,13 +208,12 @@ class _$RewardStateImpl implements _RewardState {
 }
 
 abstract class _RewardState implements RewardState {
-  const factory _RewardState({
-    final int xpGained,
-    final String? nftName,
-    final bool show,
-    final DateTime? showTimestamp,
-    final RewardType type,
-  }) = _$RewardStateImpl;
+  const factory _RewardState(
+      {final int xpGained,
+      final String? nftName,
+      final bool show,
+      final DateTime? showTimestamp,
+      final RewardType type}) = _$RewardStateImpl;
 
   @override
   int get xpGained;

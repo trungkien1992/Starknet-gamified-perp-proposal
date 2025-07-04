@@ -46,7 +46,7 @@ class WalletNotifier extends StateNotifier<WalletState> {
 
     try {
       final tradingService = ref.read(extendedTradingServiceProvider);
-      final selectedMarket = market ?? ref.read(selectedMarketProvider);
+      final selectedMarket = market ?? ref.read(selectedMarketProvider) ?? 'ETH-USD';
       
       // Calculate position size based on leverage (simplified for demo)
       final baseQuantity = leverage * 0.01; // Adjust based on account size

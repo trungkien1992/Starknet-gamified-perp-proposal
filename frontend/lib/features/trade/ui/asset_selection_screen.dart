@@ -322,47 +322,6 @@ class _AssetSelectionScreenState extends ConsumerState<AssetSelectionScreen>
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
-                                            // Asset Icon
-                                            AnimatedContainer(
-                                              duration: const Duration(
-                                                milliseconds: 300,
-                                              ),
-                                              width: isSelected ? 90 : 80,
-                                              height: isSelected ? 90 : 80,
-                                              decoration: BoxDecoration(
-                                                color: asset['color']
-                                                    .withValues(
-                                                      alpha: isSelected
-                                                          ? 0.3
-                                                          : 0.2,
-                                                    ),
-                                                shape: BoxShape.circle,
-                                                border: Border.all(
-                                                  color: asset['color'],
-                                                  width: isSelected ? 3 : 2,
-                                                ),
-                                                boxShadow: isSelected
-                                                    ? [
-                                                        BoxShadow(
-                                                          color: asset['color']
-                                                              .withValues(
-                                                                alpha: 0.4,
-                                                              ),
-                                                          blurRadius: 20,
-                                                          spreadRadius: 3,
-                                                        ),
-                                                      ]
-                                                    : null,
-                                              ),
-                                              child: Icon(
-                                                asset['icon'],
-                                                size: isSelected ? 45 : 40,
-                                                color: asset['color'],
-                                              ),
-                                            ),
-
-                                            const SizedBox(height: 20),
-
                                             // Asset Symbol
                                             Text(
                                               asset['symbol'],

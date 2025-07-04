@@ -35,7 +35,14 @@ pub mod core {
 }
 
 use core::core_service_server::{CoreService as GrpcCoreService, CoreServiceServer};
-use core::{MovePlayerRequest, MovePlayerResponse, RollbackPvPSessionRequest, RollbackPvPSessionResponse};
+use core::{
+    MovePlayerRequest, MovePlayerResponse, 
+    RollbackPvPSessionRequest, RollbackPvPSessionResponse,
+    StartPvPMatchRequest, StartPvPMatchResponse,
+    ProcessPvPRoundRequest, ProcessPvPRoundResponse,
+    ResolvePvPOutcomeRequest, ResolvePvPOutcomeResponse,
+    PvPRoundResult, PvPResolution
+};
 
 // Define our service struct
 pub struct MyCoreService {
@@ -85,6 +92,70 @@ impl GrpcCoreService for MyCoreService {
         };
         Ok(Response::new(response))
     }
+
+    async fn start_pv_p_match(
+        &self,
+        request: Request<StartPvPMatchRequest>,
+    ) -> Result<Response<StartPvPMatchResponse>, Status> {
+        let req = request.into_inner();
+        info!("Received start_pv_p_match request: {:?}", req);
+        
+        // TODO: Implement PvP match start logic via game engine
+        let response = StartPvPMatchResponse {
+            success: true,
+            message: "PvP match started successfully".to_string(),
+            match_id: format!("match_{}_{}_{}", req.player1_id, req.player2_id, chrono::Utc::now().timestamp()),
+        };
+        Ok(Response::new(response))
+    }
+
+    async fn process_pv_p_round(
+        &self,
+        request: Request<ProcessPvPRoundRequest>,
+    ) -> Result<Response<ProcessPvPRoundResponse>, Status> {
+        let req = request.into_inner();
+        info!("Received process_pv_p_round request: {:?}", req);
+        
+        // TODO: Implement PvP round processing via game engine
+        let round_result = PvPRoundResult {
+            round_number: 1,
+            player1_damage: 25,
+            player2_damage: 15,
+            winner: req.player1_action.clone(), // Simplified logic for now
+        };
+        
+        let response = ProcessPvPRoundResponse {
+            success: true,
+            message: "PvP round processed successfully".to_string(),
+            round_result: Some(round_result),
+        };
+        Ok(Response::new(response))
+    }
+
+    async fn resolve_pv_p_outcome(
+        &self,
+        request: Request<ResolvePvPOutcomeRequest>,
+    ) -> Result<Response<ResolvePvPOutcomeResponse>, Status> {
+        let req = request.into_inner();
+        info!("Received resolve_pv_p_outcome request: {:?}", req);
+        
+        // TODO: Implement PvP outcome resolution via game engine
+        let resolution = PvPResolution {
+            winner: "player1".to_string(),
+            loser: "player2".to_string(),
+            xp_gained: 150,
+            xp_lost: 50,
+            streak_broken: false,
+            badge_earned: "First Victory".to_string(),
+        };
+        
+        let response = ResolvePvPOutcomeResponse {
+            success: true,
+            message: "PvP outcome resolved successfully".to_string(),
+            resolution: Some(resolution),
+        };
+        Ok(Response::new(response))
+    }
 }
 
 impl MyCoreService {
@@ -126,7 +197,7 @@ impl MyCoreService {
         info!("[MyCoreService::new] Initializing game logic services");
         let conquest = TileService::new();
         let streaks = StreakService::new(composite_dispatcher.clone());
-        let pvp = PvPService::new();
+        let pvp = PvPService::new(composite_dispatcher.clone());
         let rewards = RewardService::new(composite_dispatcher.clone());
         let game = Arc::new(GameEngine::new(
             composite_dispatcher.clone(),

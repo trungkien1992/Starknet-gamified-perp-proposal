@@ -1,21 +1,50 @@
 PODS:
   - audioplayers_darwin (0.0.1):
     - Flutter
+  - BigInt (5.2.0)
   - connectivity_plus (0.0.1):
     - Flutter
+  - curvelib.swift (2.0.0)
   - Flutter (1.0.0)
+  - flutter_secure_storage (6.0.0):
+    - Flutter
+  - KeychainSwift (20.0.0)
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
   - share_plus (0.0.1):
     - Flutter
+  - TorusSessionManager (6.0.2):
+    - curvelib.swift (~> 2.0.0)
+    - KeychainSwift (~> 20.0.0)
+  - url_launcher_ios (0.0.1):
+    - Flutter
+  - Web3Auth (11.1.0):
+    - BigInt (~> 5.2.0)
+    - curvelib.swift (~> 2.0.0)
+    - KeychainSwift (~> 20.0.0)
+    - TorusSessionManager (~> 6.0.2)
+  - web3auth_flutter (2.0.1):
+    - Flutter
+    - Web3Auth (~> 11.1.0)
 
 DEPENDENCIES:
   - audioplayers_darwin (from `.symlinks/plugins/audioplayers_darwin/ios`)
   - connectivity_plus (from `.symlinks/plugins/connectivity_plus/ios`)
   - Flutter (from `Flutter`)
+  - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
+  - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
+  - web3auth_flutter (from `.symlinks/plugins/web3auth_flutter/ios`)
+
+SPEC REPOS:
+  trunk:
+    - BigInt
+    - curvelib.swift
+    - KeychainSwift
+    - TorusSessionManager
+    - Web3Auth
 
 EXTERNAL SOURCES:
   audioplayers_darwin:
@@ -24,18 +53,32 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/connectivity_plus/ios"
   Flutter:
     :path: Flutter
+  flutter_secure_storage:
+    :path: ".symlinks/plugins/flutter_secure_storage/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
   share_plus:
     :path: ".symlinks/plugins/share_plus/ios"
+  url_launcher_ios:
+    :path: ".symlinks/plugins/url_launcher_ios/ios"
+  web3auth_flutter:
+    :path: ".symlinks/plugins/web3auth_flutter/ios"
 
 SPEC CHECKSUMS:
   audioplayers_darwin: ccf9c770ee768abb07e26d90af093f7bab1c12ab
+  BigInt: f668a80089607f521586bbe29513d708491ef2f7
   connectivity_plus: cb623214f4e1f6ef8fe7403d580fdad517d2f7dd
+  curvelib.swift: b9223e5cac801effed8a5fe8968e952b3fe427a5
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  flutter_secure_storage: 1ed9476fba7e7a782b22888f956cce43e2c62f13
+  KeychainSwift: 0ce6a4d13f7228054d1a71bb1b500448fb2ab837
   path_provider_foundation: 080d55be775b7414fd5a5ef3ac137b97b097e564
   share_plus: de6030e33b4e106470e09322d87cf2a4258d2d1d
+  TorusSessionManager: 3c47c2a4c4d6173a10006eb0af4b86317ee45ff8
+  url_launcher_ios: 694010445543906933d732453a59da0a173ae33d
+  Web3Auth: fa82260fa6dacdcf647b333d85a923530d045051
+  web3auth_flutter: ecf03bfbcb9ebf1ed8edb24642b5dac6d6b6a980
 
-PODFILE CHECKSUM: 4305caec6b40dde0ae97be1573c53de1882a07e5
+PODFILE CHECKSUM: 6c01055ff966e40e8862373e66668a0fbf0b7ba8
 
 COCOAPODS: 1.16.2

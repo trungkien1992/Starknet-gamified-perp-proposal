@@ -12,8 +12,7 @@ part of 'game_events_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$GameEventsState {
@@ -33,17 +32,15 @@ mixin _$GameEventsState {
 /// @nodoc
 abstract class $GameEventsStateCopyWith<$Res> {
   factory $GameEventsStateCopyWith(
-    GameEventsState value,
-    $Res Function(GameEventsState) then,
-  ) = _$GameEventsStateCopyWithImpl<$Res, GameEventsState>;
+          GameEventsState value, $Res Function(GameEventsState) then) =
+      _$GameEventsStateCopyWithImpl<$Res, GameEventsState>;
   @useResult
-  $Res call({
-    List<GameEvent> recentEvents,
-    bool isConnected,
-    String? lastError,
-    DateTime? lastEventTime,
-    int totalEventsReceived,
-  });
+  $Res call(
+      {List<GameEvent> recentEvents,
+      bool isConnected,
+      String? lastError,
+      DateTime? lastEventTime,
+      int totalEventsReceived});
 }
 
 /// @nodoc
@@ -67,50 +64,45 @@ class _$GameEventsStateCopyWithImpl<$Res, $Val extends GameEventsState>
     Object? lastEventTime = freezed,
     Object? totalEventsReceived = null,
   }) {
-    return _then(
-      _value.copyWith(
-            recentEvents: null == recentEvents
-                ? _value.recentEvents
-                : recentEvents // ignore: cast_nullable_to_non_nullable
-                      as List<GameEvent>,
-            isConnected: null == isConnected
-                ? _value.isConnected
-                : isConnected // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            lastError: freezed == lastError
-                ? _value.lastError
-                : lastError // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            lastEventTime: freezed == lastEventTime
-                ? _value.lastEventTime
-                : lastEventTime // ignore: cast_nullable_to_non_nullable
-                      as DateTime?,
-            totalEventsReceived: null == totalEventsReceived
-                ? _value.totalEventsReceived
-                : totalEventsReceived // ignore: cast_nullable_to_non_nullable
-                      as int,
-          )
-          as $Val,
-    );
+    return _then(_value.copyWith(
+      recentEvents: null == recentEvents
+          ? _value.recentEvents
+          : recentEvents // ignore: cast_nullable_to_non_nullable
+              as List<GameEvent>,
+      isConnected: null == isConnected
+          ? _value.isConnected
+          : isConnected // ignore: cast_nullable_to_non_nullable
+              as bool,
+      lastError: freezed == lastError
+          ? _value.lastError
+          : lastError // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lastEventTime: freezed == lastEventTime
+          ? _value.lastEventTime
+          : lastEventTime // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      totalEventsReceived: null == totalEventsReceived
+          ? _value.totalEventsReceived
+          : totalEventsReceived // ignore: cast_nullable_to_non_nullable
+              as int,
+    ) as $Val);
   }
 }
 
 /// @nodoc
 abstract class _$$GameEventsStateImplCopyWith<$Res>
     implements $GameEventsStateCopyWith<$Res> {
-  factory _$$GameEventsStateImplCopyWith(
-    _$GameEventsStateImpl value,
-    $Res Function(_$GameEventsStateImpl) then,
-  ) = __$$GameEventsStateImplCopyWithImpl<$Res>;
+  factory _$$GameEventsStateImplCopyWith(_$GameEventsStateImpl value,
+          $Res Function(_$GameEventsStateImpl) then) =
+      __$$GameEventsStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    List<GameEvent> recentEvents,
-    bool isConnected,
-    String? lastError,
-    DateTime? lastEventTime,
-    int totalEventsReceived,
-  });
+  $Res call(
+      {List<GameEvent> recentEvents,
+      bool isConnected,
+      String? lastError,
+      DateTime? lastEventTime,
+      int totalEventsReceived});
 }
 
 /// @nodoc
@@ -118,9 +110,8 @@ class __$$GameEventsStateImplCopyWithImpl<$Res>
     extends _$GameEventsStateCopyWithImpl<$Res, _$GameEventsStateImpl>
     implements _$$GameEventsStateImplCopyWith<$Res> {
   __$$GameEventsStateImplCopyWithImpl(
-    _$GameEventsStateImpl _value,
-    $Res Function(_$GameEventsStateImpl) _then,
-  ) : super(_value, _then);
+      _$GameEventsStateImpl _value, $Res Function(_$GameEventsStateImpl) _then)
+      : super(_value, _then);
 
   /// Create a copy of GameEventsState
   /// with the given fields replaced by the non-null parameter values.
@@ -133,43 +124,41 @@ class __$$GameEventsStateImplCopyWithImpl<$Res>
     Object? lastEventTime = freezed,
     Object? totalEventsReceived = null,
   }) {
-    return _then(
-      _$GameEventsStateImpl(
-        recentEvents: null == recentEvents
-            ? _value._recentEvents
-            : recentEvents // ignore: cast_nullable_to_non_nullable
-                  as List<GameEvent>,
-        isConnected: null == isConnected
-            ? _value.isConnected
-            : isConnected // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        lastError: freezed == lastError
-            ? _value.lastError
-            : lastError // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        lastEventTime: freezed == lastEventTime
-            ? _value.lastEventTime
-            : lastEventTime // ignore: cast_nullable_to_non_nullable
-                  as DateTime?,
-        totalEventsReceived: null == totalEventsReceived
-            ? _value.totalEventsReceived
-            : totalEventsReceived // ignore: cast_nullable_to_non_nullable
-                  as int,
-      ),
-    );
+    return _then(_$GameEventsStateImpl(
+      recentEvents: null == recentEvents
+          ? _value._recentEvents
+          : recentEvents // ignore: cast_nullable_to_non_nullable
+              as List<GameEvent>,
+      isConnected: null == isConnected
+          ? _value.isConnected
+          : isConnected // ignore: cast_nullable_to_non_nullable
+              as bool,
+      lastError: freezed == lastError
+          ? _value.lastError
+          : lastError // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lastEventTime: freezed == lastEventTime
+          ? _value.lastEventTime
+          : lastEventTime // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      totalEventsReceived: null == totalEventsReceived
+          ? _value.totalEventsReceived
+          : totalEventsReceived // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
   }
 }
 
 /// @nodoc
 
 class _$GameEventsStateImpl implements _GameEventsState {
-  const _$GameEventsStateImpl({
-    final List<GameEvent> recentEvents = const [],
-    this.isConnected = false,
-    this.lastError = null,
-    this.lastEventTime = null,
-    this.totalEventsReceived = 0,
-  }) : _recentEvents = recentEvents;
+  const _$GameEventsStateImpl(
+      {final List<GameEvent> recentEvents = const [],
+      this.isConnected = false,
+      this.lastError = null,
+      this.lastEventTime = null,
+      this.totalEventsReceived = 0})
+      : _recentEvents = recentEvents;
 
   final List<GameEvent> _recentEvents;
   @override
@@ -203,10 +192,8 @@ class _$GameEventsStateImpl implements _GameEventsState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$GameEventsStateImpl &&
-            const DeepCollectionEquality().equals(
-              other._recentEvents,
-              _recentEvents,
-            ) &&
+            const DeepCollectionEquality()
+                .equals(other._recentEvents, _recentEvents) &&
             (identical(other.isConnected, isConnected) ||
                 other.isConnected == isConnected) &&
             (identical(other.lastError, lastError) ||
@@ -219,13 +206,12 @@ class _$GameEventsStateImpl implements _GameEventsState {
 
   @override
   int get hashCode => Object.hash(
-    runtimeType,
-    const DeepCollectionEquality().hash(_recentEvents),
-    isConnected,
-    lastError,
-    lastEventTime,
-    totalEventsReceived,
-  );
+      runtimeType,
+      const DeepCollectionEquality().hash(_recentEvents),
+      isConnected,
+      lastError,
+      lastEventTime,
+      totalEventsReceived);
 
   /// Create a copy of GameEventsState
   /// with the given fields replaced by the non-null parameter values.
@@ -234,19 +220,16 @@ class _$GameEventsStateImpl implements _GameEventsState {
   @pragma('vm:prefer-inline')
   _$$GameEventsStateImplCopyWith<_$GameEventsStateImpl> get copyWith =>
       __$$GameEventsStateImplCopyWithImpl<_$GameEventsStateImpl>(
-        this,
-        _$identity,
-      );
+          this, _$identity);
 }
 
 abstract class _GameEventsState implements GameEventsState {
-  const factory _GameEventsState({
-    final List<GameEvent> recentEvents,
-    final bool isConnected,
-    final String? lastError,
-    final DateTime? lastEventTime,
-    final int totalEventsReceived,
-  }) = _$GameEventsStateImpl;
+  const factory _GameEventsState(
+      {final List<GameEvent> recentEvents,
+      final bool isConnected,
+      final String? lastError,
+      final DateTime? lastEventTime,
+      final int totalEventsReceived}) = _$GameEventsStateImpl;
 
   @override
   List<GameEvent> get recentEvents;

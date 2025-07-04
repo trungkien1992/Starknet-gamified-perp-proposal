@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import '../../features/trade/ui/trade_arena_screen.dart';
 import '../../features/trade/ui/asset_selection_screen.dart';
 import '../../features/trade/widgets/brand_symbol.dart';
+import '../../features/wallet/ui/onboarding_screen.dart';
+import '../../features/wallet/ui/wallet_connection_screen.dart';
+import '../../features/wallet/providers/wallet_providers.dart';
 import '../theme/street_cred_design_system.dart';
 import '../widgets/street_cred_card.dart';
 import '../widgets/street_cred_button.dart' as scb;
 import '../widgets/street_cred_header.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../features/trade/providers/wallet_provider.dart';
+import '../../features/trade/providers/wallet_provider.dart' as legacy;
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -62,8 +65,8 @@ class _TutorialScreenState extends ConsumerState<TutorialScreen>
 
   @override
   Widget build(BuildContext context) {
-    final walletState = ref.watch(walletProvider);
-    final isLoading = ref.watch(walletLoadingProvider);
+    final walletState = ref.watch(legacy.walletProvider);
+    final isLoading = ref.watch(legacy.walletLoadingProvider);
 
     // Auto-redirect to asset selection if wallet is connected
     if (walletState.isConnected) {
@@ -82,121 +85,112 @@ class _TutorialScreenState extends ConsumerState<TutorialScreen>
             padding: const EdgeInsets.all(StreetCredDesignSystem.spacingXL),
             child: Column(
               children: [
-                const SizedBox(height: 40),
+                const SizedBox(height: 16),
 
                 // Brand header card
                 StreetCredCard(
                   themeColor: themeColor,
-                  size: CardSize.large,
+                  size: CardSize.medium,
                   isSelected: true,
                   enablePressEffect: false,
                   child: Column(
                     children: [
-                      BrandSymbol(size: 100, animated: true),
-                      const SizedBox(height: StreetCredDesignSystem.spacingL),
                       Text(
                         'STREETCRED\nCLASH',
                         textAlign: TextAlign.center,
                         style: StreetCredDesignSystem.titleStyle(
                           Colors.white,
-                        ).copyWith(fontSize: 32, letterSpacing: 3),
+                        ).copyWith(fontSize: 24, letterSpacing: 2),
                       ),
                     ],
                   ),
                 ),
 
-                const SizedBox(height: StreetCredDesignSystem.spacingXXL),
+                const SizedBox(height: StreetCredDesignSystem.spacingL),
 
                 // Subtitle
                 Text(
-                  'Turn Trading Into Art',
+                  'Street Art Meets DeFi',
                   textAlign: TextAlign.center,
                   style: StreetCredDesignSystem.subtitleStyle(
                     const Color(0xFF00FFFF),
-                  ),
+                  ).copyWith(fontSize: 16),
                 ),
-                const SizedBox(height: StreetCredDesignSystem.spacingS),
-                RichText(
+                const SizedBox(height: StreetCredDesignSystem.spacingXS),
+                Text(
+                  'Tag walls • Earn street cred • Battle crews',
                   textAlign: TextAlign.center,
-                  text: TextSpan(
-                    style: StreetCredDesignSystem.bodyStyle(),
-                    children: [
-                      TextSpan(text: 'Spray paint your '),
-                      TextSpan(
-                        text: 'trades',
-                        style: TextStyle(
-                          color: const Color(0xFF00FF41),
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      TextSpan(text: ' • Earn '),
-                      TextSpan(
-                        text: 'XP',
-                        style: TextStyle(
-                          color: const Color(0xFFFFFF00),
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      TextSpan(text: ' • Battle '),
-                      TextSpan(
-                        text: 'friends',
-                        style: TextStyle(
-                          color: themeColor,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ],
-                  ),
+                  style: StreetCredDesignSystem.bodyStyle().copyWith(fontSize: 13),
                 ),
 
-                const SizedBox(height: StreetCredDesignSystem.spacingXXL * 1.5),
+                const SizedBox(height: StreetCredDesignSystem.spacingL),
 
                 // How to Play card
                 StreetCredCard(
                   themeColor: const Color(0xFF00FFFF),
-                  size: CardSize.medium,
+                  size: CardSize.small,
                   isSelected: false,
                   enablePressEffect: false,
                   child: Column(
                     children: [
                       Text(
-                        'HOW TO PLAY',
+                        'THE STREETS',
                         style: StreetCredDesignSystem.titleStyle(
                           const Color(0xFF00FFFF),
-                        ).copyWith(fontSize: 16),
+                        ).copyWith(fontSize: 14),
                       ),
-                      const SizedBox(height: StreetCredDesignSystem.spacingM),
-                      _buildCompactFeature('🎨', 'Swipe to spray paint trades'),
-                      _buildCompactFeature(
-                        '⚡',
-                        'Build combos & climb leaderboards',
-                      ),
-                      _buildCompactFeature(
-                        '🏆',
-                        'Unlock rare NFT collectibles',
-                      ),
-                      _buildCompactFeature(
-                        '🎮',
-                        'Challenge friends in PvP duels',
-                      ),
+                      const SizedBox(height: StreetCredDesignSystem.spacingS),
+                      _buildFeature('Tag trades on walls'),
+                      _buildFeature('Build street cred'),
+                      _buildFeature('Earn graffiti NFTs'),
+                      _buildFeature('Battle rival crews'),
                     ],
                   ),
                 ),
 
-                const SizedBox(height: StreetCredDesignSystem.spacingXXL),
+                const SizedBox(height: StreetCredDesignSystem.spacingXL),
 
-                // Demo mode button
+                // Main action button
                 scb.StreetCredButton(
-                  text: 'TRY DEMO MODE',
+                  text: 'JOIN THE CREW',
+                  themeColor: const Color(0xFF00FF41),
+                  style: scb.ButtonStyle.primary,
+                  width: double.infinity,
+                  height: 56,
+                  onPressed: () => context.go('/onboarding'),
+                ),
+
+                const SizedBox(height: StreetCredDesignSystem.spacingM),
+
+                // Quick connect button
+                scb.StreetCredButton(
+                  text: isLoading
+                      ? 'Hitting the streets...'
+                      : 'QUICK CONNECT',
                   themeColor: const Color(0xFF00FFFF),
                   style: scb.ButtonStyle.secondary,
                   width: double.infinity,
-                  height: 48,
+                  height: 44,
+                  isLoading: isLoading,
+                  onPressed: isLoading
+                      ? null
+                      : () => context.go('/wallet-connect'),
+                ),
+
+                const SizedBox(height: StreetCredDesignSystem.spacingM),
+
+                // Practice mode button
+                scb.StreetCredButton(
+                  text: 'PRACTICE MODE',
+                  themeColor: const Color(0xFF888888),
+                  style: scb.ButtonStyle.secondary,
+                  width: double.infinity,
+                  height: 40,
                   onPressed: () {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
-                          '🎮 Demo mode coming soon! Connect wallet to play now.',
+                          '🎮 Practice mode coming soon!',
                         ),
                         backgroundColor: const Color(0xFF2A2A2A),
                         behavior: SnackBarBehavior.floating,
@@ -207,61 +201,13 @@ class _TutorialScreenState extends ConsumerState<TutorialScreen>
 
                 const SizedBox(height: StreetCredDesignSystem.spacingL),
 
-                // Connect wallet button
-                scb.StreetCredButton(
-                  text: isLoading
-                      ? 'Connecting to Starknet...'
-                      : 'CONNECT WALLET TO PLAY',
-                  themeColor: const Color(0xFF00FF41),
-                  style: scb.ButtonStyle.primary,
-                  width: double.infinity,
-                  height: 60,
-                  isLoading: isLoading,
-                  leadingIcon: isLoading ? null : Icons.account_balance_wallet,
-                  onPressed: isLoading
-                      ? null
-                      : () async {
-                          try {
-                            await ref.read(walletProvider.notifier).connect();
-                            // Show success message
-                            if (context.mounted) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    '🎉 Connected to Katana Starknet!',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  backgroundColor: const Color(0xFF00FF41),
-                                  duration: const Duration(seconds: 2),
-                                ),
-                              );
-                            }
-                          } catch (e) {
-                            // Show error message
-                            if (context.mounted) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text('❌ Connection failed: $e'),
-                                  backgroundColor: Colors.red,
-                                ),
-                              );
-                            }
-                          }
-                        },
-                ),
-
-                const SizedBox(height: StreetCredDesignSystem.spacingXL),
-
                 // Footer with Starknet branding
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       'Powered by ',
-                      style: StreetCredDesignSystem.captionStyle(),
+                      style: StreetCredDesignSystem.captionStyle().copyWith(fontSize: 10),
                     ),
                     GestureDetector(
                       onTap: () async {
@@ -277,8 +223,8 @@ class _TutorialScreenState extends ConsumerState<TutorialScreen>
                       },
                       child: Container(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: StreetCredDesignSystem.spacingS,
-                          vertical: StreetCredDesignSystem.spacingXS,
+                          horizontal: 6,
+                          vertical: 2,
                         ),
                         decoration:
                             StreetCredDesignSystem.secondaryCardDecoration(
@@ -287,22 +233,18 @@ class _TutorialScreenState extends ConsumerState<TutorialScreen>
                         child: Text(
                           'STARKNET',
                           style: GoogleFonts.workSans(
-                            fontSize: 9,
+                            fontSize: 8,
                             color: const Color(0xFF8C8DFC),
                             fontWeight: FontWeight.w700,
-                            letterSpacing: 1.2,
+                            letterSpacing: 1.0,
                           ),
                         ),
                       ),
                     ),
-                    Text(
-                      ' • Fast, Low-Cost Trades',
-                      style: StreetCredDesignSystem.captionStyle(),
-                    ),
                   ],
                 ),
 
-                const SizedBox(height: StreetCredDesignSystem.spacingXXL),
+                const SizedBox(height: StreetCredDesignSystem.spacingL),
               ],
             ),
           ),
@@ -311,35 +253,12 @@ class _TutorialScreenState extends ConsumerState<TutorialScreen>
     );
   }
 
-  Widget _buildFeature(String emoji, String title, [String? description]) {
+  Widget _buildFeature(String title, [String? description]) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 44,
-            height: 44,
-            decoration: BoxDecoration(
-              color: const Color(0xFF2A2A2A),
-              borderRadius: BorderRadius.circular(22),
-              border: Border.all(
-                color: const Color(0xFF00FFFF).withOpacity(0.4),
-                width: 1.5,
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: const Color(0xFF00FFFF).withOpacity(0.2),
-                  blurRadius: 8,
-                  spreadRadius: 1,
-                ),
-              ],
-            ),
-            child: Center(
-              child: Text(emoji, style: const TextStyle(fontSize: 22)),
-            ),
-          ),
-          const SizedBox(width: 16),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -371,27 +290,11 @@ class _TutorialScreenState extends ConsumerState<TutorialScreen>
     );
   }
 
-  Widget _buildCompactFeature(String emoji, String text) {
+  Widget _buildCompactFeature(String text) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
         children: [
-          Container(
-            width: 32,
-            height: 32,
-            decoration: BoxDecoration(
-              color: const Color(0xFF2A2A2A),
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(
-                color: const Color(0xFF00FFFF).withOpacity(0.3),
-                width: 1,
-              ),
-            ),
-            child: Center(
-              child: Text(emoji, style: const TextStyle(fontSize: 16)),
-            ),
-          ),
-          const SizedBox(width: 12),
           Expanded(
             child: Text(
               text,
@@ -701,13 +604,34 @@ final GoRouter appRouter = GoRouter(
   refreshListenable: routerRefreshNotifier,
   redirect: (context, state) {
     final container = ProviderScope.containerOf(context, listen: false);
-    final wallet = container.read(walletProvider);
-    final isLoggedIn = wallet.isConnected;
+    
+    // Check new wallet auth state
+    final walletAuth = container.read(walletAuthProvider);
+    final isWalletConnected = walletAuth.isAuthenticated && 
+                             walletAuth.wallet != null && 
+                             !walletAuth.isLoading;
+    
+    // Check legacy wallet state for backward compatibility
+    final legacyWallet = container.read(legacy.walletProvider);
+    final isLegacyConnected = legacyWallet.isConnected;
+    
+    final isLoggedIn = isWalletConnected || isLegacyConnected;
     final path = state.uri.toString();
-    final isOnPublic = path == '/' || path == '/tutorial';
+    
+    // Public routes that don't require authentication
+    final publicRoutes = ['/', '/tutorial', '/onboarding', '/wallet-connect'];
+    final isOnPublic = publicRoutes.contains(path);
+    
+    // Check if user has completed onboarding
+    if (isWalletConnected && path == '/') {
+      // If fully connected, go to assets
+      return '/assets';
+    }
+    
     if (!isLoggedIn && !isOnPublic) {
       return '/';
     }
+    
     return null;
   },
   routes: [
@@ -715,6 +639,14 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/tutorial',
       builder: (context, state) => const TutorialScreen(),
+    ),
+    GoRoute(
+      path: '/onboarding',
+      builder: (context, state) => const OnboardingScreen(),
+    ),
+    GoRoute(
+      path: '/wallet-connect',
+      builder: (context, state) => const WalletConnectionScreen(),
     ),
     GoRoute(
       path: '/assets',

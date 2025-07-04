@@ -6,4 +6,5 @@ pub mod rewards;
 pub mod streak;
 pub mod pvp;
 pub mod dispatcher;
-pub mod scheduler; 
+pub mod scheduler;
+pub mod trades; 

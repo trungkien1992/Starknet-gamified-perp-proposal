@@ -3,7 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'theme/street_cred_theme.dart';
 import 'routing/app_router.dart';
 import 'package:go_router/go_router.dart';
-import 'package:frontend/features/trade/providers/wallet_provider.dart';
+import 'package:frontend/features/trade/providers/wallet_provider.dart' as legacy;
+import 'package:frontend/features/wallet/providers/wallet_providers.dart';
 
 void main() {
   runApp(
@@ -22,7 +23,8 @@ class _WalletRefreshObserver extends ProviderObserver {
     Object? newValue,
     ProviderContainer container,
   ) {
-    if (provider == walletProvider) {
+    // Refresh router when wallet state changes
+    if (provider == legacy.walletProvider || provider == walletAuthProvider) {
       routerRefreshNotifier.value++;
     }
     super.didUpdateProvider(provider, previousValue, newValue, container);
