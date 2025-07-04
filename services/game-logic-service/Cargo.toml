@@ -1,0 +1,51 @@
+[package]
+name = "game-logic-service"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# Async runtime
+tokio = { version = "1.0", features = ["full"] }
+
+# Kafka client (librdkafka wrapper)
+rdkafka = { version = "0.36", features = ["cmake-build"] }
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Time utilities
+chrono = { version = "0.4", features = ["serde"] }
+
+# Logging and Tracing
+tracing = "0.1"
+tracing-subscriber = "0.3"
+
+# Configuration management
+config = "0.14"
+dotenv = "0.15"
+
+# URL parsing
+url = "2.5"
+
+# Starknet integration - aligned with core-service versions
+starknet-core = "0.14"
+starknet-providers = "0.14"
+starknet-accounts = "0.14"
+starknet-contract = "0.14.0"
+starknet-signers = "0.12"
+
+# Crypto and utilities
+hex = "0.4"
+anyhow = "1.0"
+
+# HTTP client for connectivity tests
+reqwest = { version = "0.12", features = ["json"] }
+
+# Random number generation for tests
+rand = "0.8"
+
+[dev-dependencies]
+# Testing utilities
+tokio-test = "0.4"
+mockall = "0.12" 

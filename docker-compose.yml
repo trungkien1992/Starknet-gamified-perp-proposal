@@ -1,0 +1,157 @@
+version: '3.8'
+
+services:
+  # Rust Core Service (Linux x86_64 environment)
+  core-service:
+    build:
+      context: .
+      dockerfile: ./services/core-service/Dockerfile
+    container_name: starknet-core-service
+    platform: linux/amd64
+    environment:
+      - RUST_LOG=info
+      - KAFKA_BROKERS=kafka:9092
+      - STARKNET_RPC_URL=http://katana:5050
+    ports:
+      - "50051:50051"  # gRPC port
+    depends_on:
+      - kafka
+      - katana
+    command: ["/usr/local/bin/core-service"]
+    networks:
+      - starknet-network
+
+  # Game Logic Service (NFT Minting Service)
+  game-logic-service:
+    build:
+      context: .
+      dockerfile: ./services/game-logic-service/Dockerfile
+    container_name: starknet-game-logic-service
+    platform: linux/amd64
+    environment:
+      - RUST_LOG=info
+      - KAFKA_BROKERS=kafka:9092
+      - KAFKA_TOPIC=trade.closed
+      - KAFKA_GROUP_ID=game-logic-service
+      - STARKNET_RPC_URL=http://katana:5050
+      - STARKNET_CHAIN_ID=0x4b4154414e41
+      - STARKNET_ACCOUNT_ADDRESS=0x041a78e741e5af2fec34b695279bc44b2e1c3c09ad98ccd2412343e4f0eaa012
+      - STARKNET_PRIVATE_KEY=0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
+      - SCDRIP_CONTRACT_ADDRESS=0x041a78e741e5af2fec34b695279bc44b2e1c3c09ad98ccd2412343e4f0eaa012
+      - MINT_FUNCTION_SELECTOR=0x2f0b3f571981132d9017d9e4e6d4bb62948080a49d2f1b8e3cf62f4147559e47
+      - TRANSACTION_TIMEOUT_SECONDS=300
+    depends_on:
+      - kafka
+      - katana
+    command: ["/usr/local/bin/game-logic-service"]
+    networks:
+      - starknet-network
+
+  # API Gateway
+  api-gateway:
+    build:
+      context: ./services/api-gateway
+      dockerfile: Dockerfile
+    container_name: starknet-api-gateway
+    volumes:
+      - ./services/api-gateway:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - CORE_SERVICE_URL=core-service:50051
+    depends_on:
+      - core-service
+    networks:
+      - starknet-network
+
+  # Persistence Service
+  persistence-service:
+    build:
+      context: ./services/persistence-service
+      dockerfile: Dockerfile
+    container_name: starknet-persistence-service
+    volumes:
+      - ./services/persistence-service:/app
+    ports:
+      - "8001:8001"
+    environment:
+      - DATABASE_URL=postgresql://test:test@postgres:5432/test
+    depends_on:
+      - postgres
+    networks:
+      - starknet-network
+
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: test
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  # Kafka for event streaming
+  kafka:
+    image: confluentinc/cp-kafka:7.4.0
+    container_name: starknet-kafka
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+    ports:
+      - "9092:9092"
+      - "29092:29092"
+    depends_on:
+      - zookeeper
+    networks:
+      - starknet-network
+
+  # Zookeeper for Kafka
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.4.0
+    container_name: starknet-zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - starknet-network
+
+  # Katana (Starknet devnet)
+  katana:
+    image: ghcr.io/dojoengine/katana:latest
+    container_name: starknet-katana
+    ports:
+      - "5050:5050"
+      - "8080:8080"
+    environment:
+      - KATANA_RPC_PORT=5050
+      - KATANA_ADMIN_PORT=8080
+    networks:
+      - starknet-network
+
+  # Redis for caching (optional)
+  redis:
+    image: redis:7-alpine
+    container_name: starknet-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - starknet-network
+
+volumes:
+  postgres_data:
+  core-service-cargo-cache:
+  core-service-target-cache:
+  pgdata:
+
+networks:
+  starknet-network:
+    driver: bridge 

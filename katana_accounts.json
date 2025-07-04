@@ -1,0 +1,22 @@
+{
+  "accounts": [
+    {
+      "address": "0x4e545931e54504eead01ed39a56d335ee7ea73e25b2da764731f06e931b186d",
+      "private_key": "0x2924c4aef4cce4fa8ee440985808dc12fca9f8193c048c2ac53bf56976959b9",
+      "public_key": "0x2e622c066132e528dd4450b704b74e5a770f2e6f0cd9ef67db31e0dddb7827a"
+    },
+    {
+      "address": "0x68e47ce42bc19cce11a8a1c3f52dc3719ab500d4d624401e4b2ac28638e8a51",
+      "private_key": "0x548a54da43845d57a97154d81d2d1bf5a0e7908f53c989d134baae5727b5529",
+      "public_key": "0x128f724a12bafa45c4970b57ded1b222625b9ed5b0ace3cde4999d4a942f2a7"
+    },
+    {
+      "address": "0x7a19072c35c64ad0eb1f926ffc20bd71eb2fcd1bd016f734cd8b11c308ccc07",
+      "private_key": "0x5255121e2d21e93a08c8e98ba12f4c2b2026983bd658ed6535f7a2ba24d2815",
+      "public_key": "0x75650acce7edd97ba1e5073045e341ae50262338c3dc75921baa149f639d964"
+    }
+  ],
+  "seed": "0x1234567890abcdef",
+  "rpc_url": "http://localhost:5050",
+  "chain_id": "0x4b4154414e41"
+} 

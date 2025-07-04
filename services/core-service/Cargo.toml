@@ -1,0 +1,83 @@
+[package]
+name = "core-service"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# gRPC framework and utilities
+tonic = "0.9"
+prost = "0.11"
+
+# Async runtime
+tokio = { version = "1.0", features = ["full"] }
+
+# Kafka client (librdkafka wrapper)
+rdkafka = "0.32"
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Time utilities (Required for timestamps)
+chrono = { version = "0.4", features = ["serde"] }
+
+# Logging and Tracing
+tracing = "0.1"
+tracing-subscriber = "0.3"
+
+# URL parsing
+url = "2.5"
+
+# Starknet integration - aligned to latest available versions
+starknet-core = "0.14.0"
+starknet-providers = "0.14.1"
+starknet-accounts = "0.14.0"
+starknet-contract = "0.14.0"
+starknet-signers = "0.12.0"
+
+# Crypto and utilities
+hex = "0.4"
+anyhow = "1.0"
+
+# HTTP client for testing
+reqwest = { version = "0.11", features = ["json"] }
+
+# SQLx database client
+sqlx = { version = "0.7", features = ["runtime-tokio", "postgres", "uuid"] }
+
+# Futures and async traits
+futures = "0.3"
+async-trait = "0.1"
+
+# Error handling
+thiserror = "1.0"
+
+# Random number generation
+rand = "0.8"
+
+# UUID crate with v4 and serde features
+uuid = { version = "1", features = ["v4", "serde"] }
+
+# Redis crate with async support for Redis pub/sub event broadcasting
+redis = { version = "0.24", features = ["tokio-comp"] }
+
+# Constructor for initialization logging
+ctor = "0.2"
+
+# Dotenvy for loading .env files
+dotenvy = "0.15"
+
+[build-dependencies]
+# Required for compiling .proto files
+tonic-build = "0.9"
+
+[dev-dependencies]
+# Testing utilities
+dotenv = "0.15"
+
+[[bin]]
+name = "core-service"
+path = "src/main.rs"
+
+[patch.crates-io]
+size-of = { git = "https://github.com/trungkien1992/size-of.git", branch = "master" }

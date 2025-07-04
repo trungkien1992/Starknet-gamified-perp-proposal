@@ -1,0 +1,19 @@
+{
+  "name": "streetcred",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@9.0.0",
+  "workspaces": [
+    "frontend",
+    "services/*"
+  ],
+  "scripts": {
+    "db:migrate": "bash -c 'psql \"${DATABASE_URL?}\" -f scripts/migrate.sql'"
+  },
+  "devDependencies": {
+   "turbo": "^2.5.4"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

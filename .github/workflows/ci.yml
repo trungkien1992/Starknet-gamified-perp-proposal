@@ -1,0 +1,161 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  #This pull_request trigger is now more efficent. It will only run the
+  #workflow if changes are detected in the specified, relevant directories.
+  pull_request:
+    paths:
+      - 'proto/**'
+      - 'services/**'
+      - 'frontend/**'
+      - '.github/workflows/**'
+
+env:
+  # Standard environment variables for build tools.
+  TURBO_DISABLE_TELEMETRY: '1'
+  CARGO_TERM_COLOR: always
+
+jobs:
+  # Job 1: Lint and validate our Protobuf contracts first.
+  # This is a prerequisite for all other jobs.
+  lint-proto:
+    name: Lint Protobuf Contracts
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+      - name: Setup Buf
+        uses: bufbuild/buf-setup-action@f3b8162795f29906667280f37508a113522de140
+      - name: Run Buf Linter
+        uses: bufbuild/buf-lint-action@0e3a6693a7d2e33f3739a04a091416d8e62d47ce
+        with:
+          input: 'proto'
+
+  # Job 2: Build and test all backend services in parallel.
+  # This job will only run if the protobuf contracts are valid.
+  backend-ci:
+    name: Backend CI (${{ matrix.service }})
+    needs: lint-proto
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # Allows all jobs to finish even if one fails
+      matrix:
+        service: [api-gateway, core-service, persistence-service]
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+       # IMPROVEMENT: Caching is added to speed up subsequent builds by reusing
+      # downloaded dependencies. This step is for Rust/Cargo.
+      - name: Cache Cargo Dependencies
+        uses: actions/cache@13aacd865c20de90d75de3b17ebe84f7a17d57d2 # Pinned to v4.0.2
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            services/${{ matrix.service }}/target/
+          key: ${{ runner.os }}-cargo-${{ hashFiles('services/**/Cargo.lock') }}
+
+      # TODO: The following steps are placeholders. They will be replaced
+      # with actual build, lint, and test commands for Rust and Python
+      # as those services are implemented.
+      - name: Setup Rust/Python Environment
+        run: echo "Setting up environment for ${{ matrix.service }}"
+
+      - name: Run Build
+        run: echo "Building ${{ matrix.service }}..."
+        working-directory: ./services/${{ matrix.service }}
+
+      - name: Run Tests
+        run: echo "Testing ${{ matrix.service }}..."
+        working-directory: ./services/${{ matrix.service }}
+
+  # Job 3: Build and test the Flutter frontend.
+  # This job also depends on valid protobuf contracts.
+  frontend-ci:
+    name: Frontend CI
+    needs: lint-proto
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+      - name: Setup Flutter SDK
+        uses: subosito/flutter-action@48caf3909783a3746c18d962916b206785e34747
+        with:
+          channel: 'stable'
+          cache: true
+      - name: Get Flutter Dependencies
+        run: flutter pub get
+      - name: Run Flutter Analyzer
+        run: flutter analyze
+      - name: Run Flutter Widget Tests
+        # Use a virtual framebuffer to run UI tests on a headless runner.
+        run: xvfb-run --auto-servernum -- flutter test
+        continue-on-error: true # As per AGENTS.md
+
+  build-and-test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: starknet_db
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres" --health-interval 10s --health-timeout 5s --health-retries 5
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+      kafka:
+        image: confluentinc/cp-kafka:7.4.0
+        env:
+          KAFKA_BROKER_ID: 1
+          KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+          KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+          KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+          KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+          KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+          KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+        ports:
+          - 9092:9092
+          - 29092:29092
+        options: >-
+          --health-cmd "echo 'Kafka is up'" --health-interval 10s --health-timeout 5s --health-retries 5
+      zookeeper:
+        image: confluentinc/cp-zookeeper:7.4.0
+        env:
+          ZOOKEEPER_CLIENT_PORT: 2181
+          ZOOKEEPER_TICK_TIME: 2000
+        ports:
+          - 2181:2181
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Rust
+        uses: actions/setup-rust@v1
+        with:
+          rust-version: stable
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pkg-config libssl-dev libpq-dev build-essential protobuf-compiler
+
+      - name: Build core-service
+        working-directory: services/core-service
+        run: cargo build --release
+
+      - name: Run tests
+        working-directory: services/core-service
+        run: cargo test --all --release

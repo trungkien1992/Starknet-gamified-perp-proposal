@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en-US" class="starknet-ui-dark">
+<head>
+	<meta charset="UTF-8">
+	<script data-cfasync="false" data-no-defer="1" data-no-minify="1" data-no-optimize="1">var ewww_webp_supported=!1;function check_webp_feature(A,e){var w;e=void 0!==e?e:function(){},ewww_webp_supported?e(ewww_webp_supported):((w=new Image).onload=function(){ewww_webp_supported=0<w.width&&0<w.height,e&&e(ewww_webp_supported)},w.onerror=function(){e&&e(!1)},w.src="data:image/webp;base64,"+{alpha:"UklGRkoAAABXRUJQVlA4WAoAAAAQAAAAAAAAAAAAQUxQSAwAAAARBxAR/Q9ERP8DAABWUDggGAAAABQBAJ0BKgEAAQAAAP4AAA3AAP7mtQAAAA=="}[A])}check_webp_feature("alpha");</script><script data-cfasync="false" data-no-defer="1" data-no-minify="1" data-no-optimize="1">var Arrive=function(c,w){"use strict";if(c.MutationObserver&&"undefined"!=typeof HTMLElement){var r,a=0,u=(r=HTMLElement.prototype.matches||HTMLElement.prototype.webkitMatchesSelector||HTMLElement.prototype.mozMatchesSelector||HTMLElement.prototype.msMatchesSelector,{matchesSelector:function(e,t){return e instanceof HTMLElement&&r.call(e,t)},addMethod:function(e,t,r){var a=e[t];e[t]=function(){return r.length==arguments.length?r.apply(this,arguments):"function"==typeof a?a.apply(this,arguments):void 0}},callCallbacks:function(e,t){t&&t.options.onceOnly&&1==t.firedElems.length&&(e=[e[0]]);for(var r,a=0;r=e[a];a++)r&&r.callback&&r.callback.call(r.elem,r.elem);t&&t.options.onceOnly&&1==t.firedElems.length&&t.me.unbindEventWithSelectorAndCallback.call(t.target,t.selector,t.callback)},checkChildNodesRecursively:function(e,t,r,a){for(var i,n=0;i=e[n];n++)r(i,t,a)&&a.push({callback:t.callback,elem:i}),0<i.childNodes.length&&u.checkChildNodesRecursively(i.childNodes,t,r,a)},mergeArrays:function(e,t){var r,a={};for(r in e)e.hasOwnProperty(r)&&(a[r]=e[r]);for(r in t)t.hasOwnProperty(r)&&(a[r]=t[r]);return a},toElementsArray:function(e){return e=void 0!==e&&("number"!=typeof e.length||e===c)?[e]:e}}),e=(l.prototype.addEvent=function(e,t,r,a){a={target:e,selector:t,options:r,callback:a,firedElems:[]};return this._beforeAdding&&this._beforeAdding(a),this._eventsBucket.push(a),a},l.prototype.removeEvent=function(e){for(var t,r=this._eventsBucket.length-1;t=this._eventsBucket[r];r--)e(t)&&(this._beforeRemoving&&this._beforeRemoving(t),(t=this._eventsBucket.splice(r,1))&&t.length&&(t[0].callback=null))},l.prototype.beforeAdding=function(e){this._beforeAdding=e},l.prototype.beforeRemoving=function(e){this._beforeRemoving=e},l),t=function(i,n){var o=new e,l=this,s={fireOnAttributesModification:!1};return o.beforeAdding(function(t){var e=t.target;e!==c.document&&e!==c||(e=document.getElementsByTagName("html")[0]);var r=new MutationObserver(function(e){n.call(this,e,t)}),a=i(t.options);r.observe(e,a),t.observer=r,t.me=l}),o.beforeRemoving(function(e){e.observer.disconnect()}),this.bindEvent=function(e,t,r){t=u.mergeArrays(s,t);for(var a=u.toElementsArray(this),i=0;i<a.length;i++)o.addEvent(a[i],e,t,r)},this.unbindEvent=function(){var r=u.toElementsArray(this);o.removeEvent(function(e){for(var t=0;t<r.length;t++)if(this===w||e.target===r[t])return!0;return!1})},this.unbindEventWithSelectorOrCallback=function(r){var a=u.toElementsArray(this),i=r,e="function"==typeof r?function(e){for(var t=0;t<a.length;t++)if((this===w||e.target===a[t])&&e.callback===i)return!0;return!1}:function(e){for(var t=0;t<a.length;t++)if((this===w||e.target===a[t])&&e.selector===r)return!0;return!1};o.removeEvent(e)},this.unbindEventWithSelectorAndCallback=function(r,a){var i=u.toElementsArray(this);o.removeEvent(function(e){for(var t=0;t<i.length;t++)if((this===w||e.target===i[t])&&e.selector===r&&e.callback===a)return!0;return!1})},this},i=new function(){var s={fireOnAttributesModification:!1,onceOnly:!1,existing:!1};function n(e,t,r){return!(!u.matchesSelector(e,t.selector)||(e._id===w&&(e._id=a++),-1!=t.firedElems.indexOf(e._id)))&&(t.firedElems.push(e._id),!0)}var c=(i=new t(function(e){var t={attributes:!1,childList:!0,subtree:!0};return e.fireOnAttributesModification&&(t.attributes=!0),t},function(e,i){e.forEach(function(e){var t=e.addedNodes,r=e.target,a=[];null!==t&&0<t.length?u.checkChildNodesRecursively(t,i,n,a):"attributes"===e.type&&n(r,i)&&a.push({callback:i.callback,elem:r}),u.callCallbacks(a,i)})})).bindEvent;return i.bindEvent=function(e,t,r){t=void 0===r?(r=t,s):u.mergeArrays(s,t);var a=u.toElementsArray(this);if(t.existing){for(var i=[],n=0;n<a.length;n++)for(var o=a[n].querySelectorAll(e),l=0;l<o.length;l++)i.push({callback:r,elem:o[l]});if(t.onceOnly&&i.length)return r.call(i[0].elem,i[0].elem);setTimeout(u.callCallbacks,1,i)}c.call(this,e,t,r)},i},o=new function(){var a={};function i(e,t){return u.matchesSelector(e,t.selector)}var n=(o=new t(function(){return{childList:!0,subtree:!0}},function(e,r){e.forEach(function(e){var t=e.removedNodes,e=[];null!==t&&0<t.length&&u.checkChildNodesRecursively(t,r,i,e),u.callCallbacks(e,r)})})).bindEvent;return o.bindEvent=function(e,t,r){t=void 0===r?(r=t,a):u.mergeArrays(a,t),n.call(this,e,t,r)},o};d(HTMLElement.prototype),d(NodeList.prototype),d(HTMLCollection.prototype),d(HTMLDocument.prototype),d(Window.prototype);var n={};return s(i,n,"unbindAllArrive"),s(o,n,"unbindAllLeave"),n}function l(){this._eventsBucket=[],this._beforeAdding=null,this._beforeRemoving=null}function s(e,t,r){u.addMethod(t,r,e.unbindEvent),u.addMethod(t,r,e.unbindEventWithSelectorOrCallback),u.addMethod(t,r,e.unbindEventWithSelectorAndCallback)}function d(e){e.arrive=i.bindEvent,s(i,e,"unbindArrive"),e.leave=o.bindEvent,s(o,e,"unbindLeave")}}(window,void 0),ewww_webp_supported=!1;function check_webp_feature(e,t){var r;ewww_webp_supported?t(ewww_webp_supported):((r=new Image).onload=function(){ewww_webp_supported=0<r.width&&0<r.height,t(ewww_webp_supported)},r.onerror=function(){t(!1)},r.src="data:image/webp;base64,"+{alpha:"UklGRkoAAABXRUJQVlA4WAoAAAAQAAAAAAAAAAAAQUxQSAwAAAARBxAR/Q9ERP8DAABWUDggGAAAABQBAJ0BKgEAAQAAAP4AAA3AAP7mtQAAAA==",animation:"UklGRlIAAABXRUJQVlA4WAoAAAASAAAAAAAAAAAAQU5JTQYAAAD/////AABBTk1GJgAAAAAAAAAAAAAAAAAAAGQAAABWUDhMDQAAAC8AAAAQBxAREYiI/gcA"}[e])}function ewwwLoadImages(e){if(e){for(var t=document.querySelectorAll(".batch-image img, .image-wrapper a, .ngg-pro-masonry-item a, .ngg-galleria-offscreen-seo-wrapper a"),r=0,a=t.length;r<a;r++)ewwwAttr(t[r],"data-src",t[r].getAttribute("data-webp")),ewwwAttr(t[r],"data-thumbnail",t[r].getAttribute("data-webp-thumbnail"));for(var i=document.querySelectorAll("div.woocommerce-product-gallery__image"),r=0,a=i.length;r<a;r++)ewwwAttr(i[r],"data-thumb",i[r].getAttribute("data-webp-thumb"))}for(var n=document.querySelectorAll("video"),r=0,a=n.length;r<a;r++)ewwwAttr(n[r],"poster",e?n[r].getAttribute("data-poster-webp"):n[r].getAttribute("data-poster-image"));for(var o,l=document.querySelectorAll("img.ewww_webp_lazy_load"),r=0,a=l.length;r<a;r++)e&&(ewwwAttr(l[r],"data-lazy-srcset",l[r].getAttribute("data-lazy-srcset-webp")),ewwwAttr(l[r],"data-srcset",l[r].getAttribute("data-srcset-webp")),ewwwAttr(l[r],"data-lazy-src",l[r].getAttribute("data-lazy-src-webp")),ewwwAttr(l[r],"data-src",l[r].getAttribute("data-src-webp")),ewwwAttr(l[r],"data-orig-file",l[r].getAttribute("data-webp-orig-file")),ewwwAttr(l[r],"data-medium-file",l[r].getAttribute("data-webp-medium-file")),ewwwAttr(l[r],"data-large-file",l[r].getAttribute("data-webp-large-file")),null!=(o=l[r].getAttribute("srcset"))&&!1!==o&&o.includes("R0lGOD")&&ewwwAttr(l[r],"src",l[r].getAttribute("data-lazy-src-webp"))),l[r].className=l[r].className.replace(/\bewww_webp_lazy_load\b/,"");for(var s=document.querySelectorAll(".ewww_webp"),r=0,a=s.length;r<a;r++)e?(ewwwAttr(s[r],"srcset",s[r].getAttribute("data-srcset-webp")),ewwwAttr(s[r],"src",s[r].getAttribute("data-src-webp")),ewwwAttr(s[r],"data-orig-file",s[r].getAttribute("data-webp-orig-file")),ewwwAttr(s[r],"data-medium-file",s[r].getAttribute("data-webp-medium-file")),ewwwAttr(s[r],"data-large-file",s[r].getAttribute("data-webp-large-file")),ewwwAttr(s[r],"data-large_image",s[r].getAttribute("data-webp-large_image")),ewwwAttr(s[r],"data-src",s[r].getAttribute("data-webp-src"))):(ewwwAttr(s[r],"srcset",s[r].getAttribute("data-srcset-img")),ewwwAttr(s[r],"src",s[r].getAttribute("data-src-img"))),s[r].className=s[r].className.replace(/\bewww_webp\b/,"ewww_webp_loaded");window.jQuery&&jQuery.fn.isotope&&jQuery.fn.imagesLoaded&&(jQuery(".fusion-posts-container-infinite").imagesLoaded(function(){jQuery(".fusion-posts-container-infinite").hasClass("isotope")&&jQuery(".fusion-posts-container-infinite").isotope()}),jQuery(".fusion-portfolio:not(.fusion-recent-works) .fusion-portfolio-wrapper").imagesLoaded(function(){jQuery(".fusion-portfolio:not(.fusion-recent-works) .fusion-portfolio-wrapper").isotope()}))}function ewwwWebPInit(e){ewwwLoadImages(e),ewwwNggLoadGalleries(e),document.arrive(".ewww_webp",function(){ewwwLoadImages(e)}),document.arrive(".ewww_webp_lazy_load",function(){ewwwLoadImages(e)}),document.arrive("videos",function(){ewwwLoadImages(e)}),"loading"==document.readyState?document.addEventListener("DOMContentLoaded",ewwwJSONParserInit):("undefined"!=typeof galleries&&ewwwNggParseGalleries(e),ewwwWooParseVariations(e))}function ewwwAttr(e,t,r){null!=r&&!1!==r&&e.setAttribute(t,r)}function ewwwJSONParserInit(){"undefined"!=typeof galleries&&check_webp_feature("alpha",ewwwNggParseGalleries),check_webp_feature("alpha",ewwwWooParseVariations)}function ewwwWooParseVariations(e){if(e)for(var t=document.querySelectorAll("form.variations_form"),r=0,a=t.length;r<a;r++){var i=t[r].getAttribute("data-product_variations"),n=!1;try{for(var o in i=JSON.parse(i))void 0!==i[o]&&void 0!==i[o].image&&(void 0!==i[o].image.src_webp&&(i[o].image.src=i[o].image.src_webp,n=!0),void 0!==i[o].image.srcset_webp&&(i[o].image.srcset=i[o].image.srcset_webp,n=!0),void 0!==i[o].image.full_src_webp&&(i[o].image.full_src=i[o].image.full_src_webp,n=!0),void 0!==i[o].image.gallery_thumbnail_src_webp&&(i[o].image.gallery_thumbnail_src=i[o].image.gallery_thumbnail_src_webp,n=!0),void 0!==i[o].image.thumb_src_webp&&(i[o].image.thumb_src=i[o].image.thumb_src_webp,n=!0));n&&ewwwAttr(t[r],"data-product_variations",JSON.stringify(i))}catch(e){}}}function ewwwNggParseGalleries(e){if(e)for(var t in galleries){var r=galleries[t];galleries[t].images_list=ewwwNggParseImageList(r.images_list)}}function ewwwNggLoadGalleries(e){e&&document.addEventListener("ngg.galleria.themeadded",function(e,t){window.ngg_galleria._create_backup=window.ngg_galleria.create,window.ngg_galleria.create=function(e,t){var r=$(e).data("id");return galleries["gallery_"+r].images_list=ewwwNggParseImageList(galleries["gallery_"+r].images_list),window.ngg_galleria._create_backup(e,t)}})}function ewwwNggParseImageList(e){for(var t in e){var r=e[t];if(void 0!==r["image-webp"]&&(e[t].image=r["image-webp"],delete e[t]["image-webp"]),void 0!==r["thumb-webp"]&&(e[t].thumb=r["thumb-webp"],delete e[t]["thumb-webp"]),void 0!==r.full_image_webp&&(e[t].full_image=r.full_image_webp,delete e[t].full_image_webp),void 0!==r.srcsets)for(var a in r.srcsets)nggSrcset=r.srcsets[a],void 0!==r.srcsets[a+"-webp"]&&(e[t].srcsets[a]=r.srcsets[a+"-webp"],delete e[t].srcsets[a+"-webp"]);if(void 0!==r.full_srcsets)for(var i in r.full_srcsets)nggFSrcset=r.full_srcsets[i],void 0!==r.full_srcsets[i+"-webp"]&&(e[t].full_srcsets[i]=r.full_srcsets[i+"-webp"],delete e[t].full_srcsets[i+"-webp"])}return e}check_webp_feature("alpha",ewwwWebPInit);</script><meta name='robots' content='noindex, follow' />
+	<style>img:is([sizes="auto" i], [sizes^="auto," i]) { contain-intrinsic-size: 3000px 1500px }</style>
+	
+<!-- Google Tag Manager for WordPress by gtm4wp.com -->
+<script data-cfasync="false" data-pagespeed-no-defer>
+	var gtm4wp_datalayer_name = "dataLayer";
+	var dataLayer = dataLayer || [];
+</script>
+<!-- End Google Tag Manager for WordPress by gtm4wp.com --><meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- This site is optimized with the Yoast SEO Premium plugin v25.0 (Yoast SEO v25.0) - https://yoast.com/wordpress/plugins/seo/ -->
+	<title>Page not found |</title>
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:title" content="Page not found |" />
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://www.starknet.io/#website","url":"https://www.starknet.io/","name":"Starknet.io","description":"","publisher":{"@id":"https://www.starknet.io/#organization"},"potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://www.starknet.io/?s={search_term_string}"},"query-input":{"@type":"PropertyValueSpecification","valueRequired":true,"valueName":"search_term_string"}}],"inLanguage":"en-US"},{"@type":"Organization","@id":"https://www.starknet.io/#organization","name":"Starknet","alternateName":"Starknet","url":"https://www.starknet.io/","logo":{"@type":"ImageObject","inLanguage":"en-US","@id":"https://www.starknet.io/#/schema/logo/image/","url":"https://www.starknet.io/wp-content/uploads/2024/02/starknet-logo.svg","contentUrl":"https://www.starknet.io/wp-content/uploads/2024/02/starknet-logo.svg","width":700,"height":160,"caption":"Starknet"},"image":{"@id":"https://www.starknet.io/#/schema/logo/image/"},"sameAs":["https://x.com/Starknet","https://www.youtube.com/channel/UCnDWguR8mE2oDBsjhQkgbvg","https://starknet.io/discord","https://github.com/keep-starknet-strange/awesome-starknet"],"description":"Starknet uses STARK tech for computational integrity, validating off-chain transactions with advanced math and cryptography."}]}</script>
+	<!-- / Yoast SEO Premium plugin. -->
+
+
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<style id='classic-theme-styles-inline-css'>
+/*! This file is auto-generated */
+.wp-block-button__link{color:#fff;background-color:#32373c;border-radius:9999px;box-shadow:none;text-decoration:none;padding:calc(.667em + 2px) calc(1.333em + 2px);font-size:1.125em}.wp-block-file__button{background:#32373c;color:#fff;text-decoration:none}
+</style>
+<style id='global-styles-inline-css'>
+:root{--wp--preset--aspect-ratio--square: 1;--wp--preset--aspect-ratio--4-3: 4/3;--wp--preset--aspect-ratio--3-4: 3/4;--wp--preset--aspect-ratio--3-2: 3/2;--wp--preset--aspect-ratio--2-3: 2/3;--wp--preset--aspect-ratio--16-9: 16/9;--wp--preset--aspect-ratio--9-16: 9/16;--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--color--contrast: var(--contrast);--wp--preset--color--contrast-2: var(--contrast-2);--wp--preset--color--contrast-3: var(--contrast-3);--wp--preset--color--base: var(--base);--wp--preset--color--base-2: var(--base-2);--wp--preset--color--base-3: var(--base-3);--wp--preset--color--accent: var(--accent);--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgba(255, 255, 255, 1), 6px 6px rgba(0, 0, 0, 1);--wp--preset--shadow--crisp: 6px 6px 0px rgba(0, 0, 0, 1);}:where(.is-layout-flex){gap: 0.5em;}:where(.is-layout-grid){gap: 0.5em;}body .is-layout-flex{display: flex;}.is-layout-flex{flex-wrap: wrap;align-items: center;}.is-layout-flex > :is(*, div){margin: 0;}body .is-layout-grid{display: grid;}.is-layout-grid > :is(*, div){margin: 0;}:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}
+:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}
+:root :where(.wp-block-pullquote){font-size: 1.5em;line-height: 1.6;}
+</style>
+<link rel='stylesheet' id='bcct_style-css' href='https://www.starknet.io/wp-content/plugins/better-click-to-tweet/assets/css/styles.css?ver=3.0' media='all' />
+<link rel='stylesheet' id='contact-form-7-css' href='https://www.starknet.io/wp-content/plugins/contact-form-7/includes/css/styles.css?ver=6.0.6' media='all' />
+<link rel='stylesheet' id='generate-style-css' href='https://www.starknet.io/wp-content/themes/generatepress/assets/css/main.min.css?ver=3.4.0' media='all' />
+<style id='generate-style-inline-css'>
+body{background-color:var(--base-2);color:var(--contrast);}a{color:var(--accent);}a{text-decoration:underline;}.entry-title a, .site-branding a, a.button, .wp-block-button__link, .main-navigation a{text-decoration:none;}a:hover, a:focus, a:active{color:var(--contrast);}.wp-block-group__inner-container{max-width:1200px;margin-left:auto;margin-right:auto;}:root{--contrast:#222222;--contrast-2:#575760;--contrast-3:#b2b2be;--base:#f0f0f0;--base-2:#f7f8f9;--base-3:#ffffff;--accent:#1e73be;}:root .has-contrast-color{color:var(--contrast);}:root .has-contrast-background-color{background-color:var(--contrast);}:root .has-contrast-2-color{color:var(--contrast-2);}:root .has-contrast-2-background-color{background-color:var(--contrast-2);}:root .has-contrast-3-color{color:var(--contrast-3);}:root .has-contrast-3-background-color{background-color:var(--contrast-3);}:root .has-base-color{color:var(--base);}:root .has-base-background-color{background-color:var(--base);}:root .has-base-2-color{color:var(--base-2);}:root .has-base-2-background-color{background-color:var(--base-2);}:root .has-base-3-color{color:var(--base-3);}:root .has-base-3-background-color{background-color:var(--base-3);}:root .has-accent-color{color:var(--accent);}:root .has-accent-background-color{background-color:var(--accent);}.top-bar{background-color:#636363;color:#ffffff;}.top-bar a{color:#ffffff;}.top-bar a:hover{color:#303030;}.site-header{background-color:var(--base-3);}.main-title a,.main-title a:hover{color:var(--contrast);}.site-description{color:var(--contrast-2);}.mobile-menu-control-wrapper .menu-toggle,.mobile-menu-control-wrapper .menu-toggle:hover,.mobile-menu-control-wrapper .menu-toggle:focus,.has-inline-mobile-toggle #site-navigation.toggled{background-color:rgba(0, 0, 0, 0.02);}.main-navigation,.main-navigation ul ul{background-color:var(--base-3);}.main-navigation .main-nav ul li a, .main-navigation .menu-toggle, .main-navigation .menu-bar-items{color:var(--contrast);}.main-navigation .main-nav ul li:not([class*="current-menu-"]):hover > a, .main-navigation .main-nav ul li:not([class*="current-menu-"]):focus > a, .main-navigation .main-nav ul li.sfHover:not([class*="current-menu-"]) > a, .main-navigation .menu-bar-item:hover > a, .main-navigation .menu-bar-item.sfHover > a{color:var(--accent);}button.menu-toggle:hover,button.menu-toggle:focus{color:var(--contrast);}.main-navigation .main-nav ul li[class*="current-menu-"] > a{color:var(--accent);}.navigation-search input[type="search"],.navigation-search input[type="search"]:active, .navigation-search input[type="search"]:focus, .main-navigation .main-nav ul li.search-item.active > a, .main-navigation .menu-bar-items .search-item.active > a{color:var(--accent);}.main-navigation ul ul{background-color:var(--base);}.separate-containers .inside-article, .separate-containers .comments-area, .separate-containers .page-header, .one-container .container, .separate-containers .paging-navigation, .inside-page-header{background-color:var(--base-3);}.entry-title a{color:var(--contrast);}.entry-title a:hover{color:var(--contrast-2);}.entry-meta{color:var(--contrast-2);}.sidebar .widget{background-color:var(--base-3);}.footer-widgets{background-color:var(--base-3);}.site-info{background-color:var(--base-3);}input[type="text"],input[type="email"],input[type="url"],input[type="password"],input[type="search"],input[type="tel"],input[type="number"],textarea,select{color:var(--contrast);background-color:var(--base-2);border-color:var(--base);}input[type="text"]:focus,input[type="email"]:focus,input[type="url"]:focus,input[type="password"]:focus,input[type="search"]:focus,input[type="tel"]:focus,input[type="number"]:focus,textarea:focus,select:focus{color:var(--contrast);background-color:var(--base-2);border-color:var(--contrast-3);}button,html input[type="button"],input[type="reset"],input[type="submit"],a.button,a.wp-block-button__link:not(.has-background){color:#ffffff;background-color:#55555e;}button:hover,html input[type="button"]:hover,input[type="reset"]:hover,input[type="submit"]:hover,a.button:hover,button:focus,html input[type="button"]:focus,input[type="reset"]:focus,input[type="submit"]:focus,a.button:focus,a.wp-block-button__link:not(.has-background):active,a.wp-block-button__link:not(.has-background):focus,a.wp-block-button__link:not(.has-background):hover{color:#ffffff;background-color:#3f4047;}a.generate-back-to-top{background-color:rgba( 0,0,0,0.4 );color:#ffffff;}a.generate-back-to-top:hover,a.generate-back-to-top:focus{background-color:rgba( 0,0,0,0.6 );color:#ffffff;}:root{--gp-search-modal-bg-color:var(--base-3);--gp-search-modal-text-color:var(--contrast);--gp-search-modal-overlay-bg-color:rgba(0,0,0,0.2);}@media (max-width: 1024px){.main-navigation .menu-bar-item:hover > a, .main-navigation .menu-bar-item.sfHover > a{background:none;color:var(--contrast);}}.nav-below-header .main-navigation .inside-navigation.grid-container, .nav-above-header .main-navigation .inside-navigation.grid-container{padding:0px 20px 0px 20px;}.site-main .wp-block-group__inner-container{padding:40px;}.separate-containers .paging-navigation{padding-top:20px;padding-bottom:20px;}.entry-content .alignwide, body:not(.no-sidebar) .entry-content .alignfull{margin-left:-40px;width:calc(100% + 80px);max-width:calc(100% + 80px);}.rtl .menu-item-has-children .dropdown-menu-toggle{padding-left:20px;}.rtl .main-navigation .main-nav ul li.menu-item-has-children > a{padding-right:20px;}@media (max-width:768px){.separate-containers .inside-article, .separate-containers .comments-area, .separate-containers .page-header, .separate-containers .paging-navigation, .one-container .site-content, .inside-page-header{padding:30px;}.site-main .wp-block-group__inner-container{padding:30px;}.inside-top-bar{padding-right:30px;padding-left:30px;}.inside-header{padding-right:30px;padding-left:30px;}.widget-area .widget{padding-top:30px;padding-right:30px;padding-bottom:30px;padding-left:30px;}.footer-widgets-container{padding-top:30px;padding-right:30px;padding-bottom:30px;padding-left:30px;}.inside-site-info{padding-right:30px;padding-left:30px;}.entry-content .alignwide, body:not(.no-sidebar) .entry-content .alignfull{margin-left:-30px;width:calc(100% + 60px);max-width:calc(100% + 60px);}.one-container .site-main .paging-navigation{margin-bottom:20px;}}/* End cached CSS */.is-right-sidebar{width:30%;}.is-left-sidebar{width:30%;}.site-content .content-area{width:70%;}@media (max-width: 1024px){.main-navigation .menu-toggle,.sidebar-nav-mobile:not(#sticky-placeholder){display:block;}.main-navigation ul,.gen-sidebar-nav,.main-navigation:not(.slideout-navigation):not(.toggled) .main-nav > ul,.has-inline-mobile-toggle #site-navigation .inside-navigation > *:not(.navigation-search):not(.main-nav){display:none;}.nav-align-right .inside-navigation,.nav-align-center .inside-navigation{justify-content:space-between;}.has-inline-mobile-toggle .mobile-menu-control-wrapper{display:flex;flex-wrap:wrap;}.has-inline-mobile-toggle .inside-header{flex-direction:row;text-align:left;flex-wrap:wrap;}.has-inline-mobile-toggle .header-widget,.has-inline-mobile-toggle #site-navigation{flex-basis:100%;}.nav-float-left .has-inline-mobile-toggle #site-navigation{order:10;}}
+</style>
+<link rel='stylesheet' id='hcb-style-css' href='https://www.starknet.io/wp-content/plugins/highlighting-code-block/build/css/hcb--dark.css?ver=070321130' media='all' />
+<style id='hcb-style-inline-css'>
+:root{--hcb--fz--base: 16px}:root{--hcb--fz--mobile: 16px}:root{--hcb--ff:Menlo, Consolas, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;}.hcb_wrap{--hcb--data-label: none;--hcb--btn-offset: 0px;}
+</style>
+<link rel='stylesheet' id='algolia-theme-classic-css' href='https://www.starknet.io/wp-content/themes/Starknet/assets/css/libs/algolia.autocomplete-theme-classic.min.css?ver=0.1.4' media='all' />
+<link rel='stylesheet' id='single-dapp-style-css' href='https://www.starknet.io/wp-content/themes/Starknet/assets/css/partials/dapp.css?ver=1751508690' media='all' />
+<link rel='stylesheet' id='featured-dapps-style-css' href='https://www.starknet.io/wp-content/themes/Starknet/assets/css/partials/featured-dapps.css?ver=1751508690' media='all' />
+<link rel='stylesheet' id='global-style-css' href='https://www.starknet.io/wp-content/themes/Starknet/assets/css/global.css?ver=1751508690' media='all' />
+<link rel='stylesheet' id='variables-css' href='https://www.starknet.io/wp-content/themes/Starknet/assets/css/variables.css?ver=1751508690' media='all' />
+<link rel='stylesheet' id='menus-css' href='https://www.starknet.io/wp-content/themes/Starknet/assets/css/menus.css?ver=1751508690' media='all' />
+<link rel='stylesheet' id='slick-style-css' href='https://www.starknet.io/wp-content/themes/Starknet/assets/css/libs/slick.min.css?ver=0.1.4' media='all' />
+<link rel='stylesheet' id='starknet-ibm-sans-gfont-css' href='https://fonts.googleapis.com/css2?family=IBM+Plex+Sans%3Awght%40200%3B300%3B400%3B500%3B600%3B700&#038;display=swap&#038;ver=0.1.4' media='all' />
+<link rel='stylesheet' id='starknet-inter-gfont-css' href='https://fonts.googleapis.com/css2?family=Inter%3Awght%40100..900&#038;display=swap&#038;ver=0.1.4' media='all' />
+<script id="breeze-prefetch-js-extra">
+var breeze_prefetch = {"local_url":"https:\/\/www.starknet.io","ignore_remote_prefetch":"1","ignore_list":["\/ecosystem\/dapps\/","\/ecosystem\/wallets\/","\/ecosystem\/bridges-and-onramps\/","\/ecosystem\/block-explorers-indexers-and-enhanced-api\/","\/ecosystem\/fullnodes-and-rpc-services\/","\/ecosystem\/security-and-audits\/","wp-admin","wp-login.php"]};
+</script>
+<script src="https://www.starknet.io/wp-content/plugins/breeze/assets/js/js-front-end/breeze-prefetch-links.min.js?ver=2.2.10" id="breeze-prefetch-js"></script>
+<script src="https://www.starknet.io/wp-includes/js/jquery/jquery.min.js?ver=3.7.1" id="jquery-core-js"></script>
+<script src="https://www.starknet.io/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1" id="jquery-migrate-js"></script>
+<script src="https://www.starknet.io/wp-content/plugins/gspeech/includes/js/gspeech_front.js?g_indexsp___eqgspeech_front_script_n127gsp___delg_versiongsp___eq3_14_0gsp___delw_idgsp___eqc729e61a2b3f4dee8d29a4004ad12ff5gsp___dels_encgsp___eq0b569df9536b00c26fa6d2d10d6152cc3cbe9d4481c5e62d8e4a3ae82326c46a08627cc276fcc175ea9e55250f5c3991ee2fa682fbab0909ca5ca24e2eff74abea728e3agsp___delh_encgsp___eq2a5383b453d928d6a2665cc6508c32daf3df02718f0e7ddf4fd90025369cb3bbgsp___delhh_encgsp___eq0d664b4d70e67f00d4a40c228778e62d7073a86ef843b3f7db54afbcf36ef70b6901c7110370fa7cdec8d7b330d8f4261c8136bba518466078b74227fc4581e6c3f78d7c4485f452e914f896c69405abd77144dd64c0e775f2a4bca8fc738aa40aef43c15faf0cbab60a16e8a10b7abbgsp___dellazy_loadgsp___eq1gsp___delgt_wgsp___eqgsp_clgtranslate_wrappergsp___delvv_indexgsp___eq11&amp;ver=6.8.1" id="wpgs-script777-js"></script>
+<link rel="https://api.w.org/" href="https://www.starknet.io/wp-json/" />
+<!-- Google Tag Manager for WordPress by gtm4wp.com -->
+<!-- GTM Container placement set to automatic -->
+<script data-cfasync="false" data-pagespeed-no-defer>
+	var dataLayer_content = {"pagePostType":"404-error"};
+	dataLayer.push( dataLayer_content );
+</script>
+<script data-cfasync="false" data-pagespeed-no-defer>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-K6LVSCS9');
+</script>
+<!-- End Google Tag Manager for WordPress by gtm4wp.com -->
+    <!--  Hotjar Tracking Code for starknet -->
+    <script>
+        (function(h,o,t,j,a,r){
+            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+            h._hjSettings={hjid:4982765,hjsv:6};
+            a=o.getElementsByTagName('head')[0];
+            r=o.createElement('script');r.async=1;
+            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+            a.appendChild(r);
+        })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+    </script>
+
+    <!--  Crazyegg code for starknet -->
+    <script type="text/javascript" src="//script.crazyegg.com/pages/scripts/0127/4524.js" async="async"></script>
+
+    <!-- Fullstory code -->
+    <script> window['_fs_host'] = 'eu1.fullstory.com'; window['_fs_script'] = 'edge.eu1.fullstory.com/s/fs.js'; window['_fs_org'] = 'o-6S3A-eu1'; window['_fs_namespace'] = 'FS'; !function(m,n,e,t,l,o,g,y){var s,f,a=function(h){ return!(h in m)||(m.console&&m.console.log&&m.console.log('FullStory namespace conflict. Please set window["_fs_namespace"].'),!1)}(e) ;function p(b){var h,d=[];function j(){h&&(d.forEach((function(b){var d;try{d=b[h[0]]&&b[h[0]](h[1])}catch(h){return void(b[3]&&b[3](h))} d&&d.then?d.then(b[2],b[3]):b[2]&&b[2](d)})),d.length=0)}function r(b){return function(d){h||(h=[b,d],j())}}return b(r(0),r(1)),{ then:function(b,h){return p((function(r,i){d.push([b,h,r,i]),j()}))}}}a&&(g=m[e]=function(){var b=function(b,d,j,r){function i(i,c){ h(b,d,j,i,c,r)}r=r||2;var c,u=/Async$/;return u.test(b)?(b=b.replace(u,""),"function"==typeof Promise?new Promise(i):p(i)):h(b,d,j,c,c,r)} ;function h(h,d,j,r,i,c){return b._api?b._api(h,d,j,r,i,c):(b.q&&b.q.push([h,d,j,r,i,c]),null)}return b.q=[],b}(),y=function(b){function h(h){ "function"==typeof h[4]&&h[4](new Error(b))}var d=g.q;if(d){for(var j=0;j<d.length;j++)h(d[j]);d.length=0,d.push=h}},function(){ (o=n.createElement(t)).async=!0,o.crossOrigin="anonymous",o.src="https://"+l,o.onerror=function(){y("Error loading "+l)} ;var b=n.getElementsByTagName(t)[0];b&&b.parentNode?b.parentNode.insertBefore(o,b):n.head.appendChild(o)}(),function(){function b(){} function h(b,h,d){g(b,h,d,1)}function d(b,d,j){h("setProperties",{type:b,properties:d},j)}function j(b,h){d("user",b,h)}function r(b,h,d){j({ uid:b},d),h&&j(h,d)}g.identify=r,g.setUserVars=j,g.identifyAccount=b,g.clearUserCookie=b,g.setVars=d,g.event=function(b,d,j){h("trackEvent",{ name:b,properties:d},j)},g.anonymize=function(){r(!1)},g.shutdown=function(){h("shutdown")},g.restart=function(){h("restart")}, g.log=function(b,d){h("log",{level:b,msg:d})},g.consent=function(b){h("setIdentity",{consent:!arguments.length||b})}}(),s="fetch", f="XMLHttpRequest",g._w={},g._w[f]=m[f],g._w[s]=m[s],m[s]&&(m[s]=function(){return g._w[s].apply(this,arguments)}),g._v="2.0.0") }(window,document,window._fs_namespace,"script",window._fs_script); </script>
+    <script>console.log("")</script>
+<link rel="icon" href="https://www.starknet.io/wp-content/uploads/2024/05/SN-Symbol-Flat-colour-150x150.png" sizes="32x32" />
+<link rel="icon" href="https://www.starknet.io/wp-content/uploads/2024/05/SN-Symbol-Flat-colour.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://www.starknet.io/wp-content/uploads/2024/05/SN-Symbol-Flat-colour.png" />
+<meta name="msapplication-TileImage" content="https://www.starknet.io/wp-content/uploads/2024/05/SN-Symbol-Flat-colour.png" />
+</head>
+
+<body class="error404 wp-custom-logo wp-embed-responsive wp-theme-generatepress wp-child-theme-Starknet right-sidebar nav-float-right separate-containers header-aligned-left" itemtype="https://schema.org/WebPage" itemscope>
+<script data-cfasync="false" data-no-defer="1" data-no-minify="1" data-no-optimize="1">if(typeof ewww_webp_supported==="undefined"){var ewww_webp_supported=!1}if(ewww_webp_supported){document.body.classList.add("webp-support")}</script>
+	
+<!-- GTM Container placement set to automatic -->
+<!-- Google Tag Manager (noscript) -->
+				<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K6LVSCS9" height="0" width="0" style="display:none;visibility:hidden" aria-hidden="true"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<!-- GTM Container placement set to automatic -->
+<!-- Google Tag Manager (noscript) --><a class="screen-reader-text skip-link" href="#content" title="Skip to content">Skip to content</a>    <header class="site-header has-inline-mobile-toggle" id="masthead" aria-label="Site" itemtype="https://schema.org/WPHeader" itemscope="">
+        <div class="inside-header grid-container">
+            <div class="site-logo">
+                <a href="/" rel="home">
+                    <img class="header-image is-logo-image" alt="" src="/wp-content/themes/Starknet/assets/img/starknet-logo-light.svg" width="152" height="35">
+                </a>
+            </div>
+
+            <nav id="site-navigation" class="main-navigation">
+                <div class="menu-main-menu-container"><ul id="main-navigation" class="starknet-menu"><li id="menu-item-38" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children"><a title="Developers">Developers<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 9l6 6 6-6"/></svg></a>
+<ul class="sub-menu">
+	<li id="menu-item-287" class="menu-item menu-item-type-post_type menu-item-object-page"><a title="Developers Hub" href="https://www.starknet.io/developers/">Developers Hub</a></li>
+	<li id="menu-item-15446" class="menu-item menu-item-type-post_type menu-item-object-page"><a title="SN Stack" href="https://www.starknet.io/sn-stack/">SN Stack</a></li>
+	<li id="menu-item-17259" class="menu-item menu-item-type-post_type menu-item-object-page"><a title="Build with AI" href="https://www.starknet.io/verifiable-ai-agents/">Build with AI</a></li>
+	<li id="menu-item-14502" class="menu-item menu-item-type-post_type menu-item-object-page"><a title="Modular Ecosystem" href="https://www.starknet.io/modular/">Modular Ecosystem</a></li>
+	<li id="menu-item-17653" class="external menu-item menu-item-type-custom menu-item-object-custom"><a title="Tools &amp; Resources" href="https://docs.starknet.io/tools/devtools/overview/">Tools &#038; Resources<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" aria-hidden="true" focusable="false" class="chakra-icon css-1r0yqm7" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" d="M8.25 3.75H19.5a.75.75 0 01.75.75v11.25a.75.75 0 01-1.5 0V6.31L5.03 20.03a.75.75 0 01-1.06-1.06L17.69 5.25H8.25a.75.75 0 010-1.5z" clip-rule="evenodd"></path>
+</svg>
+</a></li>
+	<li id="menu-item-284" class="external menu-item menu-item-type-custom menu-item-object-custom"><a title="Documentation" target="_blank" rel="noopener" href="https://docs.starknet.io/">Documentation<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" aria-hidden="true" focusable="false" class="chakra-icon css-1r0yqm7" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" d="M8.25 3.75H19.5a.75.75 0 01.75.75v11.25a.75.75 0 01-1.5 0V6.31L5.03 20.03a.75.75 0 01-1.06-1.06L17.69 5.25H8.25a.75.75 0 010-1.5z" clip-rule="evenodd"></path>
+</svg>
+</a></li>
+	<li id="menu-item-286" class="external menu-item menu-item-type-custom menu-item-object-custom"><a title="Cairo Book" target="_blank" rel="noopener" href="https://book.cairo-lang.org/">Cairo Book<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" aria-hidden="true" focusable="false" class="chakra-icon css-1r0yqm7" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" d="M8.25 3.75H19.5a.75.75 0 01.75.75v11.25a.75.75 0 01-1.5 0V6.31L5.03 20.03a.75.75 0 01-1.06-1.06L17.69 5.25H8.25a.75.75 0 010-1.5z" clip-rule="evenodd"></path>
+</svg>
+</a></li>
+	<li id="menu-item-288" class="menu-item menu-item-type-custom menu-item-object-custom"><a title="Tutorials" href="/tutorials/">Tutorials</a></li>
+	<li id="menu-item-6633" class="menu-item menu-item-type-post_type menu-item-object-page"><a title="Roadmap" href="https://www.starknet.io/developers/roadmap/">Roadmap</a></li>
+</ul>
+</li>
+<li id="menu-item-39" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children"><a title="Ecosystem">Ecosystem<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 9l6 6 6-6"/></svg></a>
+<ul class="sub-menu">
+<li id="menu-item-11696" class="sub-menu-title menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children"><p class="menu-top-title">Projects and Tools</p>
+	<ul class="sub-menu">
+		<li id="menu-item-19560" class="menu-item menu-item-type-post_type menu-item-object-page"><a title="Ecosystem Projects" href="https://www.starknet.io/dapps/">Ecosystem Projects</a></li>
+		<li id="menu-item-279" class="menu-item menu-item-type-post_type menu-item-object-page"><a title="Crypto Wallets" href="https://www.starknet.io/crypto-wallets/">Crypto Wallets</a></li>
+		<li id="menu-item-17350" class="menu-item menu-item-type-post_type menu-item-object-page"><a title="Bridges &#038; on-ramps" href="https://www.starknet.io/bridges-and-onramps/">Bridges &#038; on-ramps</a></li>
+		<li id="menu-item-18522" class="menu-item menu-item-type-post_type menu-item-object-page"><a title="DeFi dApps" href="https://www.starknet.io/defi-dapps/">DeFi dApps</a></li>
+		<li id="menu-item-15819" class="menu-item menu-item-type-custom menu-item-object-custom"><a title="Crypto Games" target="_blank" rel="noopener" href="https://starknet.gg/">Crypto Games</a></li>
+		<li id="menu-item-19128" class="menu-item menu-item-type-post_type menu-item-object-page"><a title="Block explorers, indexers &#038; Enhanced API" href="https://www.starknet.io/block-explorers-monitoring-tools/">Block Explorers &#038; Monitoring tools</a></li>
+		<li id="menu-item-19119" class="menu-item menu-item-type-post_type menu-item-object-page"><a title="Full-nodes &#038; RPC services" href="https://www.starknet.io/full-nodes-rpc-services/">Full-nodes &#038; RPC services</a></li>
+	</ul>
+</li>
+<li id="menu-item-11692" class="sub-menu-title menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children"><p class="menu-top-title">Grants</p>
+	<ul class="sub-menu">
+		<li id="menu-item-11623" class="menu-item menu-item-type-post_type menu-item-object-page"><a title="Grants Overview" href="https://www.starknet.io/grants/">Grants Overview</a></li>
+		<li id="menu-item-11693" class="menu-item menu-item-type-post_type menu-item-object-page"><a title="Seed Grants" href="https://www.starknet.io/grants/seed-grants/">Seed Grants</a></li>
+		<li id="menu-item-11694" class="menu-item menu-item-type-post_type menu-item-object-page"><a title="Growth Grants" href="https://www.starknet.io/grants/growth-grants/">Growth Grants</a></li>
+	</ul>
+</li>
+</ul>
+</li>
+<li id="menu-item-162" class="menu-community menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children"><a title="Community">Community<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 9l6 6 6-6"/></svg></a>
+<ul class="sub-menu">
+<li id="menu-item-261" class="sub-menu-title menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children"><p class="menu-top-title">Start here</p>
+	<ul class="sub-menu">
+		<li id="menu-item-632" class="menu-item menu-item-type-post_type menu-item-object-page"><a title="Explore Starknet" href="https://www.starknet.io/explore-starknet/">Explore Starknet</a></li>
+	</ul>
+</li>
+<li id="menu-item-263" class="sub-menu-title menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children"><p class="menu-top-title">Decentralization</p>
+	<ul class="sub-menu">
+		<li id="menu-item-269" class="external menu-item menu-item-type-custom menu-item-object-custom"><a title="Governance" target="_blank" rel="noopener" href="https://governance.starknet.io/">Governance<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" aria-hidden="true" focusable="false" class="chakra-icon css-1r0yqm7" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" d="M8.25 3.75H19.5a.75.75 0 01.75.75v11.25a.75.75 0 01-1.5 0V6.31L5.03 20.03a.75.75 0 01-1.06-1.06L17.69 5.25H8.25a.75.75 0 010-1.5z" clip-rule="evenodd"></path>
+</svg>
+</a></li>
+		<li id="menu-item-13640" class="menu-item menu-item-type-post_type menu-item-object-page"><a title="Staking" href="https://www.starknet.io/staking/">Staking</a></li>
+	</ul>
+</li>
+<li id="menu-item-266" class="sub-menu-title menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children"><p class="menu-top-title">Get Involved</p>
+	<ul class="sub-menu">
+		<li id="menu-item-3487" class="menu-item menu-item-type-post_type menu-item-object-page"><a title="Events" href="https://www.starknet.io/events/">Events</a></li>
+		<li id="menu-item-5451" class="menu-item menu-item-type-post_type menu-item-object-page"><a title="Ambassadors Program" href="https://www.starknet.io/ambassadors-program/">Ambassadors Program</a></li>
+		<li id="menu-item-5029" class="menu-item menu-item-type-post_type menu-item-object-page"><a title="Jobs" href="https://www.starknet.io/community-jobs/">Jobs</a></li>
+		<li id="menu-item-271" class="external menu-item menu-item-type-custom menu-item-object-custom"><a title="Community Forum" href="https://community.starknet.io/">Community Forum<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" aria-hidden="true" focusable="false" class="chakra-icon css-1r0yqm7" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" d="M8.25 3.75H19.5a.75.75 0 01.75.75v11.25a.75.75 0 01-1.5 0V6.31L5.03 20.03a.75.75 0 01-1.06-1.06L17.69 5.25H8.25a.75.75 0 010-1.5z" clip-rule="evenodd"></path>
+</svg>
+</a></li>
+		<li id="menu-item-694" class="menu-item menu-item-type-post_type menu-item-object-page"><a title="Online communities" href="https://www.starknet.io/online-communities/">Online Communities</a></li>
+	</ul>
+</li>
+</ul>
+</li>
+<li id="menu-item-163" class="resources-menu-list menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children"><a title="Resources">Resources<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 9l6 6 6-6"/></svg></a>
+<ul class="sub-menu">
+<div class="featured-posts-banner"><div class="menu-featured-post"><img src="https://www.starknet.io/wp-content/uploads/2025/05/layer-2.svg" alt="Layer 2"><div class="menu-featured-post-text-box"><a href="/blog/layer-2-scaling-solutions/" class="menu-featured-post-title">Layer 2</a><p class="menu-featured-post-text">Discover Our Layer 2 Scaling Solutions</p></div></div><div class="menu-featured-post"><img src="https://www.starknet.io/wp-content/uploads/2025/05/account-abstraction.svg" alt="Account Abstraction"><div class="menu-featured-post-text-box"><a href="/blog/account-abstraction/" class="menu-featured-post-title">Account Abstraction</a><p class="menu-featured-post-text">How AA improves Blockchain Usability</p></div></div><div class="menu-featured-post"><img src="https://www.starknet.io/wp-content/uploads/2025/05/dex-aggregator.svg" alt="DEX Aggregator"><div class="menu-featured-post-text-box"><a href="/blog/dex-aggregator/" class="menu-featured-post-title">DEX Aggregator</a><p class="menu-featured-post-text">Explore the Benefits of DEX Aggregators</p></div></div><div class="menu-featured-post"><img src="https://www.starknet.io/wp-content/uploads/2025/05/amm-crypto.svg" alt="AMM Crypto"><div class="menu-featured-post-text-box"><a href="/blog/amm-crypto/" class="menu-featured-post-title">AMM Crypto</a><p class="menu-featured-post-text">Watch How AMMs Are Changing Crypto Trading</p></div></div></div>	<li id="menu-item-5031" class="blog-menu-item menu-item menu-item-type-post_type menu-item-object-page"><a title="Blog" href="https://www.starknet.io/blog/">Blog<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 9l6 6 6-6"/></svg></a></li>
+	<li id="menu-item-161" class="menu-item menu-item-type-post_type menu-item-object-page"><a title="FAQs" href="https://www.starknet.io/faqs/">FAQs</a></li>
+	<li id="menu-item-582" class="menu-item menu-item-type-post_type menu-item-object-page"><a title="Glossary" href="https://www.starknet.io/glossary/">Glossary</a></li>
+	<li id="menu-item-710" class="menu-item menu-item-type-post_type menu-item-object-page"><a title="Media Kit" href="https://www.starknet.io/media-kit/">Media Kit</a></li>
+<li id="menu-item-11695" class="sub-menu-title menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children"><p class="menu-top-title">Network</p>
+	<ul class="sub-menu">
+		<li id="menu-item-12141" class="menu-item menu-item-type-post_type menu-item-object-page"><a title="Dune Dashboard" href="https://www.starknet.io/starknet-overview-dune/">Dune Dashboard</a></li>
+		<li id="menu-item-282" class="external menu-item menu-item-type-custom menu-item-object-custom"><a title="Starknet Status Page" target="_blank" rel="noopener" href="https://status.starknet.io/">Starknet Status Page<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" aria-hidden="true" focusable="false" class="chakra-icon css-1r0yqm7" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" d="M8.25 3.75H19.5a.75.75 0 01.75.75v11.25a.75.75 0 01-1.5 0V6.31L5.03 20.03a.75.75 0 01-1.06-1.06L17.69 5.25H8.25a.75.75 0 010-1.5z" clip-rule="evenodd"></path>
+</svg>
+</a></li>
+	</ul>
+</li>
+</ul>
+</li>
+</ul></div><a class="btn btn-small btn-outline bridge-nav-btn" href="https://starkgate.starknet.io/" target="_blank">Bridge</a>                <div id="menu-socials">
+                    <div class="navbar-socials d-flex">
+                <a href="https://discord.gg/starknet-community" target="_blank" rel="nofollow" title="Discord">
+                <?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+  <g id="Discord">
+    <path id="vector" d="M18.9308 5.64161C17.6561 5.05671 16.2892 4.62578 14.8599 4.37897C14.8339 4.3742 14.8079 4.38611 14.7945 4.40991C14.6187 4.72259 14.4239 5.13051 14.2876 5.45113C12.7503 5.22099 11.221 5.22099 9.71527 5.45113C9.57887 5.12338 9.37707 4.72259 9.20048 4.40991C9.18707 4.3869 9.16107 4.375 9.13504 4.37897C7.70659 4.62499 6.33963 5.05592 5.06411 5.64161C5.05307 5.64637 5.04361 5.65431 5.03732 5.66462C2.44449 9.53826 1.73421 13.3167 2.08265 17.0483C2.08423 17.0665 2.09447 17.084 2.10867 17.0951C3.81934 18.3514 5.47642 19.114 7.10273 19.6196C7.12876 19.6275 7.15634 19.618 7.1729 19.5965C7.55761 19.0712 7.90054 18.5172 8.19456 17.9347C8.21192 17.9006 8.19535 17.8601 8.15989 17.8466C7.61594 17.6403 7.098 17.3887 6.59977 17.103C6.56037 17.08 6.55721 17.0236 6.59347 16.9966C6.69831 16.9181 6.80318 16.8363 6.9033 16.7538C6.92141 16.7387 6.94665 16.7356 6.96794 16.7451C10.2411 18.2395 13.7846 18.2395 17.0191 16.7451C17.0404 16.7348 17.0657 16.7379 17.0846 16.753C17.1847 16.8356 17.2895 16.9181 17.3952 16.9966C17.4314 17.0236 17.4291 17.08 17.3897 17.103C16.8914 17.3943 16.3735 17.6403 15.8288 17.8458C15.7933 17.8593 15.7775 17.9006 15.7949 17.9347C16.0952 18.5164 16.4381 19.0704 16.8157 19.5957C16.8315 19.618 16.8599 19.6275 16.8859 19.6196C18.5201 19.114 20.1772 18.3514 21.8879 17.0951C21.9028 17.084 21.9123 17.0673 21.9139 17.049C22.3309 12.7349 21.2154 8.98749 18.9568 5.66541C18.9513 5.65431 18.9419 5.64637 18.9308 5.64161ZM8.68335 14.7761C7.69792 14.7761 6.88594 13.8714 6.88594 12.7603C6.88594 11.6493 7.68217 10.7446 8.68335 10.7446C9.69239 10.7446 10.4965 11.6572 10.4807 12.7603C10.4807 13.8714 9.68451 14.7761 8.68335 14.7761ZM15.329 14.7761C14.3435 14.7761 13.5316 13.8714 13.5316 12.7603C13.5316 11.6493 14.3278 10.7446 15.329 10.7446C16.338 10.7446 17.1421 11.6572 17.1264 12.7603C17.1264 13.8714 16.338 14.7761 15.329 14.7761Z" fill="currentColor"></path>
+  </g>
+</svg>
+            </a>
+                        <a href="https://twitter.com/Starknet" target="_blank" rel="nofollow" title="x-logo">
+                <?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+  <g id="x-logo 1" clip-path="url(#clip0_2772_329)">
+    <g id="Group">
+      <path id="Vector" d="M10.6935 7.614L17.382 0H15.7972L9.987 6.60975L5.34975 0H0L7.014 9.996L0 17.9797H1.58475L7.71675 10.998L12.615 17.9797H17.9647L10.6935 7.614ZM8.52225 10.0837L7.8105 9.08775L2.15625 1.17H4.59075L9.15525 7.56225L9.864 8.55825L15.7965 16.8668H13.362L8.52225 10.0837Z" fill="currentColor"></path>
+    </g>
+  </g>
+  <defs>
+    <clipPath id="clip0_2772_329">
+      <rect width="18" height="18" fill="currentColor"></rect>
+    </clipPath>
+  </defs>
+</svg>
+            </a>
+            </div>                </div>
+
+                <div id="snalg-autocomplete"></div>
+
+                <button data-nav="site-navigation" class="menu-toggle" aria-controls="primary-menu" aria-expanded="false">
+                    <span class="gp-icon icon-menu-bars"><svg viewBox="0 0 512 512" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"><path d="M0 96c0-13.255 10.745-24 24-24h464c13.255 0 24 10.745 24 24s-10.745 24-24 24H24c-13.255 0-24-10.745-24-24zm0 160c0-13.255 10.745-24 24-24h464c13.255 0 24 10.745 24 24s-10.745 24-24 24H24c-13.255 0-24-10.745-24-24zm0 160c0-13.255 10.745-24 24-24h464c13.255 0 24 10.745 24 24s-10.745 24-24 24H24c-13.255 0-24-10.745-24-24z"></path></svg><svg viewBox="0 0 512 512" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"><path d="M71.029 71.029c9.373-9.372 24.569-9.372 33.942 0L256 222.059l151.029-151.03c9.373-9.372 24.569-9.372 33.942 0 9.372 9.373 9.372 24.569 0 33.942L289.941 256l151.03 151.029c9.372 9.373 9.372 24.569 0 33.942-9.373 9.372-24.569 9.372-33.942 0L256 289.941l-151.029 151.03c-9.373 9.372-24.569 9.372-33.942 0-9.372-9.373-9.372-24.569 0-33.942L222.059 256 71.029 104.971c-9.372-9.373-9.372-24.569 0-33.942z"></path></svg></span><span class="screen-reader-text">Menu</span>
+                </button>
+
+            </nav>
+
+        </div>
+    </header>
+    
+	<div class="site grid-container container hfeed" id="page">
+				<div class="site-content" id="content">
+			
+    <div class="wrapper" id="page-wrapper">
+        <div class="container full-width" id="content">
+            <main class="site-main not-exist" id="main">
+                <div class="starknet-not-exist-page d-flex f-col">
+                    <h2>404</h2>
+                    <p>The page you are looking for... isn’t there!</p>
+                    <a href="/" class="btn btn-large btn-fill">Return to homepage</a>
+                </div>
+            </main>
+        </div>
+    </div>
+
+
+	</div>
+</div>
+
+
+<footer class="site-info site-footer" aria-label="Site" itemtype="https://schema.org/WPFooter" itemscope="">
+    <div class="inside-site-info grid-container d-flex f-col">
+        <div class="menu-footer-menu-container"><ul id="footer-menu" class="starknet-footer d-flex f-col"><li id="menu-item-304" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children"><a>Developers</a>
+<ul class="sub-menu">
+	<li id="menu-item-305" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.starknet.io/developers/">Developers Hub</a></li>
+	<li id="menu-item-15447" class="menu-item menu-item-type-post_type menu-item-object-page"><a title="SN Stack" href="https://www.starknet.io/sn-stack/">SN Stack</a></li>
+	<li id="menu-item-17260" class="menu-item menu-item-type-post_type menu-item-object-page"><a title="Build with AI" href="https://www.starknet.io/verifiable-ai-agents/">Build with AI</a></li>
+	<li id="menu-item-14503" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.starknet.io/modular/">Modular Ecosystem</a></li>
+	<li id="menu-item-635" class="external menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.starknet.io/developers/tools-and-resources/">Tools &#038; Resources<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" aria-hidden="true" focusable="false" class="chakra-icon css-1r0yqm7" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" d="M8.25 3.75H19.5a.75.75 0 01.75.75v11.25a.75.75 0 01-1.5 0V6.31L5.03 20.03a.75.75 0 01-1.06-1.06L17.69 5.25H8.25a.75.75 0 010-1.5z" clip-rule="evenodd"></path>
+</svg>
+</a></li>
+	<li id="menu-item-306" class="external menu-item menu-item-type-custom menu-item-object-custom"><a target="_blank" rel="noopener" href="https://docs.starknet.io/">Documentation<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" aria-hidden="true" focusable="false" class="chakra-icon css-1r0yqm7" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" d="M8.25 3.75H19.5a.75.75 0 01.75.75v11.25a.75.75 0 01-1.5 0V6.31L5.03 20.03a.75.75 0 01-1.06-1.06L17.69 5.25H8.25a.75.75 0 010-1.5z" clip-rule="evenodd"></path>
+</svg>
+</a></li>
+	<li id="menu-item-308" class="external menu-item menu-item-type-custom menu-item-object-custom"><a target="_blank" rel="noopener" href="https://book.cairo-lang.org/">Cairo Book<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" aria-hidden="true" focusable="false" class="chakra-icon css-1r0yqm7" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" d="M8.25 3.75H19.5a.75.75 0 01.75.75v11.25a.75.75 0 01-1.5 0V6.31L5.03 20.03a.75.75 0 01-1.06-1.06L17.69 5.25H8.25a.75.75 0 010-1.5z" clip-rule="evenodd"></path>
+</svg>
+</a></li>
+	<li id="menu-item-309" class="menu-item menu-item-type-custom menu-item-object-custom"><a href="/tutorials/">Tutorials</a></li>
+	<li id="menu-item-6632" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.starknet.io/developers/roadmap/">Roadmap</a></li>
+</ul>
+</li>
+<li id="menu-item-314" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children"><a>Ecosystem</a>
+<ul class="sub-menu">
+	<li id="menu-item-317" class="external menu-item menu-item-type-custom menu-item-object-custom"><a target="_blank" rel="noopener" href="https://starkgate.starknet.io/">Crypto Bridge<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" aria-hidden="true" focusable="false" class="chakra-icon css-1r0yqm7" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" d="M8.25 3.75H19.5a.75.75 0 01.75.75v11.25a.75.75 0 01-1.5 0V6.31L5.03 20.03a.75.75 0 01-1.06-1.06L17.69 5.25H8.25a.75.75 0 010-1.5z" clip-rule="evenodd"></path>
+</svg>
+</a></li>
+	<li id="menu-item-315" class="menu-item menu-item-type-post_type menu-item-object-page"><a title="Ecosystem Projects" href="https://www.starknet.io/dapps/">Ecosystem Projects</a></li>
+	<li id="menu-item-316" class="menu-item menu-item-type-post_type menu-item-object-page"><a title="Crypto Wallets" href="https://www.starknet.io/crypto-wallets/">Crypto Wallets</a></li>
+	<li id="menu-item-17349" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.starknet.io/bridges-and-onramps/">Bridges &#038; on-ramps</a></li>
+	<li id="menu-item-18521" class="menu-item menu-item-type-post_type menu-item-object-page"><a title="DeFi dApps" href="https://www.starknet.io/defi-dapps/">DeFi dApps</a></li>
+	<li id="menu-item-15818" class="menu-item menu-item-type-custom menu-item-object-custom"><a title="Crypto Games" target="_blank" rel="noopener" href="https://starknet.gg/">Crypto Games</a></li>
+	<li id="menu-item-319" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.starknet.io/?page_id=239">Block Explorers &#038; Monitoring tools</a></li>
+	<li id="menu-item-320" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.starknet.io/?page_id=244">Full-nodes &#038; RPC services</a></li>
+	<li id="menu-item-11629" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.starknet.io/grants/">Starknet Grants</a></li>
+	<li id="menu-item-322" class="external menu-item menu-item-type-custom menu-item-object-custom"><a target="_blank" rel="noopener" href="https://status.starknet.io/">Starknet Status Page<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" aria-hidden="true" focusable="false" class="chakra-icon css-1r0yqm7" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" d="M8.25 3.75H19.5a.75.75 0 01.75.75v11.25a.75.75 0 01-1.5 0V6.31L5.03 20.03a.75.75 0 01-1.06-1.06L17.69 5.25H8.25a.75.75 0 010-1.5z" clip-rule="evenodd"></path>
+</svg>
+</a></li>
+</ul>
+</li>
+<li id="menu-item-323" class="menu-community menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children"><a>Community</a>
+<ul class="sub-menu">
+	<li id="menu-item-634" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.starknet.io/explore-starknet/">Explore Starknet</a></li>
+	<li id="menu-item-3486" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.starknet.io/events/">Events</a></li>
+	<li id="menu-item-5452" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.starknet.io/ambassadors-program/">Ambassadors Program</a></li>
+	<li id="menu-item-5028" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.starknet.io/community-jobs/">Jobs</a></li>
+	<li id="menu-item-332" class="external menu-item menu-item-type-custom menu-item-object-custom"><a target="_blank" rel="noopener" href="https://governance.starknet.io/">Governance<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" aria-hidden="true" focusable="false" class="chakra-icon css-1r0yqm7" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" d="M8.25 3.75H19.5a.75.75 0 01.75.75v11.25a.75.75 0 01-1.5 0V6.31L5.03 20.03a.75.75 0 01-1.06-1.06L17.69 5.25H8.25a.75.75 0 010-1.5z" clip-rule="evenodd"></path>
+</svg>
+</a></li>
+	<li id="menu-item-13647" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.starknet.io/staking/">Staking</a></li>
+	<li id="menu-item-334" class="external menu-item menu-item-type-custom menu-item-object-custom"><a target="_blank" rel="noopener" href="https://community.starknet.io/">Community Forum<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" aria-hidden="true" focusable="false" class="chakra-icon css-1r0yqm7" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" d="M8.25 3.75H19.5a.75.75 0 01.75.75v11.25a.75.75 0 01-1.5 0V6.31L5.03 20.03a.75.75 0 01-1.06-1.06L17.69 5.25H8.25a.75.75 0 010-1.5z" clip-rule="evenodd"></path>
+</svg>
+</a></li>
+	<li id="menu-item-693" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.starknet.io/online-communities/">Online communities</a></li>
+</ul>
+</li>
+<li id="menu-item-337" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children"><a>Resources</a>
+<ul class="sub-menu">
+	<li id="menu-item-5030" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.starknet.io/blog/">Blog</a></li>
+	<li id="menu-item-303" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.starknet.io/faqs/">FAQs</a></li>
+	<li id="menu-item-581" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.starknet.io/glossary/">Glossary</a></li>
+	<li id="menu-item-711" class="menu-item menu-item-type-post_type menu-item-object-page"><a href="https://www.starknet.io/media-kit/">Media Kit</a></li>
+	<li id="menu-item-18559" class="menu-item menu-item-type-post_type menu-item-object-post"><a href="https://www.starknet.io/blog/account-abstraction/">Account Abstraction</a></li>
+</ul>
+</li>
+</ul></div><div class="copyright-bar d-flex f-col">
+    <div class="footer-legal d-flex f-col">
+        <a href="/legal-disclaimers/">Privacy Policy</a>
+        <a href="/legal-disclaimers/#terms-&-conditions">Terms & Conditions</a>
+        <a href="/legal-disclaimers/#terms-of-use">Terms Of Use</a>
+    </div>
+    <div class="site-logo">
+        <a href="/" rel="home">
+            <img class="footer-image is-logo-image" alt="starknet-logo" src="/wp-content/themes/Starknet/assets/img/starknet-logo-light.svg" width="140" height="32">
+        </a>
+    </div>
+    <div class="footer-socials d-flex">
+                        <a href="https://discord.gg/starknet-community" target="_blank" title="Discord" rel="nofollow">
+                    <?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+  <g id="Discord">
+    <path id="vector" d="M18.9308 5.64161C17.6561 5.05671 16.2892 4.62578 14.8599 4.37897C14.8339 4.3742 14.8079 4.38611 14.7945 4.40991C14.6187 4.72259 14.4239 5.13051 14.2876 5.45113C12.7503 5.22099 11.221 5.22099 9.71527 5.45113C9.57887 5.12338 9.37707 4.72259 9.20048 4.40991C9.18707 4.3869 9.16107 4.375 9.13504 4.37897C7.70659 4.62499 6.33963 5.05592 5.06411 5.64161C5.05307 5.64637 5.04361 5.65431 5.03732 5.66462C2.44449 9.53826 1.73421 13.3167 2.08265 17.0483C2.08423 17.0665 2.09447 17.084 2.10867 17.0951C3.81934 18.3514 5.47642 19.114 7.10273 19.6196C7.12876 19.6275 7.15634 19.618 7.1729 19.5965C7.55761 19.0712 7.90054 18.5172 8.19456 17.9347C8.21192 17.9006 8.19535 17.8601 8.15989 17.8466C7.61594 17.6403 7.098 17.3887 6.59977 17.103C6.56037 17.08 6.55721 17.0236 6.59347 16.9966C6.69831 16.9181 6.80318 16.8363 6.9033 16.7538C6.92141 16.7387 6.94665 16.7356 6.96794 16.7451C10.2411 18.2395 13.7846 18.2395 17.0191 16.7451C17.0404 16.7348 17.0657 16.7379 17.0846 16.753C17.1847 16.8356 17.2895 16.9181 17.3952 16.9966C17.4314 17.0236 17.4291 17.08 17.3897 17.103C16.8914 17.3943 16.3735 17.6403 15.8288 17.8458C15.7933 17.8593 15.7775 17.9006 15.7949 17.9347C16.0952 18.5164 16.4381 19.0704 16.8157 19.5957C16.8315 19.618 16.8599 19.6275 16.8859 19.6196C18.5201 19.114 20.1772 18.3514 21.8879 17.0951C21.9028 17.084 21.9123 17.0673 21.9139 17.049C22.3309 12.7349 21.2154 8.98749 18.9568 5.66541C18.9513 5.65431 18.9419 5.64637 18.9308 5.64161ZM8.68335 14.7761C7.69792 14.7761 6.88594 13.8714 6.88594 12.7603C6.88594 11.6493 7.68217 10.7446 8.68335 10.7446C9.69239 10.7446 10.4965 11.6572 10.4807 12.7603C10.4807 13.8714 9.68451 14.7761 8.68335 14.7761ZM15.329 14.7761C14.3435 14.7761 13.5316 13.8714 13.5316 12.7603C13.5316 11.6493 14.3278 10.7446 15.329 10.7446C16.338 10.7446 17.1421 11.6572 17.1264 12.7603C17.1264 13.8714 16.338 14.7761 15.329 14.7761Z" fill="currentColor"></path>
+  </g>
+</svg>
+                </a>
+                                <a href="https://github.com/keep-starknet-strange/awesome-starknet" target="_blank" title="Github" rel="nofollow">
+                    <?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+  <g id="Github">
+    <path id="Vector" d="M12 2.24707C9.6255 2.24717 7.32849 3.09218 5.51999 4.63092C3.71149 6.16965 2.50953 8.30169 2.12916 10.6456C1.74879 12.9894 2.21485 15.3921 3.44393 17.4238C4.67301 19.4555 6.58491 20.9836 8.83755 21.7346C9.33755 21.8221 9.52505 21.5221 9.52505 21.2596C9.52505 21.0221 9.51254 20.2346 9.51254 19.3971C7.00003 19.8596 6.35003 18.7846 6.15003 18.2221C5.9281 17.675 5.5763 17.1902 5.12503 16.8096C4.77503 16.6221 4.27503 16.1596 5.11252 16.1471C5.4323 16.1818 5.73901 16.2931 6.00666 16.4715C6.2743 16.6499 6.49499 16.8902 6.65003 17.1721C6.7868 17.4178 6.97071 17.6341 7.19122 17.8086C7.41173 17.9831 7.6645 18.1123 7.93506 18.189C8.20562 18.2656 8.48864 18.2881 8.76791 18.2552C9.04717 18.2222 9.3172 18.1345 9.56251 17.9971C9.6058 17.4887 9.83237 17.0134 10.2 16.6596C7.97503 16.4096 5.65003 15.5471 5.65003 11.7221C5.63597 10.7282 6.00271 9.76668 6.67503 9.0346C6.36931 8.17082 6.40508 7.22288 6.77503 6.3846C6.77503 6.3846 7.6125 6.12209 9.52503 7.4096C11.1613 6.95957 12.8887 6.95957 14.525 7.4096C16.4375 6.1096 17.275 6.3846 17.275 6.3846C17.645 7.22287 17.6808 8.17083 17.375 9.0346C18.0494 9.76542 18.4164 10.7278 18.4 11.7221C18.4 15.5596 16.0625 16.4096 13.8375 16.6596C14.0762 16.9015 14.26 17.1919 14.3764 17.5111C14.4929 17.8303 14.5393 18.1709 14.5125 18.5096C14.5125 19.8471 14.5 20.9221 14.5 21.2596C14.5 21.5221 14.6875 21.8346 15.1875 21.7346C17.4362 20.9775 19.3426 19.4458 20.5664 17.4131C21.7903 15.3804 22.2519 12.9789 21.8689 10.6373C21.4859 8.29572 20.2832 6.16644 18.4755 4.62958C16.6678 3.09272 14.3727 2.24831 12 2.24707Z" fill="#E0E0E0"></path>
+  </g>
+</svg>
+                </a>
+                                <a href="https://www.youtube.com/channel/UCnDWguR8mE2oDBsjhQkgbvg" target="_blank" title="youtube" rel="nofollow">
+                    <?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" stroke="currentColor" fill="currentColor" stroke-width="0" role="img" viewBox="0 0 24 24" font-size="1.25rem" aria-hidden="true" height="1em" width="1em">
+  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path>
+</svg>
+                </a>
+                                <a href="https://twitter.com/Starknet" target="_blank" title="x-logo" rel="nofollow">
+                    <?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+  <g id="x-logo 1" clip-path="url(#clip0_2772_329)">
+    <g id="Group">
+      <path id="Vector" d="M10.6935 7.614L17.382 0H15.7972L9.987 6.60975L5.34975 0H0L7.014 9.996L0 17.9797H1.58475L7.71675 10.998L12.615 17.9797H17.9647L10.6935 7.614ZM8.52225 10.0837L7.8105 9.08775L2.15625 1.17H4.59075L9.15525 7.56225L9.864 8.55825L15.7965 16.8668H13.362L8.52225 10.0837Z" fill="currentColor"></path>
+    </g>
+  </g>
+  <defs>
+    <clipPath id="clip0_2772_329">
+      <rect width="18" height="18" fill="currentColor"></rect>
+    </clipPath>
+  </defs>
+</svg>
+                </a>
+                    </div>
+</div>    </div>
+</footer>
+
+<script type="speculationrules">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"\/*"},{"not":{"href_matches":["\/wp-*.php","\/wp-admin\/*","\/wp-content\/uploads\/*","\/wp-content\/*","\/wp-content\/plugins\/*","\/wp-content\/themes\/Starknet\/*","\/wp-content\/themes\/generatepress\/*","\/*\\?(.+)"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch, .no-prefetch a"}}]},"eagerness":"conservative"}]}
+</script>
+<script id="generate-a11y">!function(){"use strict";if("querySelector"in document&&"addEventListener"in window){var e=document.body;e.addEventListener("mousedown",function(){e.classList.add("using-mouse")}),e.addEventListener("keydown",function(){e.classList.remove("using-mouse")})}}();</script><script src="https://www.starknet.io/wp-includes/js/dist/hooks.min.js?ver=4d63a3d491d11ffd8ac6" id="wp-hooks-js"></script>
+<script src="https://www.starknet.io/wp-includes/js/dist/i18n.min.js?ver=5e580eb46a90c2b997e6" id="wp-i18n-js"></script>
+<script id="wp-i18n-js-after">
+wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
+</script>
+<script src="https://www.starknet.io/wp-content/plugins/contact-form-7/includes/swv/js/index.js?ver=6.0.6" id="swv-js"></script>
+<script id="contact-form-7-js-before">
+var wpcf7 = {
+    "api": {
+        "root": "https:\/\/www.starknet.io\/wp-json\/",
+        "namespace": "contact-form-7\/v1"
+    },
+    "cached": 1
+};
+</script>
+<script src="https://www.starknet.io/wp-content/plugins/contact-form-7/includes/js/index.js?ver=6.0.6" id="contact-form-7-js"></script>
+<!--[if lte IE 11]>
+<script src="https://www.starknet.io/wp-content/themes/generatepress/assets/js/classList.min.js?ver=3.4.0" id="generate-classlist-js"></script>
+<![endif]-->
+<script id="generate-menu-js-extra">
+var generatepressMenu = {"toggleOpenedSubMenus":"1","openSubMenuLabel":"Open Sub-Menu","closeSubMenuLabel":"Close Sub-Menu"};
+</script>
+<script src="https://www.starknet.io/wp-content/themes/generatepress/assets/js/menu.min.js?ver=3.4.0" id="generate-menu-js"></script>
+<script src="https://www.starknet.io/wp-content/plugins/breeze/assets/js/js-front-end/breeze-lazy-load.min.js?ver=2.2.10" id="breeze-lazy-js"></script>
+<script id="breeze-lazy-js-after">
+const lazyLoadInstance = new LazyLoad({
+						    elements_selector: ".br-lazy",
+						    data_src: "breeze",
+						    data_srcset: "brsrcset",
+						    data_sizes: "brsizes",
+						    class_loaded: "br-loaded",
+						    threshold: 300,
+						    callback_enter: (element) => {
+						        console.log("Entered viewport:", element);
+						    },
+						    callback_loaded: (element) => {
+						        console.log("Loaded:", element);
+						    }
+						});
+</script>
+<script src="https://www.google.com/recaptcha/api.js?render=6LfJj90pAAAAAIA7bp6T8s7VsYEfHxH8yRVBrwZ9&amp;ver=3.0" id="google-recaptcha-js"></script>
+<script src="https://www.starknet.io/wp-includes/js/dist/vendor/wp-polyfill.min.js?ver=3.15.0" id="wp-polyfill-js"></script>
+<script id="wpcf7-recaptcha-js-before">
+var wpcf7_recaptcha = {
+    "sitekey": "6LfJj90pAAAAAIA7bp6T8s7VsYEfHxH8yRVBrwZ9",
+    "actions": {
+        "homepage": "homepage",
+        "contactform": "contactform"
+    }
+};
+</script>
+<script src="https://www.starknet.io/wp-content/plugins/contact-form-7/modules/recaptcha/index.js?ver=6.0.6" id="wpcf7-recaptcha-js"></script>
+<script src="https://www.starknet.io/wp-content/themes/Starknet/assets/js/libs/prism.js?ver=070321130" id="hcb-prism-js"></script>
+<script src="https://www.starknet.io/wp-includes/js/clipboard.min.js?ver=2.0.11" id="clipboard-js"></script>
+<script id="hcb-script-js-extra">
+var hcbVars = {"showCopyBtn":"1","copyBtnLabel":"Copy code to clipboard"};
+</script>
+<script src="https://www.starknet.io/wp-content/plugins/highlighting-code-block/build/js/hcb_script.js?ver=070321130" id="hcb-script-js"></script>
+<script src="https://www.starknet.io/wp-content/themes/Starknet/assets/js/libs/algoliasearch-lite.umd.js?ver=0.1.4" id="algolia-search-lite-js"></script>
+<script src="https://www.starknet.io/wp-content/themes/Starknet/assets/js/libs/algolia.autocomplete-core.min.js?ver=0.1.4" id="algolia-autocomplete-core-js"></script>
+<script src="https://www.starknet.io/wp-content/themes/Starknet/assets/js/libs/algolia.autocomplete-js.min.js?ver=0.1.4" id="algolia-autocomplete-js-js"></script>
+<script src="https://www.starknet.io/wp-content/themes/Starknet/assets/js/libs/algolia.autocomplete-plugin-query-suggestions.min.js?ver=0.1.4" id="algolia-autocomplete-query-suggestions-js-js"></script>
+<script src="https://www.starknet.io/wp-content/themes/Starknet/assets/js/libs/algolia.autocomplete-plugin-recent-searches.min.js?ver=0.1.4" id="algolia-autocomplete-recent-searches-js-js"></script>
+<script src="https://www.starknet.io/wp-content/themes/Starknet/assets/js/algolia.js?ver=0.1.4" id="algolia-integration-js-js"></script>
+<script src="https://www.starknet.io/wp-content/themes/Starknet/assets/js/main.js?ver=1751508690" id="main-scripts-js"></script>
+<script src="https://www.starknet.io/wp-content/themes/Starknet/assets/js/libs/slick.min.js?ver=0.1.4" id="slick-js"></script>
+<script src="https://www.starknet.io/wp-content/themes/Starknet/assets/js/libs/lottie.min.js?ver=0.1.4" id="lottie-js"></script>
+<script src="https://www.starknet.io/wp-content/themes/Starknet/assets/js/libs/lottie-player.js?ver=0.1.4" id="lottie-player-js"></script>
+<script src="https://www.starknet.io/wp-content/themes/Starknet/assets/js/libs/sharer.min.js?ver=0.1.4" id="sharer-js"></script>
+
+<div id="gsp_data_html" data-g_version="3.14.0" data-w_id="c729e61a2b3f4dee8d29a4004ad12ff5" data-s_enc="0b569df9536b00c26fa6d2d10d6152cc3cbe9d4481c5e62d8e4a3ae82326c46a08627cc276fcc175ea9e55250f5c3991ee2fa682fbab0909ca5ca24e2eff74abea728e3a" data-h_enc="2a5383b453d928d6a2665cc6508c32daf3df02718f0e7ddf4fd90025369cb3bb" data-hh_enc="0d664b4d70e67f00d4a40c228778e62d7073a86ef843b3f7db54afbcf36ef70b6901c7110370fa7cdec8d7b330d8f4261c8136bba518466078b74227fc4581e6c3f78d7c4485f452e914f896c69405abd77144dd64c0e775f2a4bca8fc738aa40aef43c15faf0cbab60a16e8a10b7abb" data-lazy_load="1" data-gt-w="gsp_clgtranslate_wrapper" data-vv_index="11" data-ref=""></div>
+</body>
+</html>

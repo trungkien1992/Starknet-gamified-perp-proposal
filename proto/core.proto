@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package streetcred.core.v1;
+
+// The Core Game Service, handles primary real-time game logic.
+service CoreService {
+  // A player requests to move to a new position on the map.
+  rpc MovePlayer(MovePlayerRequest) returns (MovePlayerResponse);
+  rpc RollbackPvPSession(RollbackPvPSessionRequest) returns (RollbackPvPSessionResponse);
+}
+
+message MovePlayerRequest {
+  string user_id = 1;
+  int32 target_x = 2;
+  int32 target_y = 3;
+}
+
+message MovePlayerResponse {
+  // Returns true if the move was accepted for processing.
+  bool success = 1;
+  // A user-facing message for context.
+  string message = 2;
+}
+
+message RollbackPvPSessionRequest {
+  int32 session_id = 1;
+}
+
+message RollbackPvPSessionResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message GameEvent {
+  string type = 1; // e.g., "xp.earned", "streak.milestone", "badge.minted"
+  string player_id = 2;
+  uint32 amount = 3;
+  string badge = 4;
+  uint32 streak = 5;
+  string timestamp = 6;
+  string payload = 7; // JSON string for extensibility
+}

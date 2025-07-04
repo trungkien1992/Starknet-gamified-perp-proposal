@@ -1,0 +1,29 @@
+[project]
+name = "persistence-service"
+version = "0.1.0"
+description = "StreetCred Clash Persistence Service"
+authors = [{ name = "Your Name", email = "you@example.com" }]
+dependencies = [
+    "kafka-python>=2.0.2",
+    "asyncpg>=0.29.0",
+    "pydantic-settings>=2.3.4",
+]
+requires-python = ">=3.11"
+
+# This section is for Poetry-specific tooling.
+[tool.poetry]
+name = "persistence-service"
+version = "0.1.0"
+description = "StreetCred Clash Persistence Service"
+authors = ["Your Name <you@example.com>"]
+packages = [{include = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+kafka-python = "^2.0.2"
+asyncpg = "^0.29.0"
+pydantic-settings = "^2.3.4"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

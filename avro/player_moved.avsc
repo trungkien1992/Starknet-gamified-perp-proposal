@@ -1,0 +1,12 @@
+{
+  "type": "record",
+  "namespace": "com.streetcredclash.events",
+  "name": "PlayerMoved",
+  "doc": "Published when a player's move has been validated and their position is updated.",
+  "fields": [
+    { "name": "user_id", "type": "string" },
+    { "name": "new_x", "type": "int", "doc": "The new X coordinate of the player." },
+    { "name": "new_y", "type": "int", "doc": "The new Y coordinate of the player." },
+    { "name": "timestamp_ms", "type": "long", "doc": "Unix timestamp in milliseconds of when the event occurred." }
+  ]
+}

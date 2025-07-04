@@ -1,0 +1,36 @@
+name: frontend
+description: A gamified perpetual trading app
+version: 1.0.0+1
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_riverpod: ^2.3.6
+  graphql_flutter: ^5.2.0
+  http: ^1.1.0 
+  starknet: ^0.1.2+1
+  freezed_annotation: ^2.4.1
+  google_fonts: ^6.1.0
+  go_router: ^15.2.4
+  web_socket_channel: ^3.0.3
+  audioplayers: ^5.2.1
+  share_plus: ^7.2.1
+  flutter_svg: ^2.0.7
+  url_launcher: ^6.2.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  build_runner: ^2.4.11
+  freezed: ^2.5.2
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/placeholder.txt
+    - assets/hand_up.png
+    - assets/hand_down.png
+    - assets/starknet_logo.svg
+    - assets/sounds/reward_chime.mp3

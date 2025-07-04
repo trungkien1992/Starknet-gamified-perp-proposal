@@ -1,0 +1,10 @@
+target/
+Cargo.lock
+.git/
+.gitignore
+README.md
+*.md
+.env
+.idea/
+.vscode/
+*.log 
