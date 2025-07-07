@@ -27,7 +27,7 @@ class OnboardingStepWidget extends StatelessWidget {
                 color: const Color(0xFF2A2A2A),
                 borderRadius: BorderRadius.circular(60),
                 border: Border.all(
-                  color: _getStepColor(step.index).withOpacity(0.3),
+                  color: _getStepColor(step.index).withValues(alpha: 0.3),
                   width: 2,
                 ),
               ),
@@ -104,7 +104,7 @@ class OnboardingStepWidget extends StatelessWidget {
               color: const Color(0xFF2A2A2A),
               borderRadius: BorderRadius.circular(20),
               border: Border.all(
-                color: const Color(0xFF00FFFF).withOpacity(0.3),
+                color: const Color(0xFF00FFFF).withValues(alpha: 0.3),
                 width: 1.5,
               ),
             ),

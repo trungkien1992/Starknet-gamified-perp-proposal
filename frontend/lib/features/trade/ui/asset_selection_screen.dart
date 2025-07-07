@@ -5,6 +5,7 @@ import '../../../app/theme/street_cred_theme.dart';
 import '../widgets/brand_symbol.dart';
 import '../../../data/providers/extended_provider.dart';
 import '../../../data/datasources/extended_api_client.dart';
+import '../../../components/central_background_overlay.dart';
 
 // Provider for selected asset index (for backward compatibility with UI)
 final selectedAssetProvider = StateProvider<int>((ref) => 1); // Default to ETH
@@ -29,33 +30,34 @@ class _AssetSelectionScreenState extends ConsumerState<AssetSelectionScreen>
 
   bool _isPressed = false;
 
-  // Available assets with their display configuration
+  // Central Hong Kong focused assets for prototype
   final List<Map<String, dynamic>> assets = [
+    {
+      'symbol': 'HSI',
+      'name': 'Hang Seng Index',
+      'icon': Icons.account_balance,
+      'color': Color(0xFFDC143C), // Crimson red for HSI
+      'pair': 'HSI-HKD',
+      'description': '中環主指數',
+      'location': 'Central Financial District',
+    },
+    {
+      'symbol': 'TCEHY',
+      'name': 'Tencent Holdings',
+      'icon': Icons.business_center,
+      'color': Color(0xFF00D4FF), // Tencent blue
+      'pair': 'TCEHY-HKD',
+      'description': '科技巨頭',
+      'location': 'Central Tower',
+    },
     {
       'symbol': 'BTC',
       'name': 'Bitcoin',
       'icon': Icons.currency_bitcoin,
       'color': Color(0xFFF7931A), // Bitcoin orange
       'pair': 'BTC-USDT',
-      'description': 'Digital Gold',
-    },
-    {
-      'symbol': 'ETH',
-      'name': 'Ethereum',
-      'icon': Icons.local_gas_station, // More appropriate for "Digital Oil"
-      'color': Color(0xFF627EEA), // Ethereum blue
-      'pair': 'ETH-USDT',
-      'description': 'Digital Oil',
-    },
-    {
-      'symbol': 'STRK',
-      'name': 'Starknet',
-      'icon': Icons.rocket_launch, // Better represents innovation
-      'color': Color(
-        0xFF8C8DFC,
-      ), // Brighter Starknet purple for better visibility
-      'pair': 'STRK-USDT',
-      'description': 'Innovation Rollup',
+      'description': '數字黃金',
+      'location': 'Central Crypto Hub',
     },
   ];
 
@@ -122,18 +124,27 @@ class _AssetSelectionScreenState extends ConsumerState<AssetSelectionScreen>
     final marketDataAsync = ref.watch(extendedMarketDataProvider(selectedAsset['pair']));
 
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              selectedAsset['color'].withValues(alpha: 0.1),
-              StreetCredTheme.darkAlley,
-              StreetCredTheme.darkGrey,
-            ],
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          onPressed: () {
+            if (Navigator.of(context).canPop()) {
+              Navigator.of(context).pop();
+            } else {
+              context.go('/');
+            }
+          },
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.white,
           ),
         ),
+      ),
+      extendBodyBehindAppBar: true,
+      body: CentralBackgroundOverlay(
+        themeColor: selectedAsset['color'],
+        isRaining: false,
         child: SafeArea(
           child: Column(
             children: [
@@ -169,23 +180,37 @@ class _AssetSelectionScreenState extends ConsumerState<AssetSelectionScreen>
                           width: 1,
                         ),
                       ),
-                      child: Text(
-                        'CHOOSE YOUR ASSET',
-                        style: StreetCredTheme.graffitiTitle.copyWith(
-                          fontSize: 22,
-                          letterSpacing: 2,
-                          color: selectedAsset['color'],
-                          fontWeight: FontWeight.bold,
-                          shadows: [
-                            Shadow(
-                              color: selectedAsset['color'].withValues(
-                                alpha: 0.6,
-                              ),
-                              blurRadius: 10,
-                              offset: const Offset(0, 0),
+                      child: Column(
+                        children: [
+                          Text(
+                            '中環金融區',
+                            style: StreetCredTheme.graffitiTitle.copyWith(
+                              fontSize: 16,
+                              letterSpacing: 1,
+                              color: selectedAsset['color'],
+                              fontWeight: FontWeight.w500,
                             ),
-                          ],
-                        ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            'CENTRAL FINANCIAL DISTRICT',
+                            style: StreetCredTheme.graffitiTitle.copyWith(
+                              fontSize: 18,
+                              letterSpacing: 2,
+                              color: selectedAsset['color'],
+                              fontWeight: FontWeight.bold,
+                              shadows: [
+                                Shadow(
+                                  color: selectedAsset['color'].withValues(
+                                    alpha: 0.6,
+                                  ),
+                                  blurRadius: 10,
+                                  offset: const Offset(0, 0),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -199,7 +224,7 @@ class _AssetSelectionScreenState extends ConsumerState<AssetSelectionScreen>
                         ),
                         const SizedBox(width: 6),
                         Text(
-                          'Swipe to explore trading pairs',
+                          'Central district markets only',
                           style: StreetCredTheme.graffitiBody.copyWith(
                             color: selectedAsset['color'].withValues(
                               alpha: 0.8,
@@ -357,6 +382,20 @@ class _AssetSelectionScreenState extends ConsumerState<AssetSelectionScreen>
                                                   .copyWith(
                                                     fontSize: 12,
                                                     color: Colors.grey[400],
+                                                  ),
+                                            ),
+
+                                            const SizedBox(height: 4),
+
+                                            // Central Location
+                                            Text(
+                                              asset['location'],
+                                              style: StreetCredTheme
+                                                  .graffitiBody
+                                                  .copyWith(
+                                                    fontSize: 10,
+                                                    color: asset['color'].withValues(alpha: 0.7),
+                                                    fontStyle: FontStyle.italic,
                                                   ),
                                             ),
 

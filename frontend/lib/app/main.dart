@@ -5,8 +5,14 @@ import 'routing/app_router.dart';
 import 'package:go_router/go_router.dart';
 import 'package:frontend/features/trade/providers/wallet_provider.dart' as legacy;
 import 'package:frontend/features/wallet/providers/wallet_providers.dart';
+import 'performance/startup_optimizer.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  // Initialize performance optimizations
+  await StartupOptimizer.initialize();
+  
   runApp(
     ProviderScope(
       observers: [_WalletRefreshObserver()],

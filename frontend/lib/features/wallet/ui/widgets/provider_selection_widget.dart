@@ -46,10 +46,10 @@ class ProviderSelectionWidget extends ConsumerWidget {
         Container(
           padding: const EdgeInsets.all(StreetCredDesignSystem.spacingM),
           decoration: BoxDecoration(
-            color: const Color(0xFF2A2A2A).withOpacity(0.5),
+            color: const Color(0xFF2A2A2A).withValues(alpha: 0.5),
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
-              color: const Color(0xFF00FF41).withOpacity(0.3),
+              color: const Color(0xFF00FF41).withValues(alpha: 0.3),
               width: 1,
             ),
           ),
@@ -92,7 +92,7 @@ class ProviderSelectionWidget extends ConsumerWidget {
               color: const Color(0xFF2A2A2A),
               borderRadius: BorderRadius.circular(24),
               border: Border.all(
-                color: _getProviderColor(provider).withOpacity(0.3),
+                color: _getProviderColor(provider).withValues(alpha: 0.3),
                 width: 2,
               ),
             ),

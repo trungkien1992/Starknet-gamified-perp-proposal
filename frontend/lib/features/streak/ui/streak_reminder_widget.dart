@@ -52,7 +52,7 @@ class _StreakReminderWidgetState extends ConsumerState<StreakReminderWidget>
               borderRadius: BorderRadius.circular(24),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.yellow.withOpacity(0.5),
+                  color: Colors.yellow.withValues(alpha: 0.5),
                   blurRadius: 16,
                 ),
               ],

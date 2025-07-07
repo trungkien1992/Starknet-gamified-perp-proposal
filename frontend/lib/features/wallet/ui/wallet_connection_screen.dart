@@ -198,7 +198,7 @@ class _WalletConnectionScreenState extends ConsumerState<WalletConnectionScreen>
               Container(
                 padding: const EdgeInsets.all(StreetCredDesignSystem.spacingM),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF2A2A2A).withOpacity(0.5),
+                  color: const Color(0xFF2A2A2A).withValues(alpha: 0.5),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Row(
@@ -254,7 +254,7 @@ class _WalletConnectionScreenState extends ConsumerState<WalletConnectionScreen>
             Container(
               padding: const EdgeInsets.all(StreetCredDesignSystem.spacingM),
               decoration: BoxDecoration(
-                color: const Color(0xFF2A2A2A).withOpacity(0.5),
+                color: const Color(0xFF2A2A2A).withValues(alpha: 0.5),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Column(
@@ -343,10 +343,10 @@ class _WalletConnectionScreenState extends ConsumerState<WalletConnectionScreen>
     return Container(
       padding: const EdgeInsets.all(StreetCredDesignSystem.spacingM),
       decoration: BoxDecoration(
-        color: const Color(0xFF2A2A2A).withOpacity(0.3),
+        color: const Color(0xFF2A2A2A).withValues(alpha: 0.3),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: const Color(0xFF00FF41).withOpacity(0.2),
+          color: const Color(0xFF00FF41).withValues(alpha: 0.2),
           width: 1,
         ),
       ),

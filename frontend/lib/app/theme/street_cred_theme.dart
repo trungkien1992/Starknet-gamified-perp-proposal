@@ -2,18 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class StreetCredTheme {
-  // Neon Color Palette
+  // Hong Kong Neon Color Palette
   static const Color neonPink = Color(0xFFFF0080);
   static const Color neonGreen = Color(0xFF00FF41);
   static const Color neonBlue = Color(0xFF00FFFF);
   static const Color neonPurple = Color(0xFF8A2BE2);
   static const Color neonOrange = Color(0xFFFF6B35);
   static const Color neonYellow = Color(0xFFFFFF00);
+  static const Color hongKongRed = Color(0xFFDC143C);
+  static const Color electricBlue = Color(0xFF7DF9FF);
+  static const Color streetLightAmber = Color(0xFFFFBF00);
 
-  // Dark Background Colors
+  // Night Rain Environment Colors
+  static const Color wetAsphalt = Color(0xFF0A0A0A);
   static const Color darkAlley = Color(0xFF0A0A0A);
   static const Color darkGrey = Color(0xFF1A1A1A);
   static const Color mediumGrey = Color(0xFF2A2A2A);
+  static const Color rainReflection = Color(0xFF3A3A3A);
+  static const Color neonGlow = Color(0xFF4A4A4A);
 
   // Trade Direction Colors
   static const Color longColor = neonGreen;
@@ -120,6 +126,19 @@ class StreetCredTheme {
     colors: [neonGreen, neonBlue, neonPink],
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
+  );
+
+  // Hong Kong Night Rain Gradients
+  static const LinearGradient rainReflectionGradient = LinearGradient(
+    colors: [wetAsphalt, rainReflection, neonGlow],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+  );
+
+  static const LinearGradient neonStreetGradient = LinearGradient(
+    colors: [hongKongRed, electricBlue, streetLightAmber],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
   );
 
   // Box Decorations

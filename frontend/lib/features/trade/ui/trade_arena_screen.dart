@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'dart:math' as Math;
 import '../../../app/theme/street_cred_theme.dart';
 import '../../../app/theme/street_cred_design_system.dart';
 import '../../../app/widgets/street_cred_card.dart';
@@ -16,6 +17,16 @@ import '../../../state/xp_provider.dart';
 import 'asset_selection_screen.dart';
 import '../../../data/providers/extended_provider.dart';
 import '../../../data/datasources/extended_api_client.dart';
+import '../../../providers/weather_provider.dart';
+import '../../../components/rain_overlay.dart';
+import '../../../components/weather_demo_widget.dart';
+import '../../../components/central_background_overlay.dart';
+import '../../../services/weather_service.dart';
+import '../../territory/providers/territory_provider.dart';
+import '../../territory/services/territory_service.dart';
+import '../../social/models/meme_models.dart';
+import '../../social/providers/social_providers.dart';
+import '../../social/ui/share_trade_widget.dart';
 
 class TradeArenaScreen extends ConsumerStatefulWidget {
   const TradeArenaScreen({Key? key}) : super(key: key);
@@ -31,26 +42,27 @@ class _TradeArenaScreenState extends ConsumerState<TradeArenaScreen>
   late Animation<double> _backgroundAnimation;
   late Animation<double> _inkPulseAnimation;
   bool showHandDemo = true;
+  TradeOutcome? _pendingShareOutcome;
 
-  // Asset display configuration mapped to Extended Exchange markets
+  // Central Hong Kong focused assets for prototype
   final Map<String, Map<String, dynamic>> _assetConfig = {
+    'HSI-HKD': {
+      'symbol': 'HSI',
+      'name': 'Hang Seng Index',
+      'icon': Icons.account_balance,
+      'color': Color(0xFFDC143C), // Crimson red for HSI
+    },
+    'TCEHY-HKD': {
+      'symbol': 'TCEHY',
+      'name': 'Tencent Holdings',
+      'icon': Icons.business_center,
+      'color': Color(0xFF00D4FF), // Tencent blue
+    },
     'BTC-USDT': {
       'symbol': 'BTC',
       'name': 'Bitcoin',
       'icon': Icons.currency_bitcoin,
       'color': Color(0xFFF7931A), // Bitcoin orange
-    },
-    'ETH-USDT': {
-      'symbol': 'ETH',
-      'name': 'Ethereum',
-      'icon': Icons.diamond,
-      'color': Color(0xFF627EEA), // Ethereum blue
-    },
-    'STRK-USDT': {
-      'symbol': 'STRK',
-      'name': 'Starknet',
-      'icon': Icons.blur_on,
-      'color': Color(0xFF8C8DFC), // Starknet purple
     },
   };
 
@@ -91,10 +103,16 @@ class _TradeArenaScreenState extends ConsumerState<TradeArenaScreen>
     final inkNotifier = ref.read(inkProvider.notifier);
     final selectedMarket = ref.read(selectedMarketProvider);
     final tradingService = ref.read(extendedTradingServiceProvider);
+    final inkEfficiencyBonus = ref.read(inkEfficiencyBonusProvider);
+    final volatilityMultiplier = ref.read(volatilityMultiplierProvider);
+    final territoriesNotifier = ref.read(territoriesProvider.notifier);
+    final territoryService = ref.read(territoryServiceProvider);
+    final currentTerritoryId = ref.read(currentTerritoryProvider);
 
-    // Deduct ink based on leverage
-    final inkCost = (leverage * 10).round();
-    inkNotifier.spendInk(inkCost);
+    // Deduct ink based on leverage with weather effects
+    final baseInkCost = (leverage * 10).round();
+    final actualInkCost = (baseInkCost / inkEfficiencyBonus).round();
+    inkNotifier.spendInk(actualInkCost);
 
     try {
       // Calculate position size based on leverage (simplified)
@@ -108,19 +126,65 @@ class _TradeArenaScreenState extends ConsumerState<TradeArenaScreen>
         quantity: baseQuantity.toStringAsFixed(6),
       );
 
-      // Show success feedback
+      // Calculate territory contribution
+      final territoryContribution = territoryService.calculateTradeContribution(
+        baseQuantity * 1000, // Convert to dollar amount estimate
+        leverage,
+      );
+      
+      // Add territory progress if territory is selected
+      String territoryBonus = '';
+      if (currentTerritoryId != null) {
+        territoriesNotifier.addTradeProgress(currentTerritoryId, tradesCompleted: territoryContribution);
+        territoryBonus = ' [+$territoryContribution Territory Progress]';
+      }
+
+      // Create trade outcome for social sharing
+      final tradeOutcome = TradeOutcome(
+        direction: direction,
+        leverage: leverage,
+        pnl: (Math.Random().nextDouble() - 0.5) * 200, // Simulate P&L for demo
+        asset: selectedMarket,
+        timestamp: DateTime.now(),
+        territoryName: currentTerritoryId != null ? 'Central District' : null,
+        isWin: territoryContribution > 2, // Simple win logic based on contribution
+        streakDays: null, // TODO: Implement streak tracking
+        consecutiveWins: null, // TODO: Implement win tracking
+      );
+
+      // Add to recent outcomes
+      ref.read(addTradeOutcomeProvider(tradeOutcome));
+
+      // Check if we should auto-suggest sharing
+      final shouldAutoSuggest = ref.read(autoSuggestShareProvider(tradeOutcome));
+      
+      // Show success feedback with weather and territory bonus info
+      final weatherBonus = inkEfficiencyBonus > 1.0 ? ' (Rain Bonus!)' : '';
+      final volatilityInfo = volatilityMultiplier > 1.2 ? ' [High Volatility]' : '';
+      
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            'Trade executed: $direction (x${leverage.toStringAsFixed(1)}) - Order ID: ${orderResponse.orderId}',
+            'Trade executed: $direction (x${leverage.toStringAsFixed(1)})$weatherBonus$volatilityInfo$territoryBonus',
             style: StreetCredTheme.graffitiBody,
           ),
           backgroundColor: direction == 'LONG'
               ? StreetCredTheme.longColor
               : StreetCredTheme.shortColor,
-          duration: const Duration(seconds: 3),
+          duration: const Duration(seconds: 4),
         ),
       );
+
+      // Show share widget if auto-suggested or for significant trades
+      if (shouldAutoSuggest || tradeOutcome.pnl.abs() > 50) {
+        Future.delayed(const Duration(seconds: 2), () {
+          if (mounted) {
+            setState(() {
+              _pendingShareOutcome = tradeOutcome;
+            });
+          }
+        });
+      }
     } catch (e) {
       // Show error feedback
       ScaffoldMessenger.of(context).showSnackBar(
@@ -143,392 +207,337 @@ class _TradeArenaScreenState extends ConsumerState<TradeArenaScreen>
     final currentXP = ref.watch(xpProvider);
     final selectedMarket = ref.watch(selectedMarketProvider);
     final marketDataAsync = ref.watch(currentMarketDataProvider);
-    final selectedAssetConfig = _assetConfig[selectedMarket] ?? _assetConfig['BTC-USDT']!;
+    final selectedAssetConfig = _assetConfig[selectedMarket] ?? _assetConfig['HSI-HKD']!;
+    
+    // Weather providers
+    final weatherDisplay = ref.watch(weatherDisplayProvider);
+    final isRaining = ref.watch(isRainingProvider);
+    final weatherStateAsync = ref.watch(weatherStateProvider);
+    final weatherActions = ref.read(weatherActionsProvider);
+    
+    // Territory providers
+    final selectedTerritory = ref.watch(selectedTerritoryProvider);
+    final userPrestige = ref.watch(userPrestigeProvider);
 
     return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            decoration: StreetCredDesignSystem.backgroundGradient(
-              selectedAssetConfig['color'],
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          onPressed: () {
+            if (Navigator.of(context).canPop()) {
+              Navigator.of(context).pop();
+            } else {
+              context.go('/');
+            }
+          },
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
+        ),
+      ),
+      extendBodyBehindAppBar: true,
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xFF0A0A1A), // Dark night sky
+              Color(0xFF1A1A2E), // Deep purple
+              Color(0xFF16213E), // Darker blue
+            ],
+          ),
+        ),
+        child: Stack(
+          children: [
+            // Rain effect overlay
+            Positioned.fill(
+              child: CustomPaint(
+                painter: RainPainter(),
+              ),
             ),
-            child: SafeArea(
+            
+            // Neon street lights
+            Positioned(
+              top: 50,
+              left: 20,
+              child: Container(
+                width: 4,
+                height: 200,
+                decoration: BoxDecoration(
+                  color: Color(0xFF00FFFF),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color(0xFF00FFFF).withOpacity(0.5),
+                      blurRadius: 20,
+                      spreadRadius: 5,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            
+            // Hong Kong street wall background
+            Positioned.fill(
+              child: Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/hong_kong_wall.jpg'),
+                    fit: BoxFit.cover,
+                    colorFilter: ColorFilter.mode(
+                      Colors.black.withOpacity(0.6),
+                      BlendMode.darken,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            
+            // Water puddle reflections
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              height: 100,
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.transparent,
+                      Color(0xFF001122).withOpacity(0.8),
+                    ],
+                  ),
+                ),
+                child: CustomPaint(
+                  painter: WaterReflectionPainter(),
+                ),
+              ),
+            ),
+            
+            SafeArea(
               child: Column(
                 children: [
-                  // Header using design system
-                  StreetCredHeader(
-                    title: 'STREETCRED CLASH',
-                    themeColor: selectedAssetConfig['color'],
-                    showBrandSymbol: false,
-                    actions: [
-                      // Ink Display with pulse animation
-                      AnimatedBuilder(
-                        animation: _inkPulseAnimation,
-                        builder: (context, child) {
-                          return Transform.scale(
-                            scale: _inkPulseAnimation.value,
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 12,
-                                    vertical: 6,
-                                  ),
-                                  decoration:
-                                      StreetCredDesignSystem.statusBadgeDecoration(
-                                        StreetCredTheme.neonYellow,
-                                      ),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Icon(
-                                        Icons.brush,
-                                        color: StreetCredTheme.neonYellow,
-                                        size: 16,
-                                      ),
-                                      const SizedBox(width: 6),
-                                      Text(
-                                        '$currentInk',
-                                        style:
-                                            StreetCredDesignSystem.bodyStyle()
-                                                .copyWith(
-                                                  color: StreetCredTheme
-                                                      .neonYellow,
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(width: 12),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 12,
-                                    vertical: 6,
-                                  ),
-                                  decoration:
-                                      StreetCredDesignSystem.statusBadgeDecoration(
-                                        StreetCredTheme.neonBlue,
-                                      ),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Icon(
-                                        Icons.star,
-                                        color: StreetCredTheme.neonBlue,
-                                        size: 16,
-                                      ),
-                                      const SizedBox(width: 6),
-                                      Text(
-                                        '$currentXP XP',
-                                        style:
-                                            StreetCredDesignSystem.bodyStyle()
-                                                .copyWith(
-                                                  color:
-                                                      StreetCredTheme.neonBlue,
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                      ),
-                                    ],
-                                  ),
+                  // Neon street sign header
+                  Container(
+                    padding: EdgeInsets.all(20),
+                    child: Column(
+                      children: [
+                        // Neon glow effect for title
+                        Container(
+                          padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              color: Color(0xFFFF0080),
+                              width: 2,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Color(0xFFFF0080).withOpacity(0.6),
+                                blurRadius: 20,
+                                spreadRadius: 2,
+                              ),
+                            ],
+                          ),
+                          child: Text(
+                            '中環金融區',
+                            style: TextStyle(
+                              color: Color(0xFFFF0080),
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 2,
+                              shadows: [
+                                Shadow(
+                                  color: Color(0xFFFF0080),
+                                  blurRadius: 10,
                                 ),
                               ],
                             ),
-                          );
-                        },
-                      ),
-                      const SizedBox(width: 12),
-                      scb.StreetCredButton(
-                        text: '',
-                        themeColor: selectedAssetConfig['color'],
-                        style: scb.ButtonStyle.navigation,
-                        leadingIcon: Icons.person,
-                        onPressed: () => context.go('/profile'),
-                      ),
-                    ],
-                  ),
-
-                  // Animated background pattern
-                  Expanded(
-                    child: Stack(
-                      children: [
-                        // Animated background
-                        AnimatedBuilder(
-                          animation: _backgroundAnimation,
-                          builder: (context, child) {
-                            return CustomPaint(
-                              size: Size.infinite,
-                              painter: _BackgroundPainter(
-                                animationValue: _backgroundAnimation.value,
-                              ),
-                            );
-                          },
+                          ),
                         ),
-
-                        // Main content
-                        Padding(
-                          padding: const EdgeInsets.all(20),
-                          child: Column(
-                            children: [
-                              // Market Display Section using design system
-                              StreetCredCard(
-                                themeColor: selectedAssetConfig['color'],
-                                size: CardSize.large,
-                                enablePressEffect: false,
-                                child: marketDataAsync.when(
-                                  data: (marketData) => Column(
-                                    children: [
-                                      // Asset Pair Display
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    selectedMarket,
-                                                    style:
-                                                        StreetCredDesignSystem.subtitleStyle(
-                                                          selectedAssetConfig['color'],
-                                                        ).copyWith(
-                                                          fontSize: 18,
-                                                          letterSpacing: 1,
-                                                        ),
-                                                  ),
-                                                  const SizedBox(
-                                                    height: StreetCredDesignSystem
-                                                        .spacingXS,
-                                                  ),
-                                                  Text(
-                                                    '\$${marketData.price}',
-                                                    style:
-                                                        StreetCredDesignSystem.bodyStyle()
-                                                            .copyWith(
-                                                              color: marketData.isPositive
-                                                                  ? StreetCredTheme.longColor
-                                                                  : StreetCredTheme.shortColor,
-                                                              fontSize: 14,
-                                                              fontWeight:
-                                                                  FontWeight.bold,
-                                                            ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                          // Market Status
-                                          Container(
-                                            padding: const EdgeInsets.symmetric(
-                                              horizontal:
-                                                  StreetCredDesignSystem.spacingM,
-                                              vertical:
-                                                  StreetCredDesignSystem.spacingS,
-                                            ),
-                                            decoration:
-                                                StreetCredDesignSystem.statusBadgeDecoration(
-                                                  marketData.isPositive
-                                                      ? StreetCredTheme.longColor
-                                                      : StreetCredTheme.shortColor,
-                                                ),
-                                            child: Row(
-                                              children: [
-                                                Icon(
-                                                  Icons.fiber_manual_record,
-                                                  color: marketData.isPositive
-                                                      ? StreetCredTheme.longColor
-                                                      : StreetCredTheme.shortColor,
-                                                  size: 8,
-                                                ),
-                                                const SizedBox(
-                                                  width: StreetCredDesignSystem
-                                                      .spacingS,
-                                                ),
-                                                Text(
-                                                  marketData.isPositive ? 'BULLISH' : 'BEARISH',
-                                                  style:
-                                                      StreetCredDesignSystem.captionStyle()
-                                                          .copyWith(
-                                                            color: marketData.isPositive
-                                                                ? StreetCredTheme.longColor
-                                                                : StreetCredTheme.shortColor,
-                                                            fontSize: 11,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                          ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-
-                                      const SizedBox(
-                                        height: StreetCredDesignSystem.spacingL,
-                                      ),
-
-                                      // Market Stats
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          _buildMarketStat(
-                                            '24h Change',
-                                            '${marketData.changePercent >= 0 ? '+' : ''}${marketData.changePercent.toStringAsFixed(2)}%',
-                                            marketData.isPositive
-                                                ? StreetCredTheme.longColor
-                                                : StreetCredTheme.shortColor,
-                                          ),
-                                          _buildMarketStat(
-                                            'Volume',
-                                            '\$${_formatVolume(marketData.volume24h)}',
-                                            Colors.grey[400]!,
-                                          ),
-                                          _buildMarketStat(
-                                            'High/Low',
-                                            '${marketData.high24h}/${marketData.low24h}',
-                                            StreetCredTheme.neonYellow,
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  loading: () => Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                selectedMarket,
-                                                style: StreetCredDesignSystem.subtitleStyle(
-                                                  selectedAssetConfig['color'],
-                                                ),
-                                              ),
-                                              const SizedBox(height: 4),
-                                              Text(
-                                                'Loading...',
-                                                style: StreetCredDesignSystem.bodyStyle(),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  error: (error, stack) => Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                selectedMarket,
-                                                style: StreetCredDesignSystem.subtitleStyle(
-                                                  selectedAssetConfig['color'],
-                                                ),
-                                              ),
-                                              const SizedBox(height: 4),
-                                              Text(
-                                                'Market data unavailable',
-                                                style: StreetCredDesignSystem.bodyStyle()
-                                                    .copyWith(color: Colors.red),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                      if (walletState.isConnected) ...[
-                                        const SizedBox(
-                                          height: StreetCredDesignSystem.spacingL,
-                                        ),
-                                        Container(
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal:
-                                                StreetCredDesignSystem.spacingM,
-                                            vertical:
-                                                StreetCredDesignSystem.spacingS,
-                                          ),
-                                          decoration:
-                                              StreetCredDesignSystem.statusBadgeDecoration(
-                                                StreetCredTheme.neonGreen,
-                                              ),
-                                          child: Text(
-                                            'READY TO TRADE',
-                                            style:
-                                                StreetCredDesignSystem.captionStyle()
-                                                    .copyWith(
-                                                      color: StreetCredTheme
-                                                          .neonGreen,
-                                                      fontSize: 12,
-                                                      fontWeight: FontWeight.bold,
-                                                    ),
-                                          ),
-                                        ),
-                                      ],
-                                    ],
-                                  ),
-                                ),
+                        SizedBox(height: 8),
+                        Text(
+                          'CENTRAL DISTRICT • STREET ART CLASH',
+                          style: TextStyle(
+                            color: Color(0xFF00FFFF),
+                            fontSize: 12,
+                            fontWeight: FontWeight.w300,
+                            letterSpacing: 3,
+                            shadows: [
+                              Shadow(
+                                color: Color(0xFF00FFFF),
+                                blurRadius: 5,
                               ),
-
-                              const SizedBox(height: 20),
-
-                              // Spray paint swipe area
-                              Expanded(
-                                child: Stack(
-                                  children: [
-                                    SwipeSprayGauge(
-                                      isEnabled:
-                                          walletState.isConnected &&
-                                          currentInk > 0,
-                                      onTrade: (direction, leverage) {
-                                        setState(() => showHandDemo = false);
-                                        // Deduct ink based on leverage
-                                        final inkCost = (leverage * 10).round();
-                                        if (currentInk >= inkCost) {
-                                          _onTradeExecuted(leverage, direction);
-                                        } else {
-                                          // Not enough ink
-                                          ScaffoldMessenger.of(
-                                            context,
-                                          ).showSnackBar(
-                                            SnackBar(
-                                              content: Text(
-                                                'Not enough ink!',
-                                                style: StreetCredTheme
-                                                    .graffitiBody,
-                                              ),
-                                              backgroundColor: Colors.red,
-                                            ),
-                                          );
-                                        }
-                                      },
-                                    ),
-                                    if (showHandDemo) const HandDemoAnimation(),
-                                  ],
-                                ),
-                              ),
-
-                              const SizedBox(height: 10),
                             ],
                           ),
                         ),
                       ],
                     ),
                   ),
+                  
+                  // Main spray paint trading area
+                  Expanded(
+                    child: Container(
+                      margin: EdgeInsets.all(20),
+                      padding: EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.3),
+                        borderRadius: BorderRadius.circular(15),
+                        border: Border.all(
+                          color: Color(0xFF00FF41).withOpacity(0.5),
+                          width: 1,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color(0xFF00FF41).withOpacity(0.2),
+                            blurRadius: 15,
+                            spreadRadius: 1,
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          // Spray can icon
+                          Icon(
+                            Icons.format_paint,
+                            size: 80,
+                            color: Color(0xFFFF0080),
+                            shadows: [
+                              Shadow(
+                                color: Color(0xFFFF0080),
+                                blurRadius: 20,
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 20),
+                          
+                          // Spray paint instruction
+                          Text(
+                            'SPRAY YOUR TRADE',
+                            style: TextStyle(
+                              color: Color(0xFFFFFFFF),
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 3,
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            'Gesture-based trading on Hong Kong walls',
+                            style: TextStyle(
+                              color: Color(0xFF00FFFF),
+                              fontSize: 14,
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                          SizedBox(height: 30),
+                          
+                          // Trading status
+                          Container(
+                            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 25),
+                            decoration: BoxDecoration(
+                              color: Color(0xFF001122),
+                              borderRadius: BorderRadius.circular(25),
+                              border: Border.all(
+                                color: Color(0xFF00FFFF),
+                                width: 1,
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(
+                                  Icons.water_drop,
+                                  color: Color(0xFF00FFFF),
+                                  size: 16,
+                                ),
+                                SizedBox(width: 8),
+                                Text(
+                                  'Rain falling • Markets volatile',
+                                  style: TextStyle(
+                                    color: Color(0xFF00FFFF),
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  
+                  // Bottom neon indicators
+                  Container(
+                    padding: EdgeInsets.all(20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        _buildNeonIndicator('INK', '$currentInk', Color(0xFFFFFF00)),
+                        _buildNeonIndicator('XP', '$currentXP', Color(0xFF00FF41)),
+                        _buildNeonIndicator('ETH', '${(2.5).toStringAsFixed(2)}', Color(0xFFFF0080)),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNeonIndicator(String label, String value, Color color) {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      decoration: BoxDecoration(
+        color: Colors.black.withOpacity(0.4),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: color.withOpacity(0.6),
+          width: 1,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: color.withOpacity(0.3),
+            blurRadius: 10,
+            spreadRadius: 1,
           ),
-          const RewardWidget(),
+        ],
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            label,
+            style: TextStyle(
+              color: color,
+              fontSize: 10,
+              fontWeight: FontWeight.w300,
+              letterSpacing: 1,
+            ),
+          ),
+          SizedBox(height: 4),
+          Text(
+            value,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              shadows: [
+                Shadow(
+                  color: color,
+                  blurRadius: 5,
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -596,6 +605,83 @@ class _BackgroundPainter extends CustomPainter {
       final y = (i + animationValue * 50) % size.height;
       canvas.drawLine(Offset(0, y), Offset(size.width, y), paint);
     }
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
+}
+
+class RainPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Color(0xFF00FFFF).withOpacity(0.3)
+      ..strokeWidth = 1
+      ..strokeCap = StrokeCap.round;
+
+    final random = Math.Random(DateTime.now().millisecondsSinceEpoch ~/ 100);
+    
+    // Draw rain drops
+    for (int i = 0; i < 100; i++) {
+      final x = random.nextDouble() * size.width;
+      final y = random.nextDouble() * size.height;
+      final length = 10 + random.nextDouble() * 20;
+      
+      canvas.drawLine(
+        Offset(x, y),
+        Offset(x + 2, y + length),
+        paint,
+      );
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
+}
+
+class WaterReflectionPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..shader = LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [
+          Color(0xFF00FFFF).withOpacity(0.1),
+          Color(0xFFFF0080).withOpacity(0.1),
+          Color(0xFF00FF41).withOpacity(0.1),
+        ],
+      ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
+
+    // Draw ripple effects
+    for (int i = 0; i < 5; i++) {
+      final radius = (i + 1) * 20.0;
+      final center = Offset(size.width * 0.3 + i * 50, size.height * 0.7);
+      
+      canvas.drawCircle(
+        center,
+        radius,
+        Paint()
+          ..color = Color(0xFF00FFFF).withOpacity(0.1 - i * 0.02)
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 1,
+      );
+    }
+    
+    // Draw water surface with neon reflections
+    final path = Path();
+    path.moveTo(0, size.height * 0.8);
+    
+    for (double x = 0; x <= size.width; x += 10) {
+      final y = size.height * 0.8 + Math.sin(x * 0.02) * 3;
+      path.lineTo(x, y);
+    }
+    
+    path.lineTo(size.width, size.height);
+    path.lineTo(0, size.height);
+    path.close();
+    
+    canvas.drawPath(path, paint);
   }
 
   @override

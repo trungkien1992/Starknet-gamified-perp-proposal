@@ -52,7 +52,7 @@ class WalletLauncher extends ConsumerWidget {
                       color: const Color(0xFF2A2A2A),
                       borderRadius: BorderRadius.circular(50),
                       border: Border.all(
-                        color: themeColor.withOpacity(0.3),
+                        color: themeColor.withValues(alpha: 0.3),
                         width: 2,
                       ),
                     ),
@@ -114,7 +114,7 @@ class WalletLauncher extends ConsumerWidget {
             width: 32,
             height: 32,
             decoration: BoxDecoration(
-              color: isActive ? const Color(0xFF00FFFF).withOpacity(0.1) : const Color(0xFF2A2A2A),
+              color: isActive ? const Color(0xFF00FFFF).withValues(alpha: 0.1) : const Color(0xFF2A2A2A),
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
                 color: isActive ? const Color(0xFF00FFFF) : const Color(0xFF666666),
@@ -174,7 +174,7 @@ class WalletLauncher extends ConsumerWidget {
                       color: const Color(0xFF2A2A2A),
                       borderRadius: BorderRadius.circular(50),
                       border: Border.all(
-                        color: themeColor.withOpacity(0.3),
+                        color: themeColor.withValues(alpha: 0.3),
                         width: 2,
                       ),
                     ),
@@ -202,7 +202,7 @@ class WalletLauncher extends ConsumerWidget {
                         Container(
                           padding: const EdgeInsets.all(StreetCredDesignSystem.spacingM),
                           decoration: BoxDecoration(
-                            color: const Color(0xFF2A2A2A).withOpacity(0.5),
+                            color: const Color(0xFF2A2A2A).withValues(alpha: 0.5),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(

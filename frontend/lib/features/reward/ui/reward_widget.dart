@@ -22,7 +22,7 @@ class _RewardWidgetState extends ConsumerState<RewardWidget> {
         opacity: reward.show ? 1 : 0,
         duration: const Duration(milliseconds: 300),
         child: Card(
-          color: Colors.black.withOpacity(0.8),
+          color: Colors.black.withValues(alpha: 0.8),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(24),
           ),

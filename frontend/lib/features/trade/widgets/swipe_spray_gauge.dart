@@ -10,11 +10,13 @@ typedef OnTrade = void Function(String direction, double leverage);
 class SwipeSprayGauge extends StatefulWidget {
   final OnTrade onTrade;
   final bool isEnabled;
+  final bool isDemoMode;
 
   const SwipeSprayGauge({
     Key? key,
     required this.onTrade,
     this.isEnabled = true,
+    this.isDemoMode = false,
   }) : super(key: key);
 
   @override
